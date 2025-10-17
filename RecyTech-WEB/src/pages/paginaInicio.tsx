@@ -16,7 +16,10 @@ export default function Home() {
                     <button type="button" className="btn btn-success w-50" style={{ height: "40px", borderRadius: "20px" }} onClick={() => navigate("/loginCatador")}>Catador</button>
                 </div>
                 <div className="col-12 mt-3">
-                    <button type="button" className="btn btn-primary w-50" style={{ height: "40px", borderRadius: "20px" }}>Success</button>
+                    <button type="button"
+                        className="btn btn-primary w-50"
+                        style={{ height: "40px", borderRadius: "20px" }}
+                        onClick={() => navigate("/loginCidadao")}>Cidadão</button>
                 </div>
             </div>
         </div>
