@@ -1,11 +1,14 @@
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { useState, useEffect } from 'react';
+import { useState, useEffect} from 'react';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import { useTokenWatcher } from './tokenWatcher';
 
 
 export default function InicioCidadao() {
+
+    useTokenWatcher();
 
     interface Endereco {
         endereco: string;
@@ -27,9 +30,7 @@ export default function InicioCidadao() {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => setEnderecos(res.data))
-            .catch(err => console.log(err));
     }, []);
-
 
     const position: [number, number] = [-23.55052, -46.633308];
 

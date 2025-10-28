@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import Router from "./routes/routes";
 
+
 // Importa o CSS do Bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 
