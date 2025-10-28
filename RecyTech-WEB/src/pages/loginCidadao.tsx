@@ -1,24 +1,46 @@
 import LogoRecyTech from "../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
-import "../style/loginCatador.css";
+import React, { useState } from "react";
+import axios from "axios";
+import "../style/inicioCidadao.css";
 
 export default function LoginCidadao() {
+
+
+    async function login(email: string, senha: string) {
+        const response = await axios.post(
+            "http://localhost:3000/auth/login",
+            { email, senha },
+            { headers: { 'Content-Type': 'application/json' } }
+        );
+
+        // salva token
+        localStorage.setItem('token', response.data.access_token);
+    }
+
+
     const navigate = useNavigate();
 
-    // const [listaUsuarios, setUsuarios] = useState<any[]>([]);
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+
+        login(email, senha)
+            .then(() => navigate('/inicioCidadao')) // ou rota protegida
+            .catch((error) => {
+                console.error(error);
+                alert("Erro ao fazer login. Verifique suas credenciais.");
+            });
+    }
 
 
-    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    //     e.preventDefault();
 
-    //     try {
-    //         const response = await axios.get("http://localhost:3000/usuario/todos");
-    //         setUsuarios(response.data);
-    //         console.log(response.data);
-    //     } catch (error: any) {
-    //         console.error(`Erro: ${error.response ? error.response.data.message : "Ocorreu um erro no servidor."}`);
-    //     }
-    // }
+
+
+
+
 
     return (
         <div className="container d-flex justify-content-center align-items-start" style={{ minHeight: "100vh", paddingTop: "80px" }}>
@@ -30,7 +52,7 @@ export default function LoginCidadao() {
 
                 {/* Formulário */}
                 <div className="col-12 col-md-6 offset-md-3">
-                    <form>
+                    <form onSubmit={handleSubmit}>
 
                         {/* Usuário / Email */}
                         <div className="mb-4 text-start">
@@ -39,8 +61,10 @@ export default function LoginCidadao() {
                                 placeholder="USUÁRIO/EMAIL"
                                 className="usuario-input w-100"
                                 name="nomeOuEmail"
-                        
-                          
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+
+
                             />
                         </div>
 
@@ -51,7 +75,9 @@ export default function LoginCidadao() {
                                 placeholder="SENHA"
                                 className="usuario-input w-100"
                                 name="senha"
-                             
+                                value={senha}
+                                onChange={e => setSenha(e.target.value)}
+
                             />
                         </div>
 
@@ -66,7 +92,7 @@ export default function LoginCidadao() {
                             </button>
                         </div>
 
-           
+
                         {/* Esqueci a senha */}
                         <div className="text-center mb-3">
                             <a href="#" className="text-primary" style={{ fontSize: "0.9rem" }}>
