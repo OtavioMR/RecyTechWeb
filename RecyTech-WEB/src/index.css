@@ -4,13 +4,43 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  color: rgba(0, 0, 0, 0.87); /* ← MUDEI: cor escura para modo claro */
+  background-color: #f5f5f5; /* ← MUDEI: fundo claro */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* RESET COMPLETO - Remove centralização forçada */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+body {
+  margin: 0 !important;
+  display: block !important; /* ← MUDEI: block em vez de flex */
+  place-items: normal !important; /* ← MUDEI: remove centralização */
+  min-width: 100% !important; /* ← MUDEI: 100% em vez de 320px */
+  min-height: 100vh !important;
+  background-color: #f5f5f5 !important;
+}
+
+#root {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 a {
@@ -20,14 +50,6 @@ a {
 }
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
 }
 
 h1 {

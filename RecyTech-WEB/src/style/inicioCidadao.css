@@ -1,3 +1,115 @@
+.pesquisa {
+    border-radius: 25px;
+    background-color: #C1C1C1;
+    border: 2px solid #dee2e6;
+    width: auto;
+    max-width: 400px;
+    height: 3.5rem; /* ← AUMENTEI A ALTURA */
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    margin: 0 0 1rem 0; /* ← MUDEI: margin-left 0 para ficar à esquerda */
+    transition: all 0.3s ease;
+}
+
+.pesquisa:focus-within {
+    border-color: #005265;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(0, 82, 101, 0.1);
+}
+
+.pesquisa input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 1.1rem; /* ↑ AUMENTEI O TEXTO */
+    color: #000000;
+}
+
+.pesquisa input::placeholder {
+    color: #000000;
+    font-size: 1.1rem; /* ↑ AUMENTEI O PLACEHOLDER */
+}
+
+.pesquisa i {
+    font-size: 1.3rem; /* ↑ AUMENTEI A LUPA */
+}
+
+
+.enderecos {
+    border-radius: 20px;
+    background-color: #D9D9D9;
+    width: 100%;
+    max-width: 100%; /* ← MUDEI: 100% em vez de 15rem */
+    padding: 0.5rem;
+}
+
+
+/* ===== RESET ESPECÍFICO PARA BOOTSTRAP 5.3.8 ===== */
+
+/* Sobrescreve containers do Bootstrap */
+.app-layout .container,
+.app-layout .container-fluid,
+.app-layout .container-xxl,
+.app-layout .container-xl,
+.app-layout .container-lg,
+.app-layout .container-md,
+.app-layout .container-sm {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Garante que o layout principal funcione */
+.app-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  position: relative !important;
+}
+
+.main-content {
+  flex: 1 !important;
+  margin-left: 300px !important;
+  width: calc(100% - 300px) !important;
+  padding: 20px !important;
+  position: relative !important;
+  z-index: 1 !important;
+  background-color: #f5f5f5 !important;
+}
+
+.sidebar-collapsed ~ .main-content {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* Remove padding dos rows/cols do Bootstrap dentro do nosso layout */
+.app-layout .row {
+  --bs-gutter-x: 0 !important;
+  --bs-gutter-y: 0 !important;
+  margin-top: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.app-layout [class*="col-"] {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Garante que o content-area não seja afetado */
+.content-area {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
+}
+/* REMOVA estas partes - estão conflitando com o App.css */
+/*
 html, body, #root {
     margin: 0;
     padding: 0;
@@ -10,27 +122,10 @@ body {
     flex-direction: column;
 }
 
-
-.pesquisa {
-    border-radius: 20px;
-    background-color: #C1C1C1;
-    width: 100%;
-    max-width: 15rem;
-    height: 3rem;
-}
-
-.enderecos {
-    border-radius: 20px;
-    background-color: #D9D9D9;
-    width: 100%;
-    max-width: 15rem;
-    padding: 0.5rem;
-}
-
 .faixa-azul {
     width: 100%;
-    height: 20px;             /* altura visível */
-    background-color: #005265; /* azul */
+    height: 20px;
+    background-color: #005265;
 }
 
 footer {
@@ -49,20 +144,21 @@ footer.opcoes {
     background-color: #C1C1C1;
     color: #fff;
     display: flex;
-    justify-content: space-around; /* distribui os itens horizontalmente */
+    justify-content: space-around;
     align-items: center;
 }
 
 footer.opcoes .col-3 {
     display: flex;
-    flex-direction: column; /* ícone em cima, texto embaixo */
-    align-items: center;    /* centraliza o conteúdo */
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     font-size: 0.9rem;
     color: black;
 }
 
 footer.opcoes i {
-    margin-bottom: 2px; /* espaço entre ícone e texto */
+    margin-bottom: 2px;
     margin-top: 5px;
 }
+*/

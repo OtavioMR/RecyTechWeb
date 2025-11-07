@@ -19,6 +19,7 @@ export default function Router() {
         <Route path="/cadastroCidadao" element={<CadastroCidadao />} />
         <Route path="/loginCidadao" element={<LoginCidadao />} />
         <Route path="/rodrigo/lixoCatador" element={<LixoCatador/>} />
+        <Route path="/inicioCidadao" element={<InicioCidadao />} />
 
 
 
@@ -26,7 +27,6 @@ export default function Router() {
         {/* Rotas protegidas */}
         <Route element={<PrivateRoute />}>
           <Route path="/teste" element={<Teste />} />
-          <Route path="/inicioCidadao" element={<InicioCidadao />} />
         </Route>
 
       </Routes>
