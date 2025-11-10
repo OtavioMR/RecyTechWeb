@@ -159,13 +159,103 @@
   display: none;
 }
 
-/* REMOVA ou ATUALIZE a responsividade para combinar com 300px/80px */
+/* ===== RESPONSIVIDADE CORRIGIDA ===== */
 @media (max-width: 768px) {
   .sidebar {
-    width: 80px; /* Combine com sua largura colapsada */
+    width: 100% !important; /* ← OCUPA LARGURA TOTAL */
+    height: 70px !important; /* ← ALTURA REDUZIDA */
+    bottom: 0 !important; /* ← FIXA EM BAIXO */
+    top: auto !important; /* ← REMOVE TOP */
+    flex-direction: row !important; /* ← MENU HORIZONTAL */
+    align-items: center !important;
+    justify-content: space-around !important;
   }
-  
-  .sidebar:not(.sidebar-collapsed) {
-    width: 300px; /* Combine com sua largura expandida */
+
+  .sidebar-header {
+    display: none !important; /* ← ESCONDE HEADER NO MOBILE */
+  }
+
+  .sidebar-nav {
+    flex-direction: row !important; /* ← MENU HORIZONTAL */
+    flex: 1 !important;
+    padding: 0 10px !important;
+    gap: 0 !important;
+    justify-content: space-around !important;
+  }
+
+  .sidebar-item {
+    flex-direction: column !important; /* ← ÍCONE E TEXTO EM COLUNA */
+    margin: 0 5px !important;
+    padding: 8px 5px !important;
+    border-radius: 6px !important;
+    min-width: 60px !important;
+  }
+
+  .sidebar-item.active {
+    border-left: none !important;
+    border-top: 3px solid #007b8f !important; /* ← BORDA EM CIMA */
+  }
+
+  .sidebar-icon {
+    font-size: 16px !important;
+    margin-bottom: 2px !important;
+  }
+
+  .sidebar-label {
+    font-size: 10px !important; /* ← TEXTO MENOR */
+    white-space: nowrap !important;
+  }
+
+  .sidebar-footer {
+    display: none !important; /* ← ESCONDE LOGOUT NO MOBILE */
+  }
+
+  /* Remove colapso no mobile - sempre expandido */
+  .sidebar-collapsed {
+    width: 100% !important;
+  }
+
+  .sidebar-collapsed .sidebar-item {
+    justify-content: center !important;
+    flex-direction: column !important;
+  }
+
+  .sidebar-collapsed .sidebar-label {
+    display: block !important; /* ← SEMPRE MOSTRA TEXTO NO MOBILE */
+  }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 250px !important; /* ← LARGURA REDUZIDA */
+  }
+
+  .sidebar-collapsed {
+    width: 70px !important; /* ← COLAPSADA REDUZIDA */
+  }
+
+  .sidebar-header {
+    padding: 15px !important;
+    min-height: 70px !important;
+  }
+
+  .sidebar-item {
+    padding: 10px 15px !important;
+  }
+}
+
+/* Ajusta o conteúdo principal para mobile */
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: 0 !important;
+    margin-bottom: 70px !important; /* ← ESPAÇO PARA SIDEBAR MOBILE */
+    width: 100% !important;
+    padding-bottom: 30px !important;
+  }
+
+  .sidebar-collapsed ~ .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
   }
 }

@@ -123,23 +123,25 @@ export default function InicioCidadao() {
                             }}
                         />
                     </div>
-                    {/* Endereços - Use w-100 para largura total */}
-                    <div className="enderecos mb-3 p-3 w-100">
-                        <p className="fw-bold mb-3 text-center">Meus endereços:</p>
-                        {loading ? (
-                            <p className='text-center'>Carregando endereços...</p>
-                        ) : enderecos.length === 0 ? (
-                            <p className='text-center'>Nenhum endereço cadastrado.</p>
-                        ) : (
-                            <div className="list-group">
-                                {enderecos.map((e, index) => (
-                                    <div key={index} className="list-group-item mb-2">
-                                        <strong>{e.endereco}</strong><br />
-                                        {e.cep} - {e.bairro} ({e.cidade}/{e.estado})
-                                    </div>
-                                ))}
-                            </div>
-                        )}
+                    {/* Endereços - Título fora da caixa e caixa à esquerda */}
+                    <div className="mb-3">
+                        <p className="enderecos-titulo">Meus endereços:</p>
+                        <div className="enderecos">
+                            {loading ? (
+                                <p className='text-center m-0'>Carregando endereços...</p>
+                            ) : enderecos.length === 0 ? (
+                                <p className='text-center m-0'>Nenhum endereço cadastrado.</p>
+                            ) : (
+                                <div className="list-group">
+                                    {enderecos.map((e, index) => (
+                                        <div key={index} className="list-group-item mb-2">
+                                            <strong>{e.endereco}</strong><br />
+                                            {e.cep} - {e.bairro} ({e.cidade}/{e.estado})
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Conteúdo baseado no menu selecionado */}
