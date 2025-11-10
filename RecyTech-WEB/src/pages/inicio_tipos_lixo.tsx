@@ -78,7 +78,7 @@ export default function InicioTiposLixo() {
                     </div>
 
                     {/* Grid de Tipos de Lixo - Agora em coluna única */}
-                    <div className="tipos-lixo-container .">
+                    <div className="tipos-lixo-container . .">
                         {tiposLixo.map((tipo) => (
                             <button
                                 key={tipo.id}
