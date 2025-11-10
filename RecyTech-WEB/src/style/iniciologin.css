@@ -1,0 +1,132 @@
+@import url('Responsividade.css');
+
+
+
+
+
+
+
+.logo {
+  width: clamp(300px, 80vw, 300px);
+  height: auto;
+  margin: 0 auto 24px;
+  display: flex;
+}
+
+
+
+.app-subtitle {
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  color: #555;
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+
+
+.button-cidadao,
+.button-catador {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 420px;
+    margin: 14px auto;
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: clamp(16px, 4.5vw, 18px);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 4px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation;
+    justify-content: center;
+}
+
+
+.button-cidadao,
+.button-catador {
+    --accent: #0d7377; 
+    color: var(--text-color, var(--accent));
+    background-color: var(--bg, transparent);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0); 
+}
+
+
+.button-cidadao {
+    --accent: #0d7377;
+    --bg: var(--accent);
+    --text-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(13,115,119,0.12);
+}
+
+
+.button-catador {
+    --accent: #0d7377;
+    --bg: transparent;
+    --text-color: var(--accent);
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 0 2px rgba(13,115,119,0.04);
+}
+
+
+.button-cidadao svg,
+.button-catador svg {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    fill: var(--text-color, #fff);
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao .arr-1,
+.button-catador .arr-1 { right: 16px; }
+.button-cidadao .arr-2,
+.button-catador .arr-2 { left: -25%; }
+
+.button-cidadao .circle,
+.button-catador .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-color, var(--accent));
+    border-radius: 100%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao .text,
+.button-catador .text {
+    position: relative;
+    z-index: 1;
+    transform: translateX(-6px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao:hover,
+.button-catador:hover {
+    color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 0 12px transparent;
+}
+
+.button-cidadao:hover .arr-1,
+.button-catador:hover .arr-1 { right: -25%; }
+.button-cidadao:hover .arr-2,
+.button-catador:hover .arr-2 { left: 16px; }
+.button-cidadao:hover .text,
+.button-catador:hover .text { transform: translateX(12px); }
+.button-cidadao:hover svg,
+.button-catador:hover svg { fill: #ffffff; }
+
+.button-cidadao:active,
+.button-catador:active { transform: scale(0.95); box-shadow: 0 0 0 4px rgba(13,115,119,0.18); }
+
+.button-catador:hover .circle { width: 100%; height: 220px; opacity: 1; }
