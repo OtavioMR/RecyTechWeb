@@ -5,6 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useTokenWatcher } from './tokenWatcher';
 import Sidebar from '../components/Sidebar';
+import InicioTiposLixo from './inicio_tipos_lixo';
 
 interface Endereco {
     endereco: string;
@@ -15,12 +16,13 @@ interface Endereco {
 }
 
 export default function InicioCidadao() {
-    useTokenWatcher();
+    useTokenWatcher(); // MANTIDO
 
     const [enderecos, setEnderecos] = useState<Endereco[]>([]);
     const [loading, setLoading] = useState(true);
     const [activeMenu, setActiveMenu] = useState('inicio');
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [mostrarTiposLixo, setMostrarTiposLixo] = useState(false); // NOVO ESTADO
 
     useEffect(() => {
         const buscarEnderecos = async () => {
@@ -63,7 +65,17 @@ export default function InicioCidadao() {
         setSidebarCollapsed(collapsed);
     };
 
+    // NOVA FUNÇÃO: Quando clicar na caixa de endereços
+    const handleEnderecosClick = () => {
+        setMostrarTiposLixo(true);
+    };
+
     const position: [number, number] = [-23.55052, -46.633308];
+
+    // SE mostrarTiposLixo for true, mostra a tela de tipos de lixo
+    if (mostrarTiposLixo) {
+        return <InicioTiposLixo />;
+    }
 
     return (
         <div className="app-layout">
@@ -123,10 +135,15 @@ export default function InicioCidadao() {
                             }}
                         />
                     </div>
+                    
                     {/* Endereços - Título fora da caixa e caixa à esquerda */}
                     <div className="mb-3">
                         <p className="enderecos-titulo">Meus endereços:</p>
-                        <div className="enderecos">
+                        <div 
+                            className="enderecos"
+                            style={{ cursor: 'pointer' }} // Torna clicável
+                            onClick={handleEnderecosClick} // NOVO: Adiciona o clique
+                        >
                             {loading ? (
                                 <p className='text-center m-0'>Carregando endereços...</p>
                             ) : enderecos.length === 0 ? (

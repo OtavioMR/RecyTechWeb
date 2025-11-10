@@ -1,0 +1,186 @@
+/* Estilos para a página de Tipos de Lixo */
+
+.titulo-tipos-lixo {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+/* Container do botão voltar - agora alinhado à esquerda */
+.voltar-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+}
+
+.btn-voltar {
+    background-color: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.tipos-lixo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tipo-lixo-btn {
+    position: relative;
+    padding: 1.5rem 2rem;
+    border: 3px solid;
+    border-radius: 15px;
+    background-color: #F5F5F5;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 80px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.tipo-lixo-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tipo-lixo-btn.selecionado {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.tipo-lixo-icone {
+    font-size: 1.8rem;
+    margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+}
+
+.tipo-lixo-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.check-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #4CAF50;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.confirmar-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    padding: 0 1rem;
+}
+
+.btn-confirmar {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 50px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.btn-confirmar:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn-confirmar:active {
+    transform: translateY(0);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .tipos-lixo-container {
+        max-width: 90%;
+    }
+    
+    .tipo-lixo-btn {
+        padding: 1.2rem 1.5rem;
+        min-height: 70px;
+    }
+    
+    .tipo-lixo-label {
+        font-size: 1.1rem;
+    }
+    
+    .tipo-lixo-icone {
+        font-size: 1.5rem;
+        margin-right: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .tipos-lixo-container {
+        max-width: 95%;
+    }
+    
+    .tipo-lixo-btn {
+        padding: 1rem 1.2rem;
+        min-height: 65px;
+    }
+    
+    .titulo-tipos-lixo {
+        font-size: 1.3rem;
+    }
+    
+    .btn-confirmar {
+        padding: 12px 40px;
+        font-size: 1.1rem;
+    }
+    
+    .btn-voltar {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+}
