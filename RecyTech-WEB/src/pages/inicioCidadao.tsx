@@ -56,11 +56,17 @@ export default function InicioCidadao() {
         return () => clearTimeout(timer);
     }, [sidebarCollapsed]);
 
-    const handleMenuSelect = (menu: string) => {
-        setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
-    };
-
+// No inicioCidadao.tsx, modifique a função handleMenuSelect:
+const handleMenuSelect = (menu: string) => {
+    setActiveMenu(menu);
+    console.log('Menu selecionado:', menu);
+    
+    // Navegação entre páginas
+    if (menu === 'opcoes') {
+        window.location.href = '/opcoes';
+    }
+    // O 'inicio' já está na página atual, então não precisa navegar
+};
     const handleSidebarToggle = (collapsed: boolean) => {
         setSidebarCollapsed(collapsed);
     };

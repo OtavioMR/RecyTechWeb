@@ -54,10 +54,18 @@ export default function InicioSolicitarColeta() {
         }
     }, []);
 
-    const handleMenuSelect = (menu: string) => {
-        setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
-    };
+const handleMenuSelect = (menu: string) => {
+    setActiveMenu(menu);
+    console.log('Menu selecionado:', menu);
+    
+    // Navegação entre páginas
+    if (menu === 'inicio') {
+        window.location.href = '/inicioCidadao';
+    }
+    if (menu === 'opcoes') {
+        window.location.href = '/opcoes';
+    }
+};
 
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);

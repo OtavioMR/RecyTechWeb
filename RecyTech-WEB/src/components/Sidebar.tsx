@@ -37,6 +37,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, activeMenu = 'inicio', 
     window.location.href = '/login';
   };
 
+  const handleMenuClick = (menuKey: string) => {
+    onMenuSelect(menuKey);
+  };
+
   return (
     <>
       {/* Sidebar Principal */}
@@ -64,7 +68,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, activeMenu = 'inicio', 
             <button
               key={item.key}
               className={`sidebar-item ${activeMenu === item.key ? 'active' : ''}`}
-              onClick={() => onMenuSelect(item.key)}
+              onClick={() => handleMenuClick(item.key)}
               aria-label={item.label}
               title={item.label}
             >
