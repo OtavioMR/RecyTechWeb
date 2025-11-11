@@ -11,13 +11,22 @@ export default function LoginCatador() {
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulação de login (substitua por axios se precisar)
+        
         console.log("Login Catador:", { email, senha });
         navigate("/inicioCatador"); // rota protegida
     };
 
     return (
-        <div className="login-screen-login-cidadao">
+ 
+        <div className="login-screen-login-catador">
+             <button className="Btn-back" onClick={() => navigate(-1)}>
+                <div className="sign-back"><svg className="w-6 h-6 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                </svg>
+
+                </div>
+                <div className="text-back">Voltar</div>
+            </button>
 
                 {/* Logo */}
                 <div className="col-12 mb-4">
@@ -29,11 +38,11 @@ export default function LoginCatador() {
                 </div>
 
                 {/* Formulário */}
-                <div className="col-12 col-md-6 offset-md-3">
+                <div className="form-catador">
                     <form onSubmit={handleSubmit}>
 
                         {/* Email */}
-                        <div className="mb-4 text-start">
+                        <div className="input-container-catador">
                             <input
                                 type="text"
                                 placeholder="USUÁRIO/EMAIL"
@@ -41,10 +50,11 @@ export default function LoginCatador() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                             />
+                            <label className="floating-label">USUÁRIO/EMAIL</label>
                         </div>
 
                         {/* Senha */}
-                        <div className="mb-4 text-start">
+                        <div className="input-container-catador">
                             <input
                                 type="password"
                                 placeholder="SENHA"
@@ -52,6 +62,7 @@ export default function LoginCatador() {
                                 value={senha}
                                 onChange={(e) => setSenha(e.target.value)}
                             />
+                            <label className="floating-label">SENHA</label>
                         </div>
 
                         {/* Botão Entrar - Catador Style */}
