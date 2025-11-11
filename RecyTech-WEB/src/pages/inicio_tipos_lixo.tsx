@@ -40,7 +40,9 @@ export default function InicioTiposLixo() {
     const handleConfirmar = () => {
         const selecionados = tiposLixo.filter(tipo => tipo.selecionado);
         console.log('Tipos de lixo selecionados:', selecionados);
-        alert(`Tipos de lixo selecionados: ${selecionados.map(t => t.label).join(', ')}`);
+        
+        // Navega para a página de quantidade
+        window.location.href = '/inicioQuantidade';
     };
 
     const handleVoltar = () => {
