@@ -1,0 +1,562 @@
+/* ================================================================== */
+/* ======================== RESPONSIVIDADE =======================*/
+/* ================================================================== */
+@media (min-width: 600px) {
+  .header {
+    grid-area: 1 / span 6;
+  }
+  
+  .menu {
+    grid-area: 2 / span 1;
+  }
+  
+  .content {
+    grid-area: 2 / span 4;
+  }
+  
+  .facts {
+    grid-area: 3 / span 6;
+  }
+  
+  .footer {
+    grid-area: 4 / span 6;
+  }
+}
+
+@media (min-width: 768px) {
+  .header {
+    grid-area: 1 / span 6;
+  }
+  
+  .menu {
+    grid-area: 2 / span 1;
+  }
+  
+  .content {
+    grid-area: 2 / span 4;
+  }
+  
+  .facts {
+    grid-area: 2 / span 1;
+  }
+  
+  .footer {
+    grid-area: 3 / span 6;
+  }
+}
+/* ================================================================== */
+/* ================================================================== */
+
+/* ================================================================== */
+/* ======================== GERAL =======================*/
+/* ================================================================== */
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(100deg, #005265, #086C4C);
+  background-attachment: fixed;
+  
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ================================================================== */
+/* ======================== PAGINA DE INICIO =======================*/
+/* ================================================================== */
+
+.login-screen-Inicio {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 700px;
+  margin: 20px auto;
+}
+
+/* HOVER SÓ NO PC */
+@media (hover: hover) {
+  .button-cidadao:hover {
+    background: #0a5a5a;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(13, 115, 119, 0.4);
+  }
+
+  .button-catador:hover {
+    background: #0d7377;
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(13, 115, 119, 0.3);
+  }
+}
+
+.logo {
+  width: clamp(300px, 80vw, 300px);
+  height: auto;
+  margin: 0 auto 24px;
+  display: flex;
+}
+
+
+
+.app-subtitle {
+  font-size: clamp(0.9rem, 3.5vw, 1rem);
+  color: #555;
+  margin-bottom: 32px;
+  font-weight: 500;
+}
+
+
+.button-cidadao,
+.button-catador {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    max-width: 420px;
+    margin: 14px auto;
+    padding: 16px 36px;
+    border-radius: 100px;
+    font-size: clamp(16px, 4.5vw, 18px);
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border: 4px solid transparent;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    touch-action: manipulation;
+    justify-content: center;
+}
+
+
+.button-cidadao,
+.button-catador {
+    --accent: #0d7377; 
+    color: var(--text-color, var(--accent));
+    background-color: var(--bg, transparent);
+    box-shadow: 0 0 0 2px rgba(0,0,0,0); 
+}
+
+
+.button-cidadao {
+    --accent: #0d7377;
+    --bg: var(--accent);
+    --text-color: #ffffff;
+    box-shadow: 0 0 0 2px rgba(13,115,119,0.12);
+}
+
+
+.button-catador {
+    --accent: #0d7377;
+    --bg: transparent;
+    --text-color: var(--accent);
+    border: 4px solid var(--accent);
+    box-shadow: 0 0 0 2px rgba(13,115,119,0.04);
+}
+
+
+.button-cidadao svg,
+.button-catador svg {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    fill: var(--text-color, #fff);
+    z-index: 9;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao .arr-1,
+.button-catador .arr-1 { right: 16px; }
+.button-cidadao .arr-2,
+.button-catador .arr-2 { left: -25%; }
+
+.button-cidadao .circle,
+.button-catador .circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background-color: var(--text-color, var(--accent));
+    border-radius: 100%;
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao .text,
+.button-catador .text {
+    position: relative;
+    z-index: 1;
+    transform: translateX(-6px);
+    transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.button-cidadao:hover,
+.button-catador:hover {
+    color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 0 12px transparent;
+}
+
+.button-cidadao:hover .arr-1,
+.button-catador:hover .arr-1 { right: -25%; }
+.button-cidadao:hover .arr-2,
+.button-catador:hover .arr-2 { left: 16px; }
+.button-cidadao:hover .text,
+.button-catador:hover .text { transform: translateX(12px); }
+.button-cidadao:hover svg,
+.button-catador:hover svg { fill: #ffffff; }
+
+.button-cidadao:active,
+.button-catador:active { transform: scale(0.95); box-shadow: 0 0 0 4px rgba(13,115,119,0.18); }
+
+.button-catador:hover .circle { width: 100%; height: 220px; opacity: 1; }
+
+/* ================================================================== */
+/* ======================== PAGINA DE INICIO =======================*/
+/* ================================================================== */
+
+/* ================================================================== */
+/* ======================== PAGINAS DE LOGIN =======================*/
+/* ================================================================== */
+.login-screen-login-cidadao {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+
+}
+
+
+.login-screen-login-catador {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+}
+
+/* ================================================================== */
+/* ======================== BOTÃO DE VOLTAR =======================*/
+/* ================================================================== */
+
+.Btn-back {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: clamp(40px, 10vw, 50px);
+  height: clamp(40px, 10vw, 50px);
+  min-width: 40px;
+  min-height: 40px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+  background-color: #086C4C;
+  font-family: inherit;
+}
+
+
+.sign-back {
+  width: 100%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.sign-back svg {
+  width: clamp(16px, 4vw, 20px);
+  height: auto;
+}
+
+.sign-back svg path {
+  fill: white;
+}
+
+
+.text-back {
+  position: absolute;
+  right: 0;
+  width: 0;
+  opacity: 0;
+  color: white;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  padding-right: 0;
+}
+
+
+
+/* Hover (desktop) */
+@media (hover: hover) and (pointer: fine) {
+  .Btn-back:hover {
+    width: clamp(100px, 25vw, 140px);
+    border-radius: 50px;
+  }
+
+  .Btn-back:hover .sign-back {
+    width: 35%;
+    padding-left: clamp(12px, 3vw, 20px);
+  }
+
+  .Btn-back:hover .text-back {
+    opacity: 1;
+    width: 65%;
+    padding-right: clamp(8px, 2vw, 12px);
+  }
+}
+
+
+.Btn-back:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Suporte a toque em mobile (sem hover) */
+@media (hover: none) and (pointer: coarse) {
+  .Btn-back {
+    width: 50px;
+    height: 50px;
+  }
+
+  .Btn-back.expanded {
+    width: 130px;
+    border-radius: 50px;
+  }
+
+  .Btn-back.expanded .sign-back {
+    width: 35%;
+    padding-left: 18px;
+  }
+
+  .Btn-back.expanded .text-back {
+    opacity: 1;
+    width: 65%;
+    padding-right: 10px;
+  }
+}
+/* ================================================================== */
+/* ================================================================== */
+
+/* ================================================================== */
+/* ======================== CIDADAO-INPUT =======================*/
+.input-container-cidadao {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.usuario-input {
+  width: 200px;
+  padding: 16px 16px 8px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.usuario-input::placeholder {
+  color: transparent;
+}
+
+.usuario-input:focus {
+  border-color: #086C4C;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(8, 108, 76, 0.1);
+}
+
+.usuario-input:not(:placeholder-shown)~.floating-label,
+.usuario-input:focus~.floating-label {
+  top: 8px;
+  font-size: 0.75rem;
+  color: #086C4C;
+  font-weight: 600;
+}
+
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: #f9f9f9;
+  padding: 0 4px;
+  font-weight: 500;
+}
+
+
+.usuario-input:focus~.floating-label {
+  color: #086C4C;
+}
+
+
+@media (max-width: 480px) {
+  .usuario-input {
+    padding: 14px 14px 6px 14px;
+    font-size: 0.95rem;
+  }
+
+  .floating-label {
+    left: 14px;
+  }
+}
+/* ================================================================== */
+/* ================================================================== */
+/* ================================================================== */
+/* ======================== CATADOR-INPUT =======================*/
+.input-container-catador {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.usuario-input {
+  width: 200px;
+  padding: 16px 16px 8px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.usuario-input::placeholder {
+  color: transparent;
+}
+
+.usuario-input:focus {
+  border-color: #086C4C;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(8, 108, 76, 0.1);
+}
+
+.usuario-input:not(:placeholder-shown)~.floating-label,
+.usuario-input:focus~.floating-label {
+  top: 8px;
+  font-size: 0.75rem;
+  color: #086C4C;
+  font-weight: 600;
+}
+
+
+.floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+  padding: 0 4px;
+  font-weight: 500;
+  border-radius: 20px;
+}
+
+
+.usuario-input:focus~.floating-label {
+  color: #086C4C;
+}
+
+
+@media (max-width: 480px) {
+  .usuario-input {
+    padding: 14px 14px 6px 14px;
+    font-size: 0.95rem;
+  }
+
+  .floating-label {
+    left: 14px;
+  }
+}
+
+/* ================================================================== */
+/* ======================== PAGINAS DE LOGIN =======================*/
+/* ================================================================== */
+
+
+
+
+/* ================================================================== */
+/* ======================== PAGINAS DE CADASTRO =======================*/
+/* ================================================================== */
+
+
+.register-screen-cidadao {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+
+}
+.register-screen-catador {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+
+}
+
+
+
+.titulo{
+  margin: 20px;
+}
