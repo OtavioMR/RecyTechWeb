@@ -12,7 +12,7 @@ export default function LoginCidadao() {
 
     async function login(email: string, senha: string) {
         const response = await axios.post(
-            "http://localhost:3000/auth/login",
+            "http://localhost:3000/auth/login/usuario",
             { email, senha },
             { headers: { 'Content-Type': 'application/json' } }
         );
