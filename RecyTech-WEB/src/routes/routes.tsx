@@ -10,7 +10,6 @@ import PrivateRoute from "./privateRoute";
 
 
 
-import LixoCatador from "../pages/lixo";
 import InicioTiposLixo from "../pages/inicio_tipos_lixo";
 import InicioQuantidade from "../pages/inicio_quantidade";
 
@@ -25,7 +24,6 @@ export default function Router() {
         <Route path="/cadastroCidadao" element={<CadastroCidadao />} />
         <Route path="/cadastroCatador" element={<CadastroCatador />} />
         <Route path="/loginCidadao" element={<LoginCidadao />} />
-        <Route path="/rodrigo/lixoCatador" element={<LixoCatador/>} />
         <Route path="/inicioCidadao" element={<InicioCidadao />} />
         <Route path="/InicioTiposLixo" element={<InicioTiposLixo />} />
         <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
