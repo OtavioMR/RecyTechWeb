@@ -63,6 +63,10 @@ export default function LoginCidadao() {
             <div className="form-cidadao">
                 <form onSubmit={handleSubmit}>
 
+                    <div className="titulo">
+                        <h2>Cidadão</h2>
+                    </div>  
+
                     {/* Email */}
                     <div className="input-container-cidadao">
                         <input
@@ -73,7 +77,7 @@ export default function LoginCidadao() {
                             onChange={(e) => setEmail(e.target.value)}
                             autoComplete="username email"
                         />
-                        <label className="floating-label">USUÁRIO/EMAIL</label>
+                        <label className="floating-label">CIDADÃO/EMAIL</label>
                     </div>
 
                     {/* Senha */}
