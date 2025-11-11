@@ -12,11 +12,11 @@ interface Quantidade {
 
 export default function InicioQuantidade() {
     const [activeMenu, setActiveMenu] = useState('inicio');
-    const [quantidades, setQuantidades] = useState<Quantidade[]>([
+    const quantidades: Quantidade[] = [
         { id: 'pouco', tipo: 'Pouco', descricao: 'Até 15 Kg', selecionado: false, icone: '♻️' },
         { id: 'medio', tipo: 'Médio', descricao: 'Até 50 Kg', selecionado: false, icone: '♻️♻️' },
         { id: 'grande', tipo: 'Grande', descricao: '+50 Kg', selecionado: false, icone: '♻️♻️♻️' },
-    ]);
+    ];
 
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
@@ -28,15 +28,14 @@ export default function InicioQuantidade() {
     };
 
     const selecionarQuantidade = (id: string) => {
-        setQuantidades(prev => prev.map(qtd => 
-            qtd.id === id 
-                ? { ...qtd, selecionado: true }
-                : { ...qtd, selecionado: false }
-        ));
-        
-        // Aqui você pode adicionar a navegação para a próxima página
-        console.log('Quantidade selecionada:', id);
-        // Exemplo: navigate('/proxima-pagina');
+        const quantidadeSelecionada = quantidades.find(qtd => qtd.id === id);
+        if (quantidadeSelecionada) {
+            // Salva a quantidade selecionada no localStorage
+            localStorage.setItem('quantidadeSelecionada', JSON.stringify(quantidadeSelecionada));
+            
+            // Navega para a página de solicitar coleta
+            window.location.href = '/inicioSolicitarColeta';
+        }
     };
 
     const handleVoltar = () => {
