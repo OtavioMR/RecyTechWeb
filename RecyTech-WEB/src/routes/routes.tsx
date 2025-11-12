@@ -14,6 +14,8 @@ import InicioTiposLixo from "../pages/inicio_tipos_lixo";
 import InicioQuantidade from "../pages/inicio_quantidade";
 import InicioSolicitarColeta from "../pages/inicio_solicitar_coleta";
 import Opcoes from "../pages/opcoes";
+import EsqueciMinhaSenhaCidadao from "../pages/esqueciMinhasenha-cidadao";
+import EsqueciMinhaSenhaCatador from "../pages/esqueciMinhasenha-catador";  
 
 export default function Router() {
   return (
@@ -31,6 +33,8 @@ export default function Router() {
         <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
         <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
         <Route path="/opcoes" element={<Opcoes />} />
+        <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
+        <Route path="/esqueciMinhasenha-cidadao" element={<EsqueciMinhaSenhaCidadao />} />
 
 
         {/* Rotas protegidas */}
