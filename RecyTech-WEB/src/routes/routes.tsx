@@ -12,6 +12,8 @@ import PrivateRoute from "./privateRoute";
 
 import InicioTiposLixo from "../pages/inicio_tipos_lixo";
 import InicioQuantidade from "../pages/inicio_quantidade";
+import InicioSolicitarColeta from "../pages/inicio_solicitar_coleta";
+import Opcoes from "../pages/opcoes";
 
 export default function Router() {
   return (
@@ -27,7 +29,8 @@ export default function Router() {
         <Route path="/inicioCidadao" element={<InicioCidadao />} />
         <Route path="/InicioTiposLixo" element={<InicioTiposLixo />} />
         <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
-
+        <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
+        <Route path="/opcoes" element={<Opcoes />} />
 
 
         {/* Rotas protegidas */}
