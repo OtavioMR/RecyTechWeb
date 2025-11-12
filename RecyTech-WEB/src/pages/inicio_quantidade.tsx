@@ -104,28 +104,6 @@ export default function InicioQuantidade() {
                             </button>
                         ))}
                     </div>
-
-                    {/* Conteúdo baseado no menu selecionado */}
-                    {activeMenu === 'coleta' && (
-                        <div className="coleta-content p-3 mt-3 w-100">
-                            <h3>Gestão de Coleta</h3>
-                            <p>Interface para gerenciar coletas de resíduos</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'opcoes' && (
-                        <div className="opcoes-content p-3 mt-3 w-100">
-                            <h3>Opções do Sistema</h3>
-                            <p>Configurações e preferências</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'conta' && (
-                        <div className="conta-content p-3 mt-3 w-100">
-                            <h3>Minha Conta</h3>
-                            <p>Gerencie suas informações pessoais</p>
-                        </div>
-                    )}
                 </div>
             </main>
         </div>
