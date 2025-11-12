@@ -7,6 +7,7 @@ import CadastroCatador from "../pages/cadastroCatador";
 import LoginCidadao from "../pages/loginCidadao";
 import InicioCidadao from "../pages/inicioCidadao";
 import PrivateRoute from "./privateRoute";
+import Coleta from "../pages/coleta";
 
 
 
@@ -31,6 +32,7 @@ export default function Router() {
         <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
         <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
         <Route path="/opcoes" element={<Opcoes />} />
+        <Route path="/coleta" element={<Coleta />} />
 
 
         {/* Rotas protegidas */}
