@@ -6,6 +6,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useTokenWatcher } from './tokenWatcher';
 import Sidebar from '../components/Sidebar';
 import InicioTiposLixo from './inicio_tipos_lixo';
+import '../style/inicioCidadao.css';
 
 interface Endereco {
     endereco: string;
