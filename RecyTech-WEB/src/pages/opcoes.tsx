@@ -19,16 +19,23 @@ export default function Opcoes() {
         { id: 'remover-conta', label: 'Remover conta', icone: '🗑️' },
     ];
 
-// No opcoes.tsx, modifique a função handleMenuSelect:
-const handleMenuSelect = (menu: string) => {
-    setActiveMenu(menu);
-    console.log('Menu selecionado:', menu);
+    const handleMenuSelect = (menu: string) => {
+        setActiveMenu(menu);
+        console.log('Menu selecionado:', menu);
+        
+        // Navegação completa
+        if (menu === 'inicio') {
+            window.location.href = '/inicioCidadao';
+        }
+        if (menu === 'coleta') {
+            window.location.href = '/coleta';
+        }
+        if (menu === 'conta') {
+            window.location.href = '/conta';
+        }
+        // 'opcoes' - não faz nada, já está na página
+    };
     
-    // Navegação entre páginas
-    if (menu === 'inicio') {
-        window.location.href = '/inicioCidadao';
-    }
-};
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);
     };

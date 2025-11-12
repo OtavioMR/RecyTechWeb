@@ -63,13 +63,17 @@ export default function Coleta() {
         setActiveMenu(menu);
         console.log('Menu selecionado:', menu);
         
-        // Navegação entre páginas
+        // Navegação completa
         if (menu === 'inicio') {
             window.location.href = '/inicioCidadao';
         }
         if (menu === 'opcoes') {
             window.location.href = '/opcoes';
         }
+        if (menu === 'conta') {
+            window.location.href = '/conta';
+        }
+        // 'coleta' - não faz nada, já está na página
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {

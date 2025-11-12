@@ -22,18 +22,22 @@ export default function InicioTiposLixo() {
         // Orgânico removido
     ]);
 
-const handleMenuSelect = (menu: string) => {
-    setActiveMenu(menu);
-    console.log('Menu selecionado:', menu);
-    
-    // Navegação entre páginas
-    if (menu === 'inicio') {
-        window.location.href = '/inicioCidadao';
-    }
-    if (menu === 'opcoes') {
-        window.location.href = '/opcoes';
-    }
-};
+    const handleMenuSelect = (menu: string) => {
+        setActiveMenu(menu);
+        console.log('Menu selecionado:', menu);
+        
+        // Navegação - Inicio não faz nada (está no fluxo)
+        if (menu === 'opcoes') {
+            window.location.href = '/opcoes';
+        }
+        if (menu === 'coleta') {
+            window.location.href = '/coleta';
+        }
+        if (menu === 'conta') {
+            window.location.href = '/conta';
+        }
+        // 'inicio' - não faz nada, está no fluxo do início
+    };
 
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);

@@ -53,7 +53,7 @@ export default function Conta() {
         setActiveMenu(menu);
         console.log('Menu selecionado:', menu);
         
-        // Navegação entre páginas
+        // Navegação completa
         if (menu === 'inicio') {
             window.location.href = '/inicioCidadao';
         }
@@ -63,6 +63,7 @@ export default function Conta() {
         if (menu === 'coleta') {
             window.location.href = '/coleta';
         }
+        // 'conta' - não faz nada, já está na página
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {
