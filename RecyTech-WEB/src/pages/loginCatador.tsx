@@ -1,5 +1,5 @@
 import logoRecyTech from "../assets/LogoRecyTech.png";
-
+import "../style/Responsividade.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 

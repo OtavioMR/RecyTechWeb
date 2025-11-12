@@ -2,6 +2,7 @@ import LogoRecyTech from "../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import axios from "axios";
+import "../style/Responsividade.css";
 
 
 
