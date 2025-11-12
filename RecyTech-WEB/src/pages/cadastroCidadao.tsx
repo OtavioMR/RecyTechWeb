@@ -2,6 +2,7 @@ import LogoRecyTech from "../assets/LogoRecyTech.png";
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../style/Responsividade.css";
 
 export default function CadastroCidadao() {
     const navigate = useNavigate();
