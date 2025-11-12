@@ -57,17 +57,23 @@ export default function InicioCidadao() {
         return () => clearTimeout(timer);
     }, [sidebarCollapsed]);
 
-// No inicioCidadao.tsx, modifique a função handleMenuSelect:
-const handleMenuSelect = (menu: string) => {
-    setActiveMenu(menu);
-    console.log('Menu selecionado:', menu);
-    
-    // Navegação entre páginas
-    if (menu === 'opcoes') {
-        window.location.href = '/opcoes';
-    }
-    // O 'inicio' já está na página atual, então não precisa navegar
-};
+        const handleMenuSelect = (menu: string) => {
+            setActiveMenu(menu);
+            console.log('Menu selecionado:', menu);
+            
+            // Navegação - Inicio não faz nada (já está na página)
+            if (menu === 'opcoes') {
+                window.location.href = '/opcoes';
+            }
+            if (menu === 'coleta') {
+                window.location.href = '/coleta';
+            }
+            if (menu === 'conta') {
+                window.location.href = '/conta';
+            }
+            // 'inicio' - não faz nada, já está na página
+        };
+
     const handleSidebarToggle = (collapsed: boolean) => {
         setSidebarCollapsed(collapsed);
     };
@@ -167,28 +173,6 @@ const handleMenuSelect = (menu: string) => {
                             )}
                         </div>
                     </div>
-
-                    {/* Conteúdo baseado no menu selecionado */}
-                    {activeMenu === 'coleta' && (
-                        <div className="coleta-content p-3 mt-3 w-100">
-                            <h3>Gestão de Coleta</h3>
-                            <p>Interface para gerenciar coletas de resíduos</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'opcoes' && (
-                        <div className="opcoes-content p-3 mt-3 w-100">
-                            <h3>Opções do Sistema</h3>
-                            <p>Configurações e preferências</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'conta' && (
-                        <div className="conta-content p-3 mt-3 w-100">
-                            <h3>Minha Conta</h3>
-                            <p>Gerencie suas informações pessoais</p>
-                        </div>
-                    )}
                 </div>
             </main>
         </div>

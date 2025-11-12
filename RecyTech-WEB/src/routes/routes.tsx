@@ -7,7 +7,8 @@ import CadastroCatador from "../pages/cadastroCatador";
 import LoginCidadao from "../pages/loginCidadao";
 import InicioCidadao from "../pages/inicioCidadao";
 import PrivateRoute from "./privateRoute";
-
+import Coleta from "../pages/coleta";
+import Conta from "../pages/conta";
 
 
 import InicioTiposLixo from "../pages/inicio_tipos_lixo";
@@ -36,6 +37,8 @@ export default function Router() {
         <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
         <Route path="/esqueciMinhasenha-cidadao" element={<EsqueciMinhaSenhaCidadao />} />
 
+        <Route path="/coleta" element={<Coleta />} />
+        <Route path="/conta" element={<Conta />} />
 
         {/* Rotas protegidas */}
         <Route element={<PrivateRoute />}>

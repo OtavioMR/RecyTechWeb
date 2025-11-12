@@ -19,16 +19,23 @@ export default function Opcoes() {
         { id: 'remover-conta', label: 'Remover conta', icone: '🗑️' },
     ];
 
-// No opcoes.tsx, modifique a função handleMenuSelect:
-const handleMenuSelect = (menu: string) => {
-    setActiveMenu(menu);
-    console.log('Menu selecionado:', menu);
+    const handleMenuSelect = (menu: string) => {
+        setActiveMenu(menu);
+        console.log('Menu selecionado:', menu);
+        
+        // Navegação completa
+        if (menu === 'inicio') {
+            window.location.href = '/inicioCidadao';
+        }
+        if (menu === 'coleta') {
+            window.location.href = '/coleta';
+        }
+        if (menu === 'conta') {
+            window.location.href = '/conta';
+        }
+        // 'opcoes' - não faz nada, já está na página
+    };
     
-    // Navegação entre páginas
-    if (menu === 'inicio') {
-        window.location.href = '/inicioCidadao';
-    }
-};
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);
     };
@@ -75,28 +82,6 @@ const handleMenuSelect = (menu: string) => {
                             </button>
                         ))}
                     </div>
-
-                    {/* Conteúdo baseado no menu selecionado */}
-                    {activeMenu === 'coleta' && (
-                        <div className="coleta-content p-3 mt-3 w-100">
-                            <h3>Gestão de Coleta</h3>
-                            <p>Interface para gerenciar coletas de resíduos</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'inicio' && (
-                        <div className="inicio-content p-3 mt-3 w-100">
-                            <h3>Página Inicial</h3>
-                            <p>Voltar para a página inicial</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'conta' && (
-                        <div className="conta-content p-3 mt-3 w-100">
-                            <h3>Minha Conta</h3>
-                            <p>Gerencie suas informações pessoais</p>
-                        </div>
-                    )}
                 </div>
             </main>
         </div>
