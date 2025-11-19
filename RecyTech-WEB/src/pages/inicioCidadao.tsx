@@ -5,6 +5,8 @@ import 'leaflet/dist/leaflet.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useTokenWatcher } from './tokenWatcher';
 import Sidebar from '../components/Sidebar';
+import InicioTiposLixo from './inicio_tipos_lixo';
+import '../style/inicioCidadao.css';
 
 interface Endereco {
     endereco: string;
@@ -15,12 +17,13 @@ interface Endereco {
 }
 
 export default function InicioCidadao() {
-    useTokenWatcher();
+    useTokenWatcher(); // MANTIDO
 
     const [enderecos, setEnderecos] = useState<Endereco[]>([]);
     const [loading, setLoading] = useState(true);
     const [activeMenu, setActiveMenu] = useState('inicio');
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [mostrarTiposLixo, setMostrarTiposLixo] = useState(false); // NOVO ESTADO
 
     useEffect(() => {
         const buscarEnderecos = async () => {
@@ -54,16 +57,38 @@ export default function InicioCidadao() {
         return () => clearTimeout(timer);
     }, [sidebarCollapsed]);
 
-    const handleMenuSelect = (menu: string) => {
-        setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
-    };
+        const handleMenuSelect = (menu: string) => {
+            setActiveMenu(menu);
+            console.log('Menu selecionado:', menu);
+            
+            // Navegação - Inicio não faz nada (já está na página)
+            if (menu === 'opcoes') {
+                window.location.href = '/opcoes';
+            }
+            if (menu === 'coleta') {
+                window.location.href = '/coleta';
+            }
+            if (menu === 'conta') {
+                window.location.href = '/conta';
+            }
+            // 'inicio' - não faz nada, já está na página
+        };
 
     const handleSidebarToggle = (collapsed: boolean) => {
         setSidebarCollapsed(collapsed);
     };
 
+    // NOVA FUNÇÃO: Quando clicar na caixa de endereços
+    const handleEnderecosClick = () => {
+        setMostrarTiposLixo(true);
+    };
+
     const position: [number, number] = [-23.55052, -46.633308];
+
+    // SE mostrarTiposLixo for true, mostra a tela de tipos de lixo
+    if (mostrarTiposLixo) {
+        return <InicioTiposLixo />;
+    }
 
     return (
         <div className="app-layout">
@@ -123,10 +148,15 @@ export default function InicioCidadao() {
                             }}
                         />
                     </div>
+                    
                     {/* Endereços - Título fora da caixa e caixa à esquerda */}
                     <div className="mb-3">
                         <p className="enderecos-titulo">Meus endereços:</p>
-                        <div className="enderecos">
+                        <div 
+                            className="enderecos"
+                            style={{ cursor: 'pointer' }} // Torna clicável
+                            onClick={handleEnderecosClick} // NOVO: Adiciona o clique
+                        >
                             {loading ? (
                                 <p className='text-center m-0'>Carregando endereços...</p>
                             ) : enderecos.length === 0 ? (
@@ -143,28 +173,6 @@ export default function InicioCidadao() {
                             )}
                         </div>
                     </div>
-
-                    {/* Conteúdo baseado no menu selecionado */}
-                    {activeMenu === 'coleta' && (
-                        <div className="coleta-content p-3 mt-3 w-100">
-                            <h3>Gestão de Coleta</h3>
-                            <p>Interface para gerenciar coletas de resíduos</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'opcoes' && (
-                        <div className="opcoes-content p-3 mt-3 w-100">
-                            <h3>Opções do Sistema</h3>
-                            <p>Configurações e preferências</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'conta' && (
-                        <div className="conta-content p-3 mt-3 w-100">
-                            <h3>Minha Conta</h3>
-                            <p>Gerencie suas informações pessoais</p>
-                        </div>
-                    )}
                 </div>
             </main>
         </div>
