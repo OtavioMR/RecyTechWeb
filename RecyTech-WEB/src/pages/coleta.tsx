@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import '../style/coleta.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Coleta {
   id: string;
@@ -19,6 +20,9 @@ interface Coleta {
 }
 
 export default function Coleta() {
+
+    const navigate = useNavigate();
+
     const [activeMenu, setActiveMenu] = useState('coleta');
     const [coletas, setColetas] = useState<Coleta[]>([
         {
@@ -65,13 +69,13 @@ export default function Coleta() {
         
         // Navegação completa
         if (menu === 'inicio') {
-            window.location.href = '/inicioCidadao';
+            navigate( '/inicioCidadao');
         }
         if (menu === 'opcoes') {
-            window.location.href = '/opcoes';
+            navigate( '/opcoes');
         }
         if (menu === 'conta') {
-            window.location.href = '/conta';
+            navigate( '/conta');
         }
         // 'coleta' - não faz nada, já está na página
     };

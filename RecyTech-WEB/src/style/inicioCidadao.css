@@ -1,77 +1,73 @@
+/* ============================================================
+   BARRA DE PESQUISA
+   ============================================================ */
 .pesquisa {
-    border-radius: 25px;
-    background-color: #C1C1C1;
-    border: 2px solid #dee2e6;
-    width: auto;
-    max-width: 400px;
-    height: 3.5rem;
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
-    margin: 0 0 1rem 0;
-    transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  height: 3.5rem;
+  padding: 0 20px;
+  margin-bottom: 1rem;
+  border: 2px solid #dee2e6;
+  border-radius: 25px;
+  background-color: #c1c1c1;
+  transition: all 0.3s ease;
 }
 
 .pesquisa:focus-within {
-    border-color: #005265;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 2px rgba(0, 82, 101, 0.1);
+  border-color: #005265;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 82, 101, 0.1);
 }
 
 .pesquisa input {
-    border: none;
-    background: transparent;
-    outline: none;
-    width: 100%;
-    font-size: 1.1rem;
-    color: #000000;
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.1rem;
+  color: #000000;
 }
 
 .pesquisa input::placeholder {
-    color: #000000;
-    font-size: 1.1rem;
+  font-size: 1.1rem;
+  color: #000000;
 }
 
 .pesquisa i {
-    font-size: 1.3rem;
+  font-size: 1.3rem;
+}
+
+
+/* ============================================================
+   CARTÃO DE ENDEREÇOS
+   ============================================================ */
+.enderecos-titulo {
+  width: 100%;
+  max-width: 467px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: left;
 }
 
 .enderecos {
-    border-radius: 20px;
-    background-color: #D9D9D9;
-    width: 467px;
-    height: 82px;
-    padding: 1rem;
-    margin: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  max-width: 467px;
+  min-height: 82px;
+  padding: 1rem;
+  margin: 0;
+  border-radius: 20px;
+  background-color: #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Título fora da caixa */
-.enderecos-titulo {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    text-align: left;
-    width: 467px;
-}
 
-/* ===== RESET ESPECÍFICO PARA BOOTSTRAP 5.3.8 ===== */
-.app-layout .container,
-.app-layout .container-fluid,
-.app-layout .container-xxl,
-.app-layout .container-xl,
-.app-layout .container-lg,
-.app-layout .container-md,
-.app-layout .container-sm {
-  max-width: 100% !important;
-  width: 100% !important;
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-  margin-right: auto !important;
-  margin-left: auto !important;
-}
-
+/* ============================================================
+   LAYOUT PRINCIPAL DO APP
+   ============================================================ */
 .app-layout {
   display: flex !important;
   flex-direction: row !important;
@@ -82,12 +78,11 @@
 
 .main-content {
   flex: 1 !important;
+  padding: 20px !important;
   margin-left: 300px !important;
   width: calc(100% - 300px) !important;
-  padding: 20px !important;
-  position: relative !important;
-  z-index: 1 !important;
   background-color: #f5f5f5 !important;
+  z-index: 1 !important;
 }
 
 .sidebar-collapsed ~ .main-content {
@@ -95,39 +90,42 @@
   width: calc(100% - 80px) !important;
 }
 
-.app-layout .row {
-  --bs-gutter-x: 0 !important;
-  --bs-gutter-y: 0 !important;
-  margin-top: 0 !important;
-  margin-right: 0 !important;
-  margin-left: 0 !important;
-}
-
-.app-layout [class*="col-"] {
-  padding-right: 0 !important;
-  padding-left: 0 !important;
-}
-
 .content-area {
+  width: 100% !important;
   max-width: 1200px !important;
   margin: 0 auto !important;
-  width: 100% !important;
 }
 
-/* ===== RESPONSIVIDADE INICIOCIDADAO ===== */
+/* Remove colunas quebradas do Bootstrap */
+.app-layout .row,
+.app-layout .container,
+.app-layout .container-fluid,
+.app-layout .container-xxl,
+.app-layout .container-xl,
+.app-layout .container-lg,
+.app-layout .container-md,
+.app-layout .container-sm,
+.app-layout [class*="col-"] {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 
-/* Mobile (até 768px) */
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+
+/* ======================= MOBILE (≤ 768px) ======================= */
 @media (max-width: 768px) {
   .main-content {
-    margin-left: 0 !important;
-    margin-bottom: 70px !important;
     width: 100% !important;
     padding: 15px !important;
+    margin-left: 0 !important;
+    margin-bottom: 70px !important;
   }
 
   .sidebar-collapsed ~ .main-content {
     margin-left: 0 !important;
-    width: 100% !important;
   }
 
   .content-area {
@@ -135,38 +133,15 @@
     padding: 0 10px !important;
   }
 
-  /* Header mobile */
-  .nomeApp {
-    text-align: center !important;
-    margin-bottom: 1rem !important;
-  }
-
-  .nomeApp h1 {
-    font-size: 1.8rem !important;
-  }
-
-  /* Mapa mobile */
-  .map-container {
-    margin-bottom: 1rem !important;
-  }
-
-  .leaflet-container {
-    height: 40vh !important; /* ← Altura reduzida no mobile */
-    border-radius: 10px !important;
-  }
-
-  /* Pesquisa mobile */
+  /* Barra de pesquisa */
   .pesquisa {
-    max-width: 100% !important; /* ← Largura total no mobile */
-    height: 3rem !important; /* ← Altura ajustada */
-    margin: 0 auto 1rem auto !important; /* ← Centralizada */
+    max-width: 100% !important;
+    height: 3rem !important;
+    margin: 0 auto 1rem auto !important;
     border-radius: 20px !important;
   }
 
-  .pesquisa input {
-    font-size: 1rem !important;
-  }
-
+  .pesquisa input,
   .pesquisa input::placeholder {
     font-size: 1rem !important;
   }
@@ -175,44 +150,28 @@
     font-size: 1.2rem !important;
   }
 
-  /* Endereços mobile */
+  /* Endereços */
   .enderecos-titulo {
-    width: 100% !important; /* ← Largura total */
-    text-align: center !important; /* ← Centralizado */
+    width: 100% !important;
+    text-align: center !important;
     font-size: 1.1rem !important;
     margin-bottom: 0.8rem !important;
   }
 
   .enderecos {
-    width: 100% !important; /* ← Largura total */
-    height: auto !important; /* ← Altura automática */
-    min-height: 80px !important;
-    margin: 0 auto !important; /* ← Centralizada */
+    width: 100% !important;
     padding: 1.5rem !important;
+    min-height: 80px !important;
+    height: auto !important;
+    margin: 0 auto !important;
   }
 
   .enderecos p {
     font-size: 0.9rem !important;
-    line-height: 1.4 !important;
-  }
-
-  /* Conteúdo dos menus mobile */
-  .coleta-content,
-  .opcoes-content,
-  .conta-content {
-    width: 100% !important;
-    margin: 1rem auto !important;
-    padding: 1rem !important;
-  }
-
-  .coleta-content h3,
-  .opcoes-content h3,
-  .conta-content h3 {
-    font-size: 1.3rem !important;
   }
 }
 
-/* Tablet (769px - 1024px) */
+/* ======================= TABLET (769px - 1024px) ======================= */
 @media (min-width: 769px) and (max-width: 1024px) {
   .main-content {
     margin-left: 250px !important;
@@ -225,52 +184,30 @@
     width: calc(100% - 70px) !important;
   }
 
-  .content-area {
-    max-width: 100% !important;
-  }
-
-  /* Pesquisa tablet */
   .pesquisa {
     max-width: 350px !important;
   }
 
-  /* Endereços tablet */
-  .enderecos {
-    width: 400px !important;
-  }
-
+  .enderecos,
   .enderecos-titulo {
-    width: 400px !important;
-  }
-
-  /* Mapa tablet */
-  .leaflet-container {
-    height: 45vh !important;
+    max-width: 400px !important;
   }
 }
 
-/* Desktop pequeno (1025px - 1200px) */
+/* ======================= DESKTOP PEQUENO (1025px - 1200px) ======================= */
 @media (min-width: 1025px) and (max-width: 1200px) {
   .content-area {
-    max-width: 100% !important;
     padding: 0 20px !important;
   }
 
-  .enderecos {
-    width: 420px !important;
-  }
-
+  .enderecos,
   .enderecos-titulo {
-    width: 420px !important;
+    max-width: 420px !important;
   }
 }
 
-/* Ajustes gerais de texto responsivo */
+/* ======================= TELAS MUITO PEQUENAS (≤ 480px) ======================= */
 @media (max-width: 480px) {
-  .nomeApp h1 {
-    font-size: 1.5rem !important;
-  }
-
   .pesquisa {
     height: 2.8rem !important;
     padding: 0 15px !important;
@@ -284,16 +221,12 @@
     font-size: 1.1rem !important;
   }
 
-  .enderecos-titulo {
-    font-size: 1rem !important;
-  }
-
   .enderecos p {
     font-size: 0.8rem !important;
   }
 }
 
-/* Ajuste para telas muito pequenas (até 360px) */
+/* ======================= MICROTELAS (≤ 360px) ======================= */
 @media (max-width: 360px) {
   .main-content {
     padding: 10px !important;
@@ -306,6 +239,5 @@
 
   .enderecos {
     border-radius: 15px !important;
-    padding: 1rem !important;
   }
 }

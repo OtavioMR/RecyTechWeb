@@ -7,6 +7,7 @@ import { useTokenWatcher } from './tokenWatcher';
 import Sidebar from '../components/Sidebar';
 import InicioTiposLixo from './inicio_tipos_lixo';
 import '../style/inicioCidadao.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Endereco {
     endereco: string;
@@ -18,6 +19,7 @@ interface Endereco {
 
 export default function InicioCidadao() {
     useTokenWatcher(); // MANTIDO
+    const navigate = useNavigate();
 
     const [enderecos, setEnderecos] = useState<Endereco[]>([]);
     const [loading, setLoading] = useState(true);
@@ -53,26 +55,26 @@ export default function InicioCidadao() {
                 mapElement._leaflet_map.invalidateSize();
             }
         }, 350);
-        
+
         return () => clearTimeout(timer);
     }, [sidebarCollapsed]);
 
-        const handleMenuSelect = (menu: string) => {
-            setActiveMenu(menu);
-            console.log('Menu selecionado:', menu);
-            
-            // Navegação - Inicio não faz nada (já está na página)
-            if (menu === 'opcoes') {
-                window.location.href = '/opcoes';
-            }
-            if (menu === 'coleta') {
-                window.location.href = '/coleta';
-            }
-            if (menu === 'conta') {
-                window.location.href = '/conta';
-            }
-            // 'inicio' - não faz nada, já está na página
-        };
+    const handleMenuSelect = (menu: string) => {
+        setActiveMenu(menu);
+        console.log('Menu selecionado:', menu);
+
+        // Navegação - Inicio não faz nada (já está na página)
+        if (menu === 'opcoes') {
+            navigate('/opcoes');
+        }
+        if (menu === 'coleta') {
+            navigate('/coleta');
+        }
+        if (menu === 'conta') {
+            navigate('/conta');
+        }
+        // 'inicio' - não faz nada, já está na página
+    };
 
     const handleSidebarToggle = (collapsed: boolean) => {
         setSidebarCollapsed(collapsed);
@@ -94,12 +96,12 @@ export default function InicioCidadao() {
         <div className="app-layout">
             {/* Sidebar Fixa */}
             <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
+
             {/* Conteúdo Principal */}
             <main className="main-content">
                 {/* Use container-fluid com px-0 para remover padding horizontal */}
                 <div className="content-area container-fluid px-0">
-                    
+
                     {/* Header */}
                     <div className="nomeApp mb-3 ps-0">
                         <h1 className="m-0">RecyTech</h1>
@@ -108,12 +110,12 @@ export default function InicioCidadao() {
                     {/* Mapa */}
                     <div className="mb-3">
                         <div className="map-container">
-                            <MapContainer 
-                                center={position} 
-                                zoom={16} 
-                                style={{ 
-                                    height: '50vh', 
-                                    width: '100%', 
+                            <MapContainer
+                                center={position}
+                                zoom={16}
+                                style={{
+                                    height: '50vh',
+                                    width: '100%',
                                     borderRadius: '10px'
                                 }}
                                 key={sidebarCollapsed ? 'collapsed' : 'expanded'}
@@ -138,9 +140,9 @@ export default function InicioCidadao() {
                     {/* Pesquisa - Agora alinhada à esquerda */}
                     <div className="pesquisa d-flex align-items-center mb-3 p-3">
                         <i className="bi bi-search px-2"></i>
-                        <input 
-                            type="text" 
-                            placeholder="Para onde?" 
+                        <input
+                            type="text"
+                            placeholder="Para onde?"
                             className="border-0 bg-transparent flex-grow-1 px-2"
                             style={{ outline: 'none' }}
                             onClick={(e) => {
@@ -148,11 +150,11 @@ export default function InicioCidadao() {
                             }}
                         />
                     </div>
-                    
+
                     {/* Endereços - Título fora da caixa e caixa à esquerda */}
                     <div className="mb-3">
                         <p className="enderecos-titulo">Meus endereços:</p>
-                        <div 
+                        <div
                             className="enderecos"
                             style={{ cursor: 'pointer' }} // Torna clicável
                             onClick={handleEnderecosClick} // NOVO: Adiciona o clique

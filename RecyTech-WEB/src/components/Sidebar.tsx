@@ -1,51 +1,55 @@
 // src/components/Sidebar.tsx
 import React, { useState } from 'react';
 import './Sidebar.css';
+import { useNavigate } from 'react-router-dom';
 
-// Ícones (substitua por seus próprios ícones ou biblioteca de ícones)
 const InicioIcon = () => <span>🏠</span>;
 const OpcoesIcon = () => <span>⚙️</span>;
 const ColetaIcon = () => <span>🗑️</span>;
 const ContaIcon = () => <span>👤</span>;
 
 interface SidebarProps {
-  onMenuSelect: (menu: string) => void;
+  onMenuSelect?: (menu: string) => void;
   activeMenu?: string;
   onToggle?: (collapsed: boolean) => void;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, activeMenu = 'inicio', onToggle }) => {
+const Sidebar: React.FC<SidebarProps> = ({
+  onMenuSelect = () => {},
+  activeMenu = 'inicioCidadao',
+  onToggle,
+}) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   const menuItems = [
-    { key: 'inicio', label: 'Inicio', icon: <InicioIcon /> },
+    { key: 'inicioCidadao', label: 'Início', icon: <InicioIcon /> },
     { key: 'opcoes', label: 'Opções', icon: <OpcoesIcon /> },
     { key: 'coleta', label: 'Coleta', icon: <ColetaIcon /> },
     { key: 'conta', label: 'Conta', icon: <ContaIcon /> },
   ];
 
+  const navigate = useNavigate();
+
   const handleToggle = () => {
-    const newCollapsedState = !isCollapsed;
-    setIsCollapsed(newCollapsedState);
-    if (onToggle) {
-      onToggle(newCollapsedState);
-    }
+    const newState = !isCollapsed;
+    setIsCollapsed(newState);
+    onToggle && onToggle(newState);
   };
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    window.location.href = '/login';
+    navigate('/');
   };
 
   const handleMenuClick = (menuKey: string) => {
     onMenuSelect(menuKey);
+    navigate(`/${menuKey}`);
   };
 
   return (
     <>
-      {/* Sidebar Principal */}
       <div className={`sidebar ${isCollapsed ? 'sidebar-collapsed' : ''}`}>
-        {/* Header da Sidebar */}
+        
         <div className="sidebar-header">
           {!isCollapsed && (
             <div className="sidebar-logo">
@@ -53,40 +57,32 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, activeMenu = 'inicio', 
               <span className="logo-text">RecyTech</span>
             </div>
           )}
-          <button 
+
+          <button
             className="sidebar-toggle"
             onClick={handleToggle}
-            aria-label={isCollapsed ? 'Expandir menu' : 'Recolher menu'}
+            aria-label="Toggle menu"
           >
             {isCollapsed ? '➡️' : '⬅️'}
           </button>
         </div>
 
-        {/* Menu de Navegação */}
         <nav className="sidebar-nav">
-          {menuItems.map((item) => (
+          {menuItems.map(item => (
             <button
               key={item.key}
               className={`sidebar-item ${activeMenu === item.key ? 'active' : ''}`}
               onClick={() => handleMenuClick(item.key)}
-              aria-label={item.label}
-              title={item.label}
             >
               <span className="sidebar-icon">{item.icon}</span>
-              {!isCollapsed && (
-                <span className="sidebar-label">{item.label}</span>
-              )}
+              {!isCollapsed && <span className="sidebar-label">{item.label}</span>}
             </button>
           ))}
         </nav>
 
-        {/* Footer da Sidebar */}
         {!isCollapsed && (
           <div className="sidebar-footer">
-            <button 
-              className="sidebar-logout-btn"
-              onClick={handleLogout}
-            >
+            <button className="sidebar-logout-btn" onClick={handleLogout}>
               <span className="logout-icon">🚪</span>
               <span className="logout-text">Sair</span>
             </button>
@@ -94,12 +90,10 @@ const Sidebar: React.FC<SidebarProps> = ({ onMenuSelect, activeMenu = 'inicio', 
         )}
       </div>
 
-      {/* Botão Sair Mobile - aparece apenas em telas pequenas */}
-      <button 
+      <button
         className="mobile-logout-btn"
         onClick={handleLogout}
         aria-label="Sair"
-        title="Sair"
       >
         <div className="sign">
           <svg viewBox="0 0 512 512">

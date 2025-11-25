@@ -1,362 +1,286 @@
-import { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import '../style/conta.css';
-
-interface Endereco {
-  id: string;
-  logradouro: string;
-  numero: string;
-  bairro: string;
-  cidade: string;
-  estado: string;
-  cep: string;
-  complemento: string;
-}
+import { useEffect, useState } from "react";
+import Sidebar from "../components/Sidebar";
+import "../style/conta.css";
+import { api } from "../services/api";
 
 export default function Conta() {
-    const [activeMenu, setActiveMenu] = useState('conta');
-    const [mostrarFormEndereco, setMostrarFormEndereco] = useState(false);
-    const [editandoEmail, setEditandoEmail] = useState(false);
-    const [editandoTelefone, setEditandoTelefone] = useState(false);
-    
-    // Dados fictícios - depois virão do back-end
-    const [dadosUsuario, setDadosUsuario] = useState({
-        nomeUsuario: 'joaosilva123',
-        email: 'joao.silva@gmail.com',
-        telefone: '(11) 98765-4321'
-    });
+  // ---------------------------------------------------------------------------
+  // ESTADOS: INFORMAÇÕES DO USUÁRIO
+  // ---------------------------------------------------------------------------
+  const [nomeCompleto, setNome] = useState("");
+  const [emailUsuario, setEmail] = useState("");
+  const [nomeUsuario, setNomeUsuario] = useState("");
+  const [cpf, setCPF] = useState("");
+  const [telefone, setTelefone] = useState("");
 
-    const [enderecos, setEnderecos] = useState<Endereco[]>([
-        {
-            id: '1',
-            logradouro: 'Rua das Flores',
-            numero: '123',
-            bairro: 'Centro',
-            cidade: 'São Paulo',
-            estado: 'SP',
-            cep: '01234-567',
-            complemento: 'Apto 45'
-        }
-    ]);
+  // ---------------------------------------------------------------------------
+  // ESTADOS: FORMULÁRIO DE ENDEREÇO
+  // ---------------------------------------------------------------------------
+  const [mostrarFormEndereco, setMostrarFormEndereco] = useState(false);
 
-    const [novoEndereco, setNovoEndereco] = useState({
-        logradouro: '',
-        numero: '',
-        bairro: '',
-        cidade: '',
-        estado: '',
-        cep: '',
-        complemento: ''
-    });
+  const [novoEndereco, setNovoEndereco] = useState({
+    logradouro: "",
+    numero: "",
+    bairro: "",
+    cidade: "",
+    estado: "",
+    cep: "",
+    complemento: ""
+  });
 
-    const handleMenuSelect = (menu: string) => {
-        setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
-        
-        // Navegação completa
-        if (menu === 'inicio') {
-            window.location.href = '/inicioCidadao';
-        }
-        if (menu === 'opcoes') {
-            window.location.href = '/opcoes';
-        }
-        if (menu === 'coleta') {
-            window.location.href = '/coleta';
-        }
-        // 'conta' - não faz nada, já está na página
-    };
+  // Atualiza qualquer campo do formulário
+  const handleInputChange = (campo: string, valor: string) => {
+    setNovoEndereco((prev) => ({ ...prev, [campo]: valor }));
+  };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log('Sidebar collapsed:', collapsed);
-    };
+  // ---------------------------------------------------------------------------
+  // BUSCAR DADOS DO USUÁRIO LOGADO
+  // ---------------------------------------------------------------------------
+  async function handleDados() {
+    try {
+      const token = localStorage.getItem("token");
 
-    const handleInputChange = (campo: string, valor: string) => {
-        setNovoEndereco(prev => ({
-            ...prev,
-            [campo]: valor
-        }));
-    };
+      const response = await api.get("/usuario/usuario-logado", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-    const handleAdicionarEndereco = () => {
-        if (novoEndereco.logradouro && novoEndereco.numero && novoEndereco.bairro && 
-            novoEndereco.cidade && novoEndereco.estado && novoEndereco.cep) {
-            
-            const endereco: Endereco = {
-                id: Date.now().toString(),
-                ...novoEndereco
-            };
-            
-            setEnderecos(prev => [...prev, endereco]);
-            setNovoEndereco({
-                logradouro: '',
-                numero: '',
-                bairro: '',
-                cidade: '',
-                estado: '',
-                cep: '',
-                complemento: ''
-            });
-            setMostrarFormEndereco(false);
-            alert('Endereço adicionado com sucesso!');
-        } else {
-            alert('Preencha todos os campos obrigatórios!');
-        }
-    };
+      const data = response.data;
 
-    const handleSalvarEmail = () => {
-        // Aqui você pode adicionar a lógica para salvar no back-end
-        setEditandoEmail(false);
-        alert('Email alterado com sucesso!');
-    };
+      setNome(data.nomeCompleto);
+      setNomeUsuario(data.nomeUsuario);
+      setEmail(data.dadosUsuario.emailUsuario);
+      setCPF(data.dadosUsuario.cpf);
+      setTelefone(data.dadosUsuario.telefone);
 
-    const handleSalvarTelefone = () => {
-        // Aqui você pode adicionar a lógica para salvar no back-end
-        setEditandoTelefone(false);
-        alert('Telefone alterado com sucesso!');
-    };
+    } catch (error) {
+      console.error("Erro ao buscar cidadão!", error);
+    }
+  }
 
-    return (
-        <div className="app-layout">
-            {/* Sidebar Fixa */}
-            <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
-            {/* Conteúdo Principal */}
-            <main className="main-content">
-                <div className="content-area container-fluid px-0">
-                    
-                    {/* Header */}
-                    <div className="nomeApp mb-3 ps-0">
-                        <h1 className="m-0">RecyTech</h1>
-                    </div>
+  // Carrega os dados ao iniciar a página
+  useEffect(() => {
+    handleDados();
+  }, []);
 
-                    {/* Título da Página */}
-                    <div className="mb-4">
-                        <h2 className="titulo-conta">Minha Conta</h2>
-                    </div>
+  // ---------------------------------------------------------------------------
+  // SALVAR NOVO ENDEREÇO NO BACK-END
+  // ---------------------------------------------------------------------------
+  async function handleAdicionarEndereco() {
+    try {
+      const token = localStorage.getItem("token");
 
-                    {/* Conteúdo da Conta */}
-                    <div className="conta-container">
-                        
-                        {/* Informações do Usuário */}
-                        <div className="info-section">
-                            <h3 className="subtitulo">Informações Pessoais</h3>
-                            
-                            {/* Nome de Usuário */}
-                            <div className="info-item">
-                                <label className="info-label">Nome de usuário</label>
-                                <div className="info-box">
-                                    <span className="info-value">{dadosUsuario.nomeUsuario}</span>
-                                </div>
-                                <span className="info-observacao">nome de usuário não poderá ser alterado</span>
-                            </div>
+      const payload = {
+        ...novoEndereco,
+        usuario: { id: 64 } // depois substitui pelo usuário real logado
+      };
 
-                            {/* Email */}
-                            <div className="info-item">
-                                <label className="info-label">Email</label>
-                                <div className="info-box">
-                                    {editandoEmail ? (
-                                        <div className="edicao-container">
-                                            <input
-                                                type="email"
-                                                value={dadosUsuario.email}
-                                                onChange={(e) => setDadosUsuario(prev => ({
-                                                    ...prev,
-                                                    email: e.target.value
-                                                }))}
-                                                className="input-edicao"
-                                            />
-                                            <button 
-                                                className="btn-salvar"
-                                                onClick={handleSalvarEmail}
-                                            >
-                                                Salvar
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <span className="info-value">{dadosUsuario.email}</span>
-                                            <button 
-                                                className="btn-alterar"
-                                                onClick={() => setEditandoEmail(true)}
-                                            >
-                                                Alterar
-                                            </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
+      await api.post("/endereco-usuario", payload, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
-                            {/* Telefone */}
-                            <div className="info-item">
-                                <label className="info-label">Telefone</label>
-                                <div className="info-box">
-                                    {editandoTelefone ? (
-                                        <div className="edicao-container">
-                                            <input
-                                                type="tel"
-                                                value={dadosUsuario.telefone}
-                                                onChange={(e) => setDadosUsuario(prev => ({
-                                                    ...prev,
-                                                    telefone: e.target.value
-                                                }))}
-                                                className="input-edicao"
-                                            />
-                                            <button 
-                                                className="btn-salvar"
-                                                onClick={handleSalvarTelefone}
-                                            >
-                                                Salvar
-                                            </button>
-                                        </div>
-                                    ) : (
-                                        <>
-                                            <span className="info-value">{dadosUsuario.telefone}</span>
-                                            <button 
-                                                className="btn-alterar"
-                                                onClick={() => setEditandoTelefone(true)}
-                                            >
-                                                Alterar
-                                            </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
+      alert("Endereço cadastrado com sucesso!");
 
-                        {/* Endereços */}
-                        <div className="info-section">
-                            <h3 className="subtitulo">Endereços Cadastrados</h3>
-                            
-                            {enderecos.map((endereco) => (
-                                <div key={endereco.id} className="endereco-card">
-                                    <div className="endereco-info">
-                                        <strong>{endereco.logradouro}, {endereco.numero}</strong>
-                                        <br />
-                                        {endereco.bairro} - {endereco.cidade}/{endereco.estado}
-                                        <br />
-                                        CEP: {endereco.cep}
-                                        {endereco.complemento && (
-                                            <>
-                                                <br />
-                                                Complemento: {endereco.complemento}
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
+      // Limpa formulário
+      setNovoEndereco({
+        logradouro: "",
+        numero: "",
+        bairro: "",
+        cidade: "",
+        estado: "",
+        cep: "",
+        complemento: ""
+      });
 
-                            {/* Formulário de Novo Endereço */}
-                            {mostrarFormEndereco && (
-                                <div className="form-endereco">
-                                    <h4 className="subtitulo-form">Adicionar Novo Endereço</h4>
-                                    
-                                    <div className="input-group">
-                                        <span className="input-icone">📍</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Logradouro"
-                                            className="form-input"
-                                            value={novoEndereco.logradouro}
-                                            onChange={(e) => handleInputChange('logradouro', e.target.value)}
-                                        />
-                                    </div>
+      // Fecha o formulário
+      setMostrarFormEndereco(false);
 
-                                    <div className="input-group">
-                                        <span className="input-icone">🔢</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Número"
-                                            className="form-input"
-                                            value={novoEndereco.numero}
-                                            onChange={(e) => handleInputChange('numero', e.target.value)}
-                                        />
-                                    </div>
+    } catch (error) {
+      console.error("Erro ao adicionar endereço:", error);
+      alert("Erro ao salvar endereço.");
+    }
+  }
 
-                                    <div className="input-group">
-                                        <span className="input-icone">🏘️</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Bairro"
-                                            className="form-input"
-                                            value={novoEndereco.bairro}
-                                            onChange={(e) => handleInputChange('bairro', e.target.value)}
-                                        />
-                                    </div>
+  // ---------------------------------------------------------------------------
+  // RENDERIZAÇÃO
+  // ---------------------------------------------------------------------------
+  return (
+    <div className="app-layout">
+      {/* Sidebar fixa */}
+      <Sidebar
+        onMenuSelect={() => {}}
+        activeMenu="conta"
+        onToggle={() => {}}
+      />
 
-                                    <div className="input-group">
-                                        <span className="input-icone">🏙️</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Cidade"
-                                            className="form-input"
-                                            value={novoEndereco.cidade}
-                                            onChange={(e) => handleInputChange('cidade', e.target.value)}
-                                        />
-                                    </div>
+      <main className="main-content">
+        <div className="content-area container-fluid px-0">
 
-                                    <div className="input-group">
-                                        <span className="input-icone">🗺️</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Estado"
-                                            className="form-input"
-                                            value={novoEndereco.estado}
-                                            onChange={(e) => handleInputChange('estado', e.target.value)}
-                                        />
-                                    </div>
+          {/* Título do app */}
+          <div className="nomeApp mb-3 ps-0">
+            <h1 className="m-0">RecyTech</h1>
+          </div>
 
-                                    <div className="input-group">
-                                        <span className="input-icone">📮</span>
-                                        <input
-                                            type="text"
-                                            placeholder="CEP"
-                                            className="form-input"
-                                            value={novoEndereco.cep}
-                                            onChange={(e) => handleInputChange('cep', e.target.value)}
-                                        />
-                                    </div>
+          {/* Título da seção */}
+          <div className="mb-4">
+            <h2 className="titulo-conta">Minha Conta</h2>
+          </div>
 
-                                    <div className="input-group">
-                                        <span className="input-icone">📝</span>
-                                        <input
-                                            type="text"
-                                            placeholder="Complemento (opcional)"
-                                            className="form-input"
-                                            value={novoEndereco.complemento}
-                                            onChange={(e) => handleInputChange('complemento', e.target.value)}
-                                        />
-                                    </div>
+          {/* Container principal */}
+          <div className="conta-container">
 
-                                    <div className="botoes-form">
-                                        <button 
-                                            className="btn-cancelar"
-                                            onClick={() => setMostrarFormEndereco(false)}
-                                        >
-                                            Cancelar
-                                        </button>
-                                        <button 
-                                            className="btn-adicionar"
-                                            onClick={handleAdicionarEndereco}
-                                        >
-                                            Adicionar Endereço
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+            {/* Informações Pessoais */}
+            <div className="info-section">
 
-                            {/* Botão para mostrar formulário */}
-                            {!mostrarFormEndereco && (
-                                <button 
-                                    className="btn-adicionar-endereco"
-                                    onClick={() => setMostrarFormEndereco(true)}
-                                >
-                                    + Adicionar Endereço
-                                </button>
-                            )}
-                        </div>
-                    </div>
+              <h3 className="subtitulo">Informações Pessoais</h3>
+
+              <div className="info-item">
+                <label className="info-label">Nome Completo</label>
+                <div className="info-box">
+                  <span className="info-value">{nomeCompleto}</span>
                 </div>
-            </main>
+              </div>
+
+              <div className="info-item">
+                <label className="info-label">Nome de usuário</label>
+                <div className="info-box">
+                  <span className="info-value">{nomeUsuario}</span>
+                </div>
+                <span className="info-observacao">
+                  nome de usuário não poderá ser alterado
+                </span>
+              </div>
+
+              <div className="info-item">
+                <label className="info-label">CPF</label>
+                <div className="info-box">
+                  <span className="info-value">{cpf}</span>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <label className="info-label">Email</label>
+                <div className="info-box">
+                  <span className="info-value">{emailUsuario}</span>
+                </div>
+              </div>
+
+              <div className="info-item">
+                <label className="info-label">Telefone</label>
+                <div className="info-box">
+                  <span className="info-value">{telefone}</span>
+                </div>
+              </div>
+
+              {/* Botão de abrir formulário */}
+              {!mostrarFormEndereco && (
+                <button
+                  className="btn-adicionar-endereco"
+                  onClick={() => setMostrarFormEndereco(true)}
+                >
+                  + Adicionar Endereço
+                </button>
+              )}
+
+              {/* Formulário de endereço */}
+              {mostrarFormEndereco && (
+                <div className="form-endereco">
+
+                  <h4 className="subtitulo-form">Adicionar Novo Endereço</h4>
+
+                  <input
+                    type="text"
+                    placeholder="Logradouro"
+                    className="form-input"
+                    value={novoEndereco.logradouro}
+                    onChange={(e) =>
+                      handleInputChange("logradouro", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Número"
+                    className="form-input"
+                    value={novoEndereco.numero}
+                    onChange={(e) =>
+                      handleInputChange("numero", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Bairro"
+                    className="form-input"
+                    value={novoEndereco.bairro}
+                    onChange={(e) =>
+                      handleInputChange("bairro", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Cidade"
+                    className="form-input"
+                    value={novoEndereco.cidade}
+                    onChange={(e) =>
+                      handleInputChange("cidade", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Estado"
+                    className="form-input"
+                    value={novoEndereco.estado}
+                    onChange={(e) =>
+                      handleInputChange("estado", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="CEP"
+                    className="form-input"
+                    value={novoEndereco.cep}
+                    onChange={(e) =>
+                      handleInputChange("cep", e.target.value)
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    placeholder="Complemento (opcional)"
+                    className="form-input"
+                    value={novoEndereco.complemento}
+                    onChange={(e) =>
+                      handleInputChange("complemento", e.target.value)
+                    }
+                  />
+
+                  <div className="botoes-form">
+                    <button
+                      className="btn-cancelar"
+                      onClick={() => setMostrarFormEndereco(false)}
+                    >
+                      Cancelar
+                    </button>
+
+                    <button
+                      className="btn-adicionar"
+                      onClick={handleAdicionarEndereco}
+                    >
+                      Adicionar Endereço
+                    </button>
+                  </div>
+
+                </div>
+              )}
+
+            </div>
+          </div>
+
         </div>
-    );
+      </main>
+    </div>
+  );
 }

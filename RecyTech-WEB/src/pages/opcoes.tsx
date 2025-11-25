@@ -1,14 +1,16 @@
 import { useState } from 'react';
 import Sidebar from '../components/Sidebar';
 import '../style/opcoes.css';
+import { useNavigate } from 'react-router-dom';
 
 interface Opcao {
-  id: string;
-  label: string;
-  icone: string;
+    id: string;
+    label: string;
+    icone: string;
 }
 
 export default function Opcoes() {
+    const navigate = useNavigate();
     const [activeMenu, setActiveMenu] = useState('opcoes');
 
     const opcoes: Opcao[] = [
@@ -22,20 +24,12 @@ export default function Opcoes() {
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
         console.log('Menu selecionado:', menu);
-        
-        // Navegação completa
-        if (menu === 'inicio') {
-            window.location.href = '/inicioCidadao';
-        }
-        if (menu === 'coleta') {
-            window.location.href = '/coleta';
-        }
-        if (menu === 'conta') {
-            window.location.href = '/conta';
-        }
-        // 'opcoes' - não faz nada, já está na página
+
+        if (menu === 'inicio') navigate('/inicioCidadao');
+        if (menu === 'coleta') navigate('/coleta');
+        if (menu === 'conta') navigate('/conta');
     };
-    
+
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);
     };
@@ -51,11 +45,11 @@ export default function Opcoes() {
         <div className="app-layout">
             {/* Sidebar Fixa */}
             <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
+
             {/* Conteúdo Principal */}
             <main className="main-content">
                 <div className="content-area container-fluid px-0">
-                    
+
                     {/* Header */}
                     <div className="nomeApp mb-3 ps-0">
                         <h1 className="m-0">RecyTech</h1>
