@@ -1,68 +1,243 @@
-html, body, #root {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-}
-
-
+/* ============================================================
+   BARRA DE PESQUISA
+   ============================================================ */
 .pesquisa {
-    border-radius: 20px;
-    background-color: #C1C1C1;
-    width: 100%;
-    max-width: 15rem;
-    height: 3rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  height: 3.5rem;
+  padding: 0 20px;
+  margin-bottom: 1rem;
+  border: 2px solid #dee2e6;
+  border-radius: 25px;
+  background-color: #c1c1c1;
+  transition: all 0.3s ease;
+}
+
+.pesquisa:focus-within {
+  border-color: #005265;
+  background-color: #ffffff;
+  box-shadow: 0 0 0 2px rgba(0, 82, 101, 0.1);
+}
+
+.pesquisa input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+.pesquisa input::placeholder {
+  font-size: 1.1rem;
+  color: #000000;
+}
+
+.pesquisa i {
+  font-size: 1.3rem;
+}
+
+
+/* ============================================================
+   CARTÃO DE ENDEREÇOS
+   ============================================================ */
+.enderecos-titulo {
+  width: 100%;
+  max-width: 467px;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  text-align: left;
 }
 
 .enderecos {
-    border-radius: 20px;
-    background-color: #D9D9D9;
-    width: 100%;
-    max-width: 15rem;
-    padding: 0.5rem;
+  width: 100%;
+  max-width: 467px;
+  min-height: 82px;
+  padding: 1rem;
+  margin: 0;
+  border-radius: 20px;
+  background-color: #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.faixa-azul {
-    width: 100%;
-    height: 20px;             /* altura visível */
-    background-color: #005265; /* azul */
+
+/* ============================================================
+   LAYOUT PRINCIPAL DO APP
+   ============================================================ */
+.app-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  position: relative !important;
 }
 
-footer {
-    width: 100%;
-    height: 60px;
-    background-color: #C1C1C1;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.main-content {
+  flex: 1 !important;
+  padding: 20px !important;
+  margin-left: 300px !important;
+  width: calc(100% - 300px) !important;
+  background-color: #f5f5f5 !important;
+  z-index: 1 !important;
 }
 
-footer.opcoes {
-    width: 100%;
-    height: 70px;
-    background-color: #C1C1C1;
-    color: #fff;
-    display: flex;
-    justify-content: space-around; /* distribui os itens horizontalmente */
-    align-items: center;
+.sidebar-collapsed ~ .main-content {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
 }
 
-footer.opcoes .col-3 {
-    display: flex;
-    flex-direction: column; /* ícone em cima, texto embaixo */
-    align-items: center;    /* centraliza o conteúdo */
-    justify-content: center;
-    font-size: 0.9rem;
-    color: black;
+.content-area {
+  width: 100% !important;
+  max-width: 1200px !important;
+  margin: 0 auto !important;
 }
 
-footer.opcoes i {
-    margin-bottom: 2px; /* espaço entre ícone e texto */
-    margin-top: 5px;
+/* Remove colunas quebradas do Bootstrap */
+.app-layout .row,
+.app-layout .container,
+.app-layout .container-fluid,
+.app-layout .container-xxl,
+.app-layout .container-xl,
+.app-layout .container-lg,
+.app-layout .container-md,
+.app-layout .container-sm,
+.app-layout [class*="col-"] {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+
+/* ======================= MOBILE (≤ 768px) ======================= */
+@media (max-width: 768px) {
+  .main-content {
+    width: 100% !important;
+    padding: 15px !important;
+    margin-left: 0 !important;
+    margin-bottom: 70px !important;
+  }
+
+  .sidebar-collapsed ~ .main-content {
+    margin-left: 0 !important;
+  }
+
+  .content-area {
+    max-width: 100% !important;
+    padding: 0 10px !important;
+  }
+
+  /* Barra de pesquisa */
+  .pesquisa {
+    max-width: 100% !important;
+    height: 3rem !important;
+    margin: 0 auto 1rem auto !important;
+    border-radius: 20px !important;
+  }
+
+  .pesquisa input,
+  .pesquisa input::placeholder {
+    font-size: 1rem !important;
+  }
+
+  .pesquisa i {
+    font-size: 1.2rem !important;
+  }
+
+  /* Endereços */
+  .enderecos-titulo {
+    width: 100% !important;
+    text-align: center !important;
+    font-size: 1.1rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .enderecos {
+    width: 100% !important;
+    padding: 1.5rem !important;
+    min-height: 80px !important;
+    height: auto !important;
+    margin: 0 auto !important;
+  }
+
+  .enderecos p {
+    font-size: 0.9rem !important;
+  }
+}
+
+/* ======================= TABLET (769px - 1024px) ======================= */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .main-content {
+    margin-left: 250px !important;
+    width: calc(100% - 250px) !important;
+    padding: 15px !important;
+  }
+
+  .sidebar-collapsed ~ .main-content {
+    margin-left: 70px !important;
+    width: calc(100% - 70px) !important;
+  }
+
+  .pesquisa {
+    max-width: 350px !important;
+  }
+
+  .enderecos,
+  .enderecos-titulo {
+    max-width: 400px !important;
+  }
+}
+
+/* ======================= DESKTOP PEQUENO (1025px - 1200px) ======================= */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  .content-area {
+    padding: 0 20px !important;
+  }
+
+  .enderecos,
+  .enderecos-titulo {
+    max-width: 420px !important;
+  }
+}
+
+/* ======================= TELAS MUITO PEQUENAS (≤ 480px) ======================= */
+@media (max-width: 480px) {
+  .pesquisa {
+    height: 2.8rem !important;
+    padding: 0 15px !important;
+  }
+
+  .pesquisa input {
+    font-size: 0.9rem !important;
+  }
+
+  .pesquisa i {
+    font-size: 1.1rem !important;
+  }
+
+  .enderecos p {
+    font-size: 0.8rem !important;
+  }
+}
+
+/* ======================= MICROTELAS (≤ 360px) ======================= */
+@media (max-width: 360px) {
+  .main-content {
+    padding: 10px !important;
+  }
+
+  .pesquisa {
+    border-radius: 15px !important;
+    padding: 0 12px !important;
+  }
+
+  .enderecos {
+    border-radius: 15px !important;
+  }
 }

@@ -1,0 +1,130 @@
+/* Estilos para a página de Opções */
+
+.titulo-opcoes {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.opcoes-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.opcao-btn {
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: left;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.opcao-btn:hover {
+    border-color: #4CAF50;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f8f9fa;
+}
+
+.opcao-btn:active {
+    transform: translateY(0);
+}
+
+.opcao-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.opcao-icone {
+    font-size: 1.5rem;
+    margin-right: 1rem;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.opcao-label {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+    text-align: left;
+}
+
+.opcao-seta {
+    font-size: 1.5rem;
+    color: #666;
+    font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.opcao-btn:hover .opcao-seta {
+    transform: translateX(3px);
+    color: #4CAF50;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .opcoes-container {
+        max-width: 90%;
+        gap: 0.6rem;
+    }
+    
+    .opcao-btn {
+        padding: 1rem 1.2rem;
+    }
+    
+    .opcao-icone {
+        font-size: 1.3rem;
+        margin-right: 0.8rem;
+        width: 25px;
+    }
+    
+    .opcao-label {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .opcoes-container {
+        max-width: 95%;
+    }
+    
+    .titulo-opcoes {
+        font-size: 1.3rem;
+    }
+    
+    .opcao-btn {
+        padding: 0.9rem 1rem;
+    }
+    
+    .opcao-icone {
+        font-size: 1.2rem;
+        margin-right: 0.7rem;
+        width: 22px;
+    }
+    
+    .opcao-label {
+        font-size: 0.95rem;
+    }
+    
+    .opcao-seta {
+        font-size: 1.3rem;
+    }
+}

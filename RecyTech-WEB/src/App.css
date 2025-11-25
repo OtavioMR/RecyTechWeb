@@ -1,42 +1,167 @@
-#root {
-  max-width: 1280px;
+/* App.css - apenas estilos específicos */
+.app-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.main-content {
+  margin-left: 300px;
+  width: calc(100% - 300px);
+  padding: 20px;
+  min-height: 100vh;
+  transition: all 0.3s ease;
+  background-color: #f5f5f5;
+}
+
+.sidebar-collapsed ~ .main-content {
+  margin-left: 80px;
+  width: calc(100% - 80px);
+}
+
+.content-area {
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.nomeApp h1 {
+  color: #2d5a27;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.pesquisa {
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  border: 1px solid #dee2e6;
+  padding: 12px 15px;
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.map-container {
+  width: 100%;
+  margin-bottom: 1rem;
 }
 
-.card {
-  padding: 2em;
+.leaflet-container {
+  width: 100%;
+  height: 50vh;
+  border-radius: 10px;
 }
 
-.read-the-docs {
-  color: #888;
+.enderecos {
+  background-color: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+.faixa-azul, .opcoes {
+  display: none;
+}
+
+/* RESET ESPECÍFICO PARA SOBRESCREVER BOOTSTRAP */
+.app-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+}
+
+.main-content {
+  margin-left: 300px !important;
+  width: calc(100% - 300px) !important;
+  padding: 20px !important;
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.sidebar-collapsed ~ .main-content {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* Sobrescreve possíveis estilos do Bootstrap */
+.container, .container-fluid {
+  max-width: 100% !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.col, .col-1, .col-2, .col-3, .col-4, .col-5, .col-6,
+.col-7, .col-8, .col-9, .col-10, .col-11, .col-12 {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* ===== RESET ESPECÍFICO PARA BOOTSTRAP 5.3.8 ===== */
+
+/* Sobrescreve containers do Bootstrap */
+.app-layout .container,
+.app-layout .container-fluid,
+.app-layout .container-xxl,
+.app-layout .container-xl,
+.app-layout .container-lg,
+.app-layout .container-md,
+.app-layout .container-sm {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+  margin-right: auto !important;
+  margin-left: auto !important;
+}
+
+/* Garante que o layout principal funcione */
+.app-layout {
+  display: flex !important;
+  flex-direction: row !important;
+  width: 100% !important;
+  min-height: 100vh !important;
+  position: relative !important;
+}
+
+.main-content {
+  flex: 1 !important;
+  margin-left: 300px !important;
+  width: calc(100% - 300px) !important;
+  padding: 20px !important;
+  position: relative !important;
+  z-index: 1 !important;
+  background-color: #f5f5f5 !important;
+}
+
+.sidebar-collapsed ~ .main-content {
+  margin-left: 80px !important;
+  width: calc(100% - 80px) !important;
+}
+
+/* Remove padding dos rows/cols do Bootstrap dentro do nosso layout */
+.app-layout .row {
+  --bs-gutter-x: 0 !important;
+  --bs-gutter-y: 0 !important;
+  margin-top: 0 !important;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+}
+
+.app-layout [class*="col-"] {
+  padding-right: 0 !important;
+  padding-left: 0 !important;
+}
+
+/* Garante que o content-area não seja afetado */
+.content-area {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  width: 100% !important;
 }
