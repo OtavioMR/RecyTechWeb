@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 interface Coleta {
   id: string;
-  status: 'em-andamento' | 'concluida';
+  status: 'pendente' | 'concluida';
   prazo?: string;
   dataConclusao?: string;
   tiposLixo: Array<{
@@ -27,8 +27,8 @@ export default function Coleta() {
     const [coletas, setColetas] = useState<Coleta[]>([
         {
             id: '1',
-            status: 'em-andamento',
-            prazo: '17:00 do dia 15/11/2024',
+            status: 'pendente',
+            prazo: '23:59:00 do dia 26/11/2024',
             tiposLixo: [
                 { tipo: 'Plástico', quantidade: '15Kg', icone: '🥤', cor: '#F44336' },
                 { tipo: 'Vidro', quantidade: '8Kg', icone: '🍶', cor: '#4CAF50' }
@@ -52,7 +52,7 @@ export default function Coleta() {
         },
         {
             id: '3',
-            status: 'em-andamento',
+            status: 'concluida',
             prazo: '18:00 do dia 16/11/2024',
             tiposLixo: [
                 { tipo: 'Vidro', quantidade: '20Kg', icone: '🍶', cor: '#4CAF50' }
@@ -127,7 +127,7 @@ export default function Coleta() {
                                     {/* Status da Coleta */}
                                     <div className="coleta-status">
                                         <span className={`status-badge ${coleta.status}`}>
-                                            {coleta.status === 'em-andamento' ? '🟡 Coleta Em Andamento' : '🟢 Coleta Concluída'}
+                                            {coleta.status === 'pendente' ? '🟡 Coleta Em Andamento' : '🟢 Coleta Concluída'}
                                         </span>
                                         <span className="seta">
                                             {coleta.expandida ? '▲' : '▼'}
@@ -136,7 +136,7 @@ export default function Coleta() {
 
                                     {/* Prazo ou Data de Conclusão */}
                                     <div className="coleta-info">
-                                        {coleta.status === 'em-andamento' ? (
+                                        {coleta.status === 'concluida' ? (
                                             <p className="prazo">📅 Prazo até {coleta.prazo}</p>
                                         ) : (
                                             <p className="conclusao">✅ Coleta feita em {coleta.dataConclusao}</p>
