@@ -1,155 +1,154 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import '../style/inicio_solicitar_coleta.css';
+import { routesMap } from "../routes/routesMap.ts";
 
 interface QuantidadeSelecionada {
     id: string;
     tipo: string;
     descricao: string;
-    selecionado: boolean;
+    icone: string;
+}
+
+interface TipoLixo {
+    id: string;
+    label: string;
     icone: string;
 }
 
 export default function InicioSolicitarColeta() {
+    const navigate = useNavigate();
+
     const [activeMenu, setActiveMenu] = useState('inicio');
     const [showConfirmacao, setShowConfirmacao] = useState(false);
-    const [quantidadeSelecionada, setQuantidadeSelecionada] = useState<QuantidadeSelecionada | null>(null);
+
+    const [quantidadeSelecionada, setQuantidadeSelecionada] =
+        useState<QuantidadeSelecionada | null>(null);
+    const [tiposSelecionados, setTiposSelecionados] = useState<TipoLixo[]>([]);
     const [endereco, setEndereco] = useState({
         logradouro: '',
         numero: '',
         bairro: '',
         cidade: '',
         estado: '',
-        cep: '', // NOVO CAMPO CEP
+        cep: '',
         complemento: ''
     });
 
-    // Lê a quantidade do localStorage quando o componente carrega
+    // 🔹 Carregar dados do localStorage
     useEffect(() => {
         const quantidadeSalva = localStorage.getItem('quantidadeSelecionada');
+        const tiposSalvos = localStorage.getItem('tiposSelecionados');
+        const enderecoSalvo = localStorage.getItem('enderecoSelecionado');
+
         if (quantidadeSalva) {
             try {
-                const quantidade = JSON.parse(quantidadeSalva);
-                setQuantidadeSelecionada(quantidade);
-            } catch (error) {
-                console.error('Erro ao ler quantidade do localStorage:', error);
-                // Valor padrão caso ocorra erro
+                setQuantidadeSelecionada(JSON.parse(quantidadeSalva));
+            } catch {
                 setQuantidadeSelecionada({
-                    id: 'medio',
+                    id: 'erro',
                     tipo: 'Erro',
-                    descricao: 'Deu erro',
-                    selecionado: true,
+                    descricao: 'Falha ao ler',
                     icone: '🚫'
                 });
             }
-        } else {
-            // Valor padrão caso não tenha quantidade salva
-            setQuantidadeSelecionada({
-                id: 'medio',
-                tipo: 'Não selecionado',
-                descricao: 'Selecione primeiro',
-                selecionado: true,
-                icone: '🚫'
-            });
+        }
+
+        if (tiposSalvos) {
+            try {
+                setTiposSelecionados(JSON.parse(tiposSalvos));
+            } catch {
+                setTiposSelecionados([]);
+            }
+        }
+
+        if (enderecoSalvo) {
+            try {
+                setEndereco(JSON.parse(enderecoSalvo));
+            } catch {
+                console.error("Erro ao ler endereço salvo");
+            }
         }
     }, []);
 
+    // 🔹 Navegação SPA
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
-        
-        // Navegação - Inicio não faz nada (está no fluxo)
-        if (menu === 'opcoes') {
-            window.location.href = '/opcoes';
-        }
-        if (menu === 'coleta') {
-            window.location.href = '/coleta';
-        }
-        if (menu === 'conta') {
-            window.location.href = '/conta';
-        }
-        // 'inicio' - não faz nada, está no fluxo do início
+        if (routesMap[menu]) navigate(routesMap[menu]);
     };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log('Sidebar collapsed:', collapsed);
-    };
+    const handleVoltar = () => navigate('/inicioQuantidade');
 
-    const handleVoltar = () => {
-        window.location.href = '/inicioQuantidade';
-    };
-
+    // 🔹 Atualizar campos do endereço
     const handleInputChange = (campo: string, valor: string) => {
-        setEndereco(prev => ({
-            ...prev,
-            [campo]: valor
-        }));
+        setEndereco(prev => ({ ...prev, [campo]: valor }));
     };
 
-    const handleConfirmarSolicitacao = () => {
-        setShowConfirmacao(true);
+    const handleConfirmarSolicitacao = () => setShowConfirmacao(true);
+    const handleCancelar = () => setShowConfirmacao(false);
+
+    // 🔹 Confirmar solicitação
+    const handleConfirmar = async () => {
+        try {
+            const solicitacao = {
+                endereco,
+                tipos: tiposSelecionados,
+                quantidade: quantidadeSelecionada,
+                usuarioId: '123', // depois pega do token
+                usuarioNome: 'Rodrigo' // idem
+            };
+
+            console.log('Solicitação enviada:', solicitacao);
+
+            // Futuro: await api.post('/solicitacoes', solicitacao);
+
+            // Limpa cache
+            localStorage.removeItem('enderecoSelecionado');
+            localStorage.removeItem('tiposSelecionados');
+            localStorage.removeItem('quantidadeSelecionada');
+
+            setShowConfirmacao(false);
+            alert('Solicitação de coleta confirmada!');
+            navigate('/inicioCidadao');
+        } catch (err) {
+            console.error('Erro ao confirmar coleta:', err);
+            alert('Erro ao confirmar coleta');
+        }
     };
 
-    const handleConfirmar = () => {
-        console.log('Solicitação confirmada:', { 
-            quantidade: quantidadeSelecionada, 
-            endereco 
-        });
-        setShowConfirmacao(false);
-        // Aqui você pode adicionar a lógica para enviar para o back-end
-        alert('Solicitação de coleta confirmada!');
-        
-        // Limpa a quantidade do localStorage após o uso
-        localStorage.removeItem('quantidadeSelecionada');
-    };
+    const getQuantidadeDisplay = () =>
+        quantidadeSelecionada ? `${quantidadeSelecionada.tipo}: ${quantidadeSelecionada.descricao}` : 'Carregando...';
 
-    const handleCancelar = () => {
-        setShowConfirmacao(false);
-    };
-
-    const getQuantidadeDisplay = () => {
-        if (!quantidadeSelecionada) return 'Carregando...';
-        return `${quantidadeSelecionada.tipo}: ${quantidadeSelecionada.descricao}`;
-    };
-
-    const getQuantidadeIcone = () => {
-        if (!quantidadeSelecionada) return '🚫';
-        return quantidadeSelecionada.icone;
-    };
+    const getQuantidadeIcone = () =>
+        quantidadeSelecionada ? quantidadeSelecionada.icone : '🚫';
 
     return (
         <div className="app-layout">
-            {/* Sidebar Fixa */}
-            <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
-            {/* Conteúdo Principal */}
+            <Sidebar
+                onMenuSelect={handleMenuSelect}
+                activeMenu={activeMenu}
+                onToggle={() => { }}
+            />
+
             <main className="main-content">
                 <div className="content-area container-fluid px-0">
-                    
-                    {/* Header */}
+
                     <div className="nomeApp mb-3 ps-0">
                         <h1 className="m-0">RecyTech</h1>
                     </div>
 
-                    {/* Botão Voltar */}
                     <div className="voltar-container mb-4">
-                        <button 
-                            className="btn-voltar"
-                            onClick={handleVoltar}
-                        >
+                        <button className="btn-voltar" onClick={handleVoltar}>
                             ← Voltar
                         </button>
                     </div>
 
-                    {/* Título da Página */}
-                    <div className="mb-4">
-                        <h2 className="titulo-solicitar">Solicitar Coleta</h2>
-                    </div>
+                    <h2 className="titulo-solicitar mb-4">Solicitar Coleta</h2>
 
-                    {/* Conteúdo Principal */}
                     <div className="solicitar-container">
-                        
-                        {/* Quantidade Estimada */}
+
+                        {/* Quantidade */}
                         <div className="info-section">
                             <h3 className="subtitulo">Quantidade estimada</h3>
                             <div className="info-box quantidade-box">
@@ -158,119 +157,56 @@ export default function InicioSolicitarColeta() {
                             </div>
                         </div>
 
+                        {/* Tipos de lixo */}
+                        <div className="info-section">
+                            <h3 className="subtitulo">Tipos de lixo selecionados</h3>
+                            <ul>
+                                {tiposSelecionados.map((tipo) => (
+                                    <li key={tipo.id}>{tipo.icone} {tipo.label}</li>
+                                ))}
+                            </ul>
+                        </div>
+
                         {/* Endereço */}
                         <div className="info-section">
                             <h3 className="subtitulo">Endereço:</h3>
-                            
-                            <div className="input-group">
-                                <span className="input-icone">📍</span>
-                                <input
-                                    type="text"
-                                    placeholder="Logradouro"
-                                    className="form-input"
-                                    value={endereco.logradouro}
-                                    onChange={(e) => handleInputChange('logradouro', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="input-group">
-                                <span className="input-icone">🔢</span>
-                                <input
-                                    type="text"
-                                    placeholder="Número"
-                                    className="form-input"
-                                    value={endereco.numero}
-                                    onChange={(e) => handleInputChange('numero', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="input-group">
-                                <span className="input-icone">🏘️</span>
-                                <input
-                                    type="text"
-                                    placeholder="Bairro"
-                                    className="form-input"
-                                    value={endereco.bairro}
-                                    onChange={(e) => handleInputChange('bairro', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="input-group">
-                                <span className="input-icone">🏙️</span>
-                                <input
-                                    type="text"
-                                    placeholder="Cidade"
-                                    className="form-input"
-                                    value={endereco.cidade}
-                                    onChange={(e) => handleInputChange('cidade', e.target.value)}
-                                />
-                            </div>
-
-                            <div className="input-group">
-                                <span className="input-icone">🗺️</span>
-                                <input
-                                    type="text"
-                                    placeholder="Estado"
-                                    className="form-input"
-                                    value={endereco.estado}
-                                    onChange={(e) => handleInputChange('estado', e.target.value)}
-                                />
-                            </div>
-
-                            {/* NOVO CAMPO CEP */}
-                            <div className="input-group">
-                                <span className="input-icone">📮</span>
-                                <input
-                                    type="text"
-                                    placeholder="CEP"
-                                    className="form-input"
-                                    value={endereco.cep}
-                                    onChange={(e) => handleInputChange('cep', e.target.value)}
-                                    maxLength={9}
-                                />
-                            </div>
-
-                            <div className="input-group">
-                                <span className="input-icone">📝</span>
-                                <input
-                                    type="text"
-                                    placeholder="Complemento (opcional)"
-                                    className="form-input"
-                                    value={endereco.complemento}
-                                    onChange={(e) => handleInputChange('complemento', e.target.value)}
-                                />
-                            </div>
+                            {[
+                                ["📍", "logradouro", "Logradouro"],
+                                ["🔢", "numero", "Número"],
+                                ["🏘️", "bairro", "Bairro"],
+                                ["🏙️", "cidade", "Cidade"],
+                                ["🗺️", "estado", "Estado"],
+                                ["📮", "cep", "CEP"],
+                                ["📝", "complemento", "Complemento (opcional)"]
+                            ].map(([icone, campo, label]) => (
+                                <div key={campo} className="input-group">
+                                    <span className="input-icone">{icone}</span>
+                                    <input
+                                        type="text"
+                                        placeholder={label as string}
+                                        className="form-input"
+                                        value={(endereco as any)[campo]}
+                                        onChange={(e) => handleInputChange(campo as string, e.target.value)}
+                                    />
+                                </div>
+                            ))}
                         </div>
 
-                        {/* Botão Confirmar Solicitação */}
+                        {/* Botão Confirmar */}
                         <div className="confirmar-container">
-                            <button 
-                                className="btn-confirmar-solicitacao"
-                                onClick={handleConfirmarSolicitacao}
-                            >
+                            <button className="btn-confirmar-solicitacao" onClick={handleConfirmarSolicitacao}>
                                 Confirmar Solicitação
                             </button>
                         </div>
                     </div>
 
-                    {/* Modal de Confirmação */}
                     {showConfirmacao && (
                         <div className="modal-overlay">
                             <div className="modal-content">
                                 <h3 className="modal-titulo">Confirmar Solicitação?</h3>
                                 <div className="modal-botoes">
-                                    <button 
-                                        className="btn-modal-confirmar"
-                                        onClick={handleConfirmar}
-                                    >
-                                        Confirmar
-                                    </button>
-                                    <button 
-                                        className="btn-modal-cancelar"
-                                        onClick={handleCancelar}
-                                    >
-                                        Cancelar
-                                    </button>
+                                    <button className="btn-modal-confirmar" onClick={handleConfirmar}>Confirmar</button>
+                                    <button className="btn-modal-cancelar" onClick={handleCancelar}>Cancelar</button>
                                 </div>
                             </div>
                         </div>

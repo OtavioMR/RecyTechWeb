@@ -1,23 +1,33 @@
 import LogoRecyTech from "../assets/LogoRecyTech.png";
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../style/Responsividade.css";
+import { usuarioService } from "../services/usuarioService";
+import type { UsuarioCreate } from "../types/types"; // 🔹 importando tipo
 
 export default function CadastroCidadao() {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
+
+    // 🔹 Tipagem explícita: UsuarioCreate + confirmarSenha
+    const [formData, setFormData] = useState<UsuarioCreate & { confirmarSenha: string }>({
         nomeCompleto: "",
         email: "",
         nomeUsuario: "",
         senha: "",
-        confirmarSenha: "",
+        confirmarSenha: ""
     });
 
+    const [loading, setLoading] = useState(false);
+
+    // 🔹 Atualizar campos
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
     };
 
+    // 🔹 Submeter formulário
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -26,50 +36,59 @@ export default function CadastroCidadao() {
             return;
         }
 
+        setLoading(true);
+
         try {
-            await axios.post("http://localhost:3000/usuario/create", {
+            // TS valida os campos obrigatórios
+            await usuarioService.criar({
                 nomeCompleto: formData.nomeCompleto,
                 email: formData.email,
                 nomeUsuario: formData.nomeUsuario,
-                senha: formData.senha,
+                senha: formData.senha
             });
 
-            //console.log(response.data);
             alert("Usuário cadastrado com sucesso!");
+
+            // Limpa formulário
             setFormData({
                 nomeCompleto: "",
                 email: "",
                 nomeUsuario: "",
                 senha: "",
-                confirmarSenha: "",
-            })
+                confirmarSenha: ""
+            });
+
+            // Redireciona para login
+            navigate("/loginCidadao");
         } catch (error: any) {
             console.error(error);
-
-            if (error.response) {
-                alert(`Erro: ${error.response.data.message || "Ocorreu um erro no servidor."}`);
-            }
+            alert(error?.response?.data?.message || "Erro ao cadastrar usuário");
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <div className="register-screen-cidadao">
-
+            {/* Botão Voltar */}
             <button className="Btn-back" onClick={() => navigate(-1)}>
-                <div className="sign-back"><svg className="w-6 h-6 text-gray-800 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12l4-4m-4 4 4 4" />
-                </svg>
-
+                <div className="sign-back">
+                    <svg className="w-6 h-6 text-gray-800 text-white" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                    </svg>
                 </div>
                 <div className="text-back">Voltar</div>
             </button>
 
+            {/* Logo */}
             <div className="col-12 mb-4">
                 <img src={LogoRecyTech} alt="Logo RecyTech" className="logo img-fluid" />
             </div>
-            <div className="form-cidadao">
-                <form onSubmit={handleSubmit} >
 
+            {/* Formulário */}
+            <div className="form-cidadao">
+                <form onSubmit={handleSubmit}>
+                    {/* Nome completo */}
                     <div className="input-container-cidadao">
                         <input
                             type="text"
@@ -82,6 +101,7 @@ export default function CadastroCidadao() {
                         <label className="floating-label">Nome completo</label>
                     </div>
 
+                    {/* Email */}
                     <div className="input-container-cidadao">
                         <input
                             type="email"
@@ -94,6 +114,7 @@ export default function CadastroCidadao() {
                         <label className="floating-label">Email</label>
                     </div>
 
+                    {/* Nome de usuário */}
                     <div className="input-container-cidadao">
                         <input
                             type="text"
@@ -106,6 +127,7 @@ export default function CadastroCidadao() {
                         <label className="floating-label">Nome de usuário</label>
                     </div>
 
+                    {/* Senha */}
                     <div className="input-container-cidadao">
                         <input
                             type="password"
@@ -118,6 +140,7 @@ export default function CadastroCidadao() {
                         <label className="floating-label">Senha</label>
                     </div>
 
+                    {/* Confirmar senha */}
                     <div className="input-container-cidadao">
                         <input
                             type="password"
@@ -130,11 +153,10 @@ export default function CadastroCidadao() {
                         <label className="floating-label">Confirmar senha</label>
                     </div>
 
+                    {/* Botão Cadastrar */}
                     <div className="">
-                        <button
-                            type="submit"
-                            className="button-cidadao">
-                            <span className="text">Cadastrar-se</span>
+                        <button type="submit" className="button-cidadao" disabled={loading}>
+                            <span className="text">{loading ? "Cadastrando..." : "Cadastrar-se"}</span>
                             <svg className="arr-1" viewBox="0 0 24 24">
                                 <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
                             </svg>
@@ -147,6 +169,5 @@ export default function CadastroCidadao() {
                 </form>
             </div>
         </div>
-
     );
 }
