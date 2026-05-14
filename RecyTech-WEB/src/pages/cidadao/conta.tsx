@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import { routesMap } from "../routes/routesMap.ts";
-import "../style/conta.css";
-import { usuarioService } from "../services/usuarioService";
-import { enderecoService } from "../services/enderecoService";
-import type { Endereco, EnderecoInput } from "../types/types";
+import Sidebar from "../../components/Sidebar.tsx";
+import { routesMapCidadao } from "../../routes/routesMap.ts";
+import "../../style/cidadao/conta.css";
+import { cidadaoService } from "../../services/cidadao/cidadaoService.ts";
+import { enderecoService } from "../../services/cidadao/enderecoService.ts";
+import type { Endereco, EnderecoInput } from "../../types/types.ts";
 
 export default function Conta() {
     const navigate = useNavigate();
@@ -35,7 +35,7 @@ export default function Conta() {
         const carregarDados = async () => {
             try {
                 const [user, end] = await Promise.all([
-                    usuarioService.me(),
+                    cidadaoService.me(),
                     enderecoService.listarMeus()
                 ]);
                 setUsuario(user);
@@ -52,7 +52,7 @@ export default function Conta() {
     // 🔹 Navegação SPA (agora alinhada com Sidebar)
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {

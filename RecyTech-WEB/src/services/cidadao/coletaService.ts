@@ -1,5 +1,5 @@
-import { api } from "./api";
-import type { ColetaInput, Coleta } from "../types/types";
+import { api } from "../comuns/api";
+import type { ColetaInput, Coleta } from "../../types/types";
 
 export const coletaService = {
   // 🔹 Criar solicitação de coleta

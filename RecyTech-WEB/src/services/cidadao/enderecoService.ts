@@ -1,5 +1,5 @@
-import { api } from "./api";
-import type { EnderecoInput, Endereco } from "../types/types";
+import { api } from "../comuns/api";
+import type { EnderecoInput, Endereco } from "../../types/types";
 
 export const enderecoService = {
   // 🔹 Buscar endereços do usuário logado

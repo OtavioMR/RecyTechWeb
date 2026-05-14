@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import '../style/inicio_quantidade.css';
-import { routesMap } from "../routes/routesMap.ts";
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicio_quantidade.css';
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 
 interface Quantidade {
     id: string;
@@ -26,7 +26,7 @@ export default function InicioQuantidade() {
     // 🔹 Navegação SPA
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {

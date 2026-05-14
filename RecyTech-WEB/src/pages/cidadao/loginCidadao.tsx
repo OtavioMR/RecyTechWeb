@@ -1,10 +1,10 @@
-import LogoRecyTech from "../assets/LogoRecyTech.png";
+import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import "../style/Responsividade.css";
+import "../../style/Responsividade.css";
 
-import { loginCidadao } from "../services/authService"; // serviço de login
-import type { LoginInput } from "../types/types"; // 🔹 importando tipo
+import { cidadaoService } from "../../services/cidadao/cidadaoService"; // serviço de login
+import type { LoginInput } from "../../types/types"; // 🔹 importando tipo
 
 export default function LoginCidadao() {
     const navigate = useNavigate();
@@ -31,10 +31,11 @@ export default function LoginCidadao() {
         setLoading(true);
 
         try {
-            const data = await loginCidadao(formData);
+            const data = await cidadaoService.login(formData);
 
-            // salva token
+            // salva token e perfil
             localStorage.setItem("token", data.access_token);
+            localStorage.setItem("perfil", "cidadao");
 
             // navega sem reload
             navigate("/inicioCidadao");
@@ -44,6 +45,7 @@ export default function LoginCidadao() {
         } finally {
             setLoading(false);
         }
+
     }
 
     return (

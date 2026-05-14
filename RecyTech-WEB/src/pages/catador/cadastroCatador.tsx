@@ -1,14 +1,14 @@
-import LogoRecyTech from "../assets/LogoRecyTech.png";
+import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../style/Responsividade.css";
-import { usuarioService } from "../services/usuarioService";
-import type { UsuarioCreate } from "../types/types"; // 🔹 importando tipo
+import "../../style/Responsividade.css";
+import { catadorService } from "../../services/catador/catadorService";
+import type { UsuarioCreate } from "../../types/types";
 
-export default function CadastroCidadao() {
+export default function CadastroCatador() {
     const navigate = useNavigate();
 
-    // 🔹 Tipagem explícita: UsuarioCreate + confirmarSenha
+    // 🔹 Tipagem explícita
     const [formData, setFormData] = useState<UsuarioCreate & { confirmarSenha: string }>({
         nomeCompleto: "",
         email: "",
@@ -19,7 +19,6 @@ export default function CadastroCidadao() {
 
     const [loading, setLoading] = useState(false);
 
-    // 🔹 Atualizar campos
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
@@ -27,7 +26,6 @@ export default function CadastroCidadao() {
         });
     };
 
-    // 🔹 Submeter formulário
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
@@ -39,17 +37,15 @@ export default function CadastroCidadao() {
         setLoading(true);
 
         try {
-            // TS valida os campos obrigatórios
-            await usuarioService.criar({
+            await catadorService.criar({
                 nomeCompleto: formData.nomeCompleto,
                 email: formData.email,
                 nomeUsuario: formData.nomeUsuario,
                 senha: formData.senha
             });
 
-            alert("Usuário cadastrado com sucesso!");
+            alert("Catador cadastrado com sucesso!");
 
-            // Limpa formulário
             setFormData({
                 nomeCompleto: "",
                 email: "",
@@ -58,18 +54,18 @@ export default function CadastroCidadao() {
                 confirmarSenha: ""
             });
 
-            // Redireciona para login
-            navigate("/loginCidadao");
+            // 🔹 Navegação SPA
+            navigate("/loginCatador");
         } catch (error: any) {
             console.error(error);
-            alert(error?.response?.data?.message || "Erro ao cadastrar usuário");
+            alert(error?.response?.data?.message || "Erro ao cadastrar catador");
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="register-screen-cidadao">
+        <div className="register-screen-catador">
             {/* Botão Voltar */}
             <button className="Btn-back" onClick={() => navigate(-1)}>
                 <div className="sign-back">
@@ -86,10 +82,10 @@ export default function CadastroCidadao() {
             </div>
 
             {/* Formulário */}
-            <div className="form-cidadao">
+            <div className="form-catador">
                 <form onSubmit={handleSubmit}>
                     {/* Nome completo */}
-                    <div className="input-container-cidadao">
+                    <div className="input-container-catador">
                         <input
                             type="text"
                             name="nomeCompleto"
@@ -102,7 +98,7 @@ export default function CadastroCidadao() {
                     </div>
 
                     {/* Email */}
-                    <div className="input-container-cidadao">
+                    <div className="input-container-catador">
                         <input
                             type="email"
                             name="email"
@@ -115,7 +111,7 @@ export default function CadastroCidadao() {
                     </div>
 
                     {/* Nome de usuário */}
-                    <div className="input-container-cidadao">
+                    <div className="input-container-catador">
                         <input
                             type="text"
                             name="nomeUsuario"
@@ -128,7 +124,7 @@ export default function CadastroCidadao() {
                     </div>
 
                     {/* Senha */}
-                    <div className="input-container-cidadao">
+                    <div className="input-container-catador">
                         <input
                             type="password"
                             name="senha"
@@ -141,7 +137,7 @@ export default function CadastroCidadao() {
                     </div>
 
                     {/* Confirmar senha */}
-                    <div className="input-container-cidadao">
+                    <div className="input-container-catador">
                         <input
                             type="password"
                             name="confirmarSenha"
@@ -154,8 +150,8 @@ export default function CadastroCidadao() {
                     </div>
 
                     {/* Botão Cadastrar */}
-                    <div className="">
-                        <button type="submit" className="button-cidadao" disabled={loading}>
+                    <div>
+                        <button type="submit" className="button-catador" disabled={loading}>
                             <span className="text">{loading ? "Cadastrando..." : "Cadastrar-se"}</span>
                             <svg className="arr-1" viewBox="0 0 24 24">
                                 <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import '../style/inicio_tipos_lixo.css';
-import { routesMap } from "../routes/routesMap.ts";
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicio_tipos_lixo.css';
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 
 interface TipoLixo {
     id: string;
@@ -28,7 +28,7 @@ export default function InicioTiposLixo() {
     // 🔹 Navegação SPA
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {

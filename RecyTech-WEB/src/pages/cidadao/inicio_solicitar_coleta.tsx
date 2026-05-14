@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Sidebar from '../components/Sidebar';
-import '../style/inicio_solicitar_coleta.css';
-import { routesMap } from "../routes/routesMap.ts";
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicio_solicitar_coleta.css';
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 
 interface QuantidadeSelecionada {
     id: string;
@@ -75,7 +75,7 @@ export default function InicioSolicitarColeta() {
     // 🔹 Navegação SPA
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleVoltar = () => navigate('/inicioQuantidade');

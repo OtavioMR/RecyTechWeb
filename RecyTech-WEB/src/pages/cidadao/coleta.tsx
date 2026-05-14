@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../components/Sidebar";
-import "../style/coleta.css";
-import type { Coleta } from "../types/types";
-import { routesMap } from "../routes/routesMap.ts";
+import Sidebar from "../../components/Sidebar.tsx";
+import "../../style/cidadao/coleta.css";
+import type { Coleta } from "../../types/types.ts";
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 // import { coletaService } from "../services/coletaService"; // futuro backend
 
 // 🔹 Tipo local para UI
@@ -63,7 +63,7 @@ export default function Coleta() {
     // 🔹 Navegação SPA (agora alinhada com Sidebar)
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {

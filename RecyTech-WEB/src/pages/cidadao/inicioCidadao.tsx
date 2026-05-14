@@ -4,12 +4,12 @@ import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { useNavigate } from 'react-router-dom';
-import { routesMap } from "../routes/routesMap.ts";
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 
 
-import { useTokenWatcher } from './tokenWatcher.ts';
-import Sidebar from '../components/Sidebar';
-import '../style/inicioCidadao.css';
+import { useTokenWatcher } from '../../hooks/tokenWatcher.ts';
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicioCidadao.css';
 
 interface Endereco {
     endereco: string;
@@ -66,7 +66,7 @@ export default function InicioCidadao() {
     // 🔹 Navegação SPA (agora alinhada com Sidebar)
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMap[menu]) navigate(routesMap[menu]);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
 
