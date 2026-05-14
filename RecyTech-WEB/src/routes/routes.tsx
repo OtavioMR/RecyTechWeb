@@ -1,48 +1,67 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Teste from "../pages/Home";
-import Home from "../pages/paginaInicio";
-import LoginCatador from "../pages/loginCatador";
-import CadastroCidadao from "../pages/cadastroCidadao";
-import CadastroCatador from "../pages/cadastroCatador";
-import LoginCidadao from "../pages/loginCidadao";
-import InicioCidadao from "../pages/inicioCidadao";
+
+// 🔹 Comuns
+import Home from "../pages/comuns/paginaInicio";
 import PrivateRoute from "./privateRoute";
-import Coleta from "../pages/coleta";
-import Conta from "../pages/conta";
 
+// 🔹 Cidadão
+import LoginCidadao from "../pages/cidadao/loginCidadao";
+import CadastroCidadao from "../pages/cidadao/cadastroCidadao";
+import EsqueciMinhaSenhaCidadao from "../pages/cidadao/esqueciMinhasenha-cidadao";
 
-import InicioTiposLixo from "../pages/inicio_tipos_lixo";
-import InicioQuantidade from "../pages/inicio_quantidade";
-import InicioSolicitarColeta from "../pages/inicio_solicitar_coleta";
-import Opcoes from "../pages/opcoes";
-import EsqueciMinhaSenhaCidadao from "../pages/esqueciMinhasenha-cidadao";
-import EsqueciMinhaSenhaCatador from "../pages/esqueciMinhasenha-catador";  
+import InicioCidadao from "../pages/cidadao/inicioCidadao";
+import Coleta from "../pages/cidadao/coleta";
+import Conta from "../pages/cidadao/conta";
+import Opcoes from "../pages/cidadao/opcoes";
+import InicioTiposLixo from "../pages/cidadao/inicio_tipos_lixo";
+import InicioQuantidade from "../pages/cidadao/inicio_quantidade";
+import InicioSolicitarColeta from "../pages/cidadao/inicio_solicitar_coleta";
+
+// 🔹 Catador
+import LoginCatador from "../pages/catador/loginCatador";
+import CadastroCatador from "../pages/catador/cadastroCatador";
+import EsqueciMinhaSenhaCatador from "../pages/catador/esqueciMinhasenha-catador";
+
+// (futuro) telas protegidas do Catador
+// import InicioCatador from "../pages/catador/inicioCatador";
+// import MinhasColetas from "../pages/catador/minhasColetas";
+// import PerfilCatador from "../pages/catador/perfilCatador";
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
 
-        {/* Rotas públicas */}
+        {/* ================= PUBLICAS ================= */}
         <Route path="/" element={<Home />} />
-        <Route path="/loginCatador" element={<LoginCatador />} />
-        <Route path="/cadastroCidadao" element={<CadastroCidadao />} />
-        <Route path="/cadastroCatador" element={<CadastroCatador />} />
+        
+        {/* Cidadão */}
         <Route path="/loginCidadao" element={<LoginCidadao />} />
-        <Route path="/inicioCidadao" element={<InicioCidadao />} />
-        <Route path="/InicioTiposLixo" element={<InicioTiposLixo />} />
-        <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
-        <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
-        <Route path="/opcoes" element={<Opcoes />} />
-        <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
+        <Route path="/cadastroCidadao" element={<CadastroCidadao />} />
         <Route path="/esqueciMinhasenha-cidadao" element={<EsqueciMinhaSenhaCidadao />} />
 
-        <Route path="/coleta" element={<Coleta />} />
-        <Route path="/conta" element={<Conta />} />
+        {/* Catador */}
+        <Route path="/loginCatador" element={<LoginCatador />} />
+        <Route path="/cadastroCatador" element={<CadastroCatador />} />
+        <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
 
-        {/* Rotas protegidas */}
+        {/* ================= PROTEGIDAS ================= */}
         <Route element={<PrivateRoute />}>
-          <Route path="/teste" element={<Teste />} />
+          {/* Cidadão */}
+          <Route path="/inicioCidadao" element={<InicioCidadao />} />
+          <Route path="/coleta" element={<Coleta />} />
+          <Route path="/conta" element={<Conta />} />
+          <Route path="/opcoes" element={<Opcoes />} />
+          <Route path="/inicioTiposLixo" element={<InicioTiposLixo />} />
+          <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
+          <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
+
+          {/* Catador (futuro) */}
+          {/*
+          <Route path="/inicioCatador" element={<InicioCatador />} />
+          <Route path="/minhasColetas" element={<MinhasColetas />} />
+          <Route path="/perfilCatador" element={<PerfilCatador />} />
+          */}
         </Route>
 
       </Routes>

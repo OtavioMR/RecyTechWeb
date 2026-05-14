@@ -1,7 +1,6 @@
-import "../style/iniciologin.css";
-import LogoRecyTech from "../assets/LogoRecyTech.png";
+import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
-import "../style/Responsividade.css";
+import "../../style/Responsividade.css";
 
 
 

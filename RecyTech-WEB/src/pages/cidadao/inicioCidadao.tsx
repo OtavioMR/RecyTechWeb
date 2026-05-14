@@ -3,10 +3,13 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'leaflet/dist/leaflet.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import { useTokenWatcher } from './tokenWatcher';
-import Sidebar from '../components/Sidebar';
-import InicioTiposLixo from './inicio_tipos_lixo';
-import '../style/inicioCidadao.css';
+import { useNavigate } from 'react-router-dom';
+import { routesMapCidadao } from "../../routes/routesMap.ts";
+
+
+import { useTokenWatcher } from '../../hooks/tokenWatcher.ts';
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicioCidadao.css';
 
 interface Endereco {
     endereco: string;
@@ -17,21 +20,24 @@ interface Endereco {
 }
 
 export default function InicioCidadao() {
-    useTokenWatcher(); // MANTIDO
+    useTokenWatcher(); // ✅ Mantém segurança
+
+    const navigate = useNavigate();
 
     const [enderecos, setEnderecos] = useState<Endereco[]>([]);
     const [loading, setLoading] = useState(true);
     const [activeMenu, setActiveMenu] = useState('inicio');
     const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
-    const [mostrarTiposLixo, setMostrarTiposLixo] = useState(false); // NOVO ESTADO
 
+    // 🔹 Buscar endereços
     useEffect(() => {
         const buscarEnderecos = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const res = await axios.get("http://localhost:3000/endereco-usuario/meus-enderecos", {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                const res = await axios.get(
+                    "http://localhost:3000/endereco-usuario/meus-enderecos",
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
                 setEnderecos(res.data);
             } catch (error) {
                 console.error("Erro ao buscar endereços:", error);
@@ -45,7 +51,7 @@ export default function InicioCidadao() {
         return () => clearInterval(interval);
     }, []);
 
-    // Efeito para redimensionar o mapa quando a sidebar altera
+    // 🔹 Ajuste mapa sidebar
     useEffect(() => {
         const timer = setTimeout(() => {
             const mapElement = document.querySelector('.leaflet-container') as any;
@@ -53,53 +59,39 @@ export default function InicioCidadao() {
                 mapElement._leaflet_map.invalidateSize();
             }
         }, 350);
-        
+
         return () => clearTimeout(timer);
     }, [sidebarCollapsed]);
 
-        const handleMenuSelect = (menu: string) => {
-            setActiveMenu(menu);
-            console.log('Menu selecionado:', menu);
-            
-            // Navegação - Inicio não faz nada (já está na página)
-            if (menu === 'opcoes') {
-                window.location.href = '/opcoes';
-            }
-            if (menu === 'coleta') {
-                window.location.href = '/coleta';
-            }
-            if (menu === 'conta') {
-                window.location.href = '/conta';
-            }
-            // 'inicio' - não faz nada, já está na página
-        };
+    // 🔹 Navegação SPA (agora alinhada com Sidebar)
+    const handleMenuSelect = (menu: string) => {
+        setActiveMenu(menu);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
+    };
+
 
     const handleSidebarToggle = (collapsed: boolean) => {
         setSidebarCollapsed(collapsed);
     };
 
-    // NOVA FUNÇÃO: Quando clicar na caixa de endereços
-    const handleEnderecosClick = () => {
-        setMostrarTiposLixo(true);
+    // 🔹 Quando clicar em um endereço, salva no localStorage e vai para tipos de lixo
+    const handleEnderecoClick = (endereco: Endereco) => {
+        localStorage.setItem('enderecoSelecionado', JSON.stringify(endereco));
+        navigate('/inicioTiposLixo');
     };
 
     const position: [number, number] = [-23.55052, -46.633308];
 
-    // SE mostrarTiposLixo for true, mostra a tela de tipos de lixo
-    if (mostrarTiposLixo) {
-        return <InicioTiposLixo />;
-    }
-
     return (
         <div className="app-layout">
-            {/* Sidebar Fixa */}
-            <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
-            {/* Conteúdo Principal */}
+            <Sidebar
+                onMenuSelect={handleMenuSelect}
+                activeMenu={activeMenu}
+                onToggle={handleSidebarToggle}
+            />
+
             <main className="main-content">
-                {/* Use container-fluid com px-0 para remover padding horizontal */}
                 <div className="content-area container-fluid px-0">
-                    
                     {/* Header */}
                     <div className="nomeApp mb-3 ps-0">
                         <h1 className="m-0">RecyTech</h1>
@@ -108,12 +100,12 @@ export default function InicioCidadao() {
                     {/* Mapa */}
                     <div className="mb-3">
                         <div className="map-container">
-                            <MapContainer 
-                                center={position} 
-                                zoom={16} 
-                                style={{ 
-                                    height: '50vh', 
-                                    width: '100%', 
+                            <MapContainer
+                                center={position}
+                                zoom={16}
+                                style={{
+                                    height: '50vh',
+                                    width: '100%',
                                     borderRadius: '10px'
                                 }}
                                 key={sidebarCollapsed ? 'collapsed' : 'expanded'}
@@ -124,47 +116,43 @@ export default function InicioCidadao() {
                                 />
                                 <Marker position={position}>
                                     <Popup>
-                                        <div>
-                                            <strong>Você está aqui!</strong>
-                                            <br />
-                                            RecyTech - Sistema de Coleta
-                                        </div>
+                                        <strong>Você está aqui!</strong><br />
+                                        RecyTech - Sistema de Coleta
                                     </Popup>
                                 </Marker>
                             </MapContainer>
                         </div>
                     </div>
 
-                    {/* Pesquisa - Agora alinhada à esquerda */}
+                    {/* Pesquisa */}
                     <div className="pesquisa d-flex align-items-center mb-3 p-3">
                         <i className="bi bi-search px-2"></i>
-                        <input 
-                            type="text" 
-                            placeholder="Para onde?" 
+                        <input
+                            type="text"
+                            placeholder="Para onde?"
                             className="border-0 bg-transparent flex-grow-1 px-2"
                             style={{ outline: 'none' }}
-                            onClick={(e) => {
-                                e.currentTarget.focus();
-                            }}
+                            onClick={(e) => e.currentTarget.focus()}
                         />
                     </div>
-                    
-                    {/* Endereços - Título fora da caixa e caixa à esquerda */}
+
+                    {/* Endereços */}
                     <div className="mb-3">
                         <p className="enderecos-titulo">Meus endereços:</p>
-                        <div 
-                            className="enderecos"
-                            style={{ cursor: 'pointer' }} // Torna clicável
-                            onClick={handleEnderecosClick} // NOVO: Adiciona o clique
-                        >
+                        <div className="enderecos">
                             {loading ? (
-                                <p className='text-center m-0'>Carregando endereços...</p>
+                                <p className="text-center m-0">Carregando endereços...</p>
                             ) : enderecos.length === 0 ? (
-                                <p className='text-center m-0'>Nenhum endereço cadastrado.</p>
+                                <p className="text-center m-0">Nenhum endereço cadastrado.</p>
                             ) : (
                                 <div className="list-group">
                                     {enderecos.map((e, index) => (
-                                        <div key={index} className="list-group-item mb-2">
+                                        <div
+                                            key={index}
+                                            className="list-group-item mb-2"
+                                            style={{ cursor: 'pointer' }}
+                                            onClick={() => handleEnderecoClick(e)}
+                                        >
                                             <strong>{e.endereco}</strong><br />
                                             {e.cep} - {e.bairro} ({e.cidade}/{e.estado})
                                         </div>
