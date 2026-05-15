@@ -1,17 +1,21 @@
 import { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import '../style/inicio_tipos_lixo.css';
+import { useNavigate } from 'react-router-dom';
+import Sidebar from '../../components/Sidebar.tsx';
+import '../../style/cidadao/inicio_tipos_lixo.css';
+import { routesMapCidadao } from "../../routes/routesMap.ts";
 
 interface TipoLixo {
-  id: string;
-  label: string;
-  selecionado: boolean;
-  cor: string;
-  corTexto: string;
-  icone: string;
+    id: string;
+    label: string;
+    selecionado: boolean;
+    cor: string;
+    corTexto: string;
+    icone: string;
 }
 
 export default function InicioTiposLixo() {
+    const navigate = useNavigate();
+
     const [activeMenu, setActiveMenu] = useState('inicio');
     const [tiposLixo, setTiposLixo] = useState<TipoLixo[]>([
         { id: 'papel', label: 'Papel', selecionado: false, cor: '#2196F3', corTexto: '#FFFFFF', icone: '📄' },
@@ -19,68 +23,71 @@ export default function InicioTiposLixo() {
         { id: 'vidro', label: 'Vidro', selecionado: false, cor: '#4CAF50', corTexto: '#FFFFFF', icone: '🍶' },
         { id: 'metais', label: 'Metais', selecionado: false, cor: '#FFEB3B', corTexto: '#666666', icone: '🔩' },
         { id: 'eletronicos', label: 'Eletrónicos', selecionado: false, cor: '#9E9E9E', corTexto: '#FFFFFF', icone: '💻' },
-        // Orgânico removido
     ]);
 
+    // 🔹 Navegação SPA
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        console.log('Menu selecionado:', menu);
+        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {
         console.log('Sidebar collapsed:', collapsed);
     };
 
+    // 🔹 Toggle seleção
     const toggleTipoLixo = (id: string) => {
-        setTiposLixo(prev => prev.map(tipo => 
-            tipo.id === id ? { ...tipo, selecionado: !tipo.selecionado } : tipo
-        ));
+        setTiposLixo(prev =>
+            prev.map(tipo =>
+                tipo.id === id
+                    ? { ...tipo, selecionado: !tipo.selecionado }
+                    : tipo
+            )
+        );
     };
 
+    // 🔹 Confirmar: salva no localStorage e vai para quantidade
     const handleConfirmar = () => {
-        const selecionados = tiposLixo.filter(tipo => tipo.selecionado);
-        console.log('Tipos de lixo selecionados:', selecionados);
-        
-        // Navega para a página de quantidade
-        window.location.href = '/inicioQuantidade';
+        const selecionados = tiposLixo.filter(t => t.selecionado);
+        localStorage.setItem('tiposSelecionados', JSON.stringify(selecionados));
+        navigate('/inicioQuantidade');
     };
 
+    // 🔹 Voltar
     const handleVoltar = () => {
-        // Navegação direta para a tela do cidadão
-        window.location.href = '/inicioCidadao';
+        navigate('/inicioCidadao');
     };
 
     return (
         <div className="app-layout">
-            {/* Sidebar Fixa */}
-            <Sidebar onMenuSelect={handleMenuSelect} activeMenu={activeMenu} onToggle={handleSidebarToggle} />
-            
-            {/* Conteúdo Principal */}
+            <Sidebar
+                onMenuSelect={handleMenuSelect}
+                activeMenu={activeMenu}
+                onToggle={handleSidebarToggle}
+            />
+
             <main className="main-content">
                 <div className="content-area container-fluid px-0">
-                    
+
                     {/* Header */}
                     <div className="nomeApp mb-3 ps-0">
                         <h1 className="m-0">RecyTech</h1>
                     </div>
 
-                    {/* Botão Voltar alinhado à esquerda */}
+                    {/* Botão Voltar */}
                     <div className="voltar-container mb-4">
-                        <button 
-                            className="btn-voltar"
-                            onClick={handleVoltar}
-                        >
+                        <button className="btn-voltar" onClick={handleVoltar}>
                             ← Voltar
                         </button>
                     </div>
 
-                    {/* Título da Página */}
+                    {/* Título */}
                     <div className="mb-4">
                         <h2 className="titulo-tipos-lixo">Quais o tipo de lixo:</h2>
                     </div>
 
-                    {/* Grid de Tipos de Lixo - Agora em coluna única */}
-                    <div className="tipos-lixo-container . .">
+                    {/* Grid de Tipos de Lixo */}
+                    <div className="tipos-lixo-container">
                         {tiposLixo.map((tipo) => (
                             <button
                                 key={tipo.id}
@@ -103,35 +110,10 @@ export default function InicioTiposLixo() {
 
                     {/* Botão Confirmar */}
                     <div className="confirmar-container">
-                        <button 
-                            className="btn-confirmar"
-                            onClick={handleConfirmar}
-                        >
+                        <button className="btn-confirmar" onClick={handleConfirmar}>
                             Confirmar
                         </button>
                     </div>
-
-                    {/* Conteúdo baseado no menu selecionado */}
-                    {activeMenu === 'coleta' && (
-                        <div className="coleta-content p-3 mt-3 w-100">
-                            <h3>Gestão de Coleta</h3>
-                            <p>Interface para gerenciar coletas de resíduos</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'opcoes' && (
-                        <div className="opcoes-content p-3 mt-3 w-100">
-                            <h3>Opções do Sistema</h3>
-                            <p>Configurações e preferências</p>
-                        </div>
-                    )}
-
-                    {activeMenu === 'conta' && (
-                        <div className="conta-content p-3 mt-3 w-100">
-                            <h3>Minha Conta</h3>
-                            <p>Gerencie suas informações pessoais</p>
-                        </div>
-                    )}
                 </div>
             </main>
         </div>

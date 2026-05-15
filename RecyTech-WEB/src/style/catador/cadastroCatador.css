@@ -1,0 +1,247 @@
+/* ================================================================== */
+/* ======================== CADASTRO CATADOR =======================*/
+/* ================================================================== */
+
+.register-screen-catador {
+  background: white;
+  color: #123;
+  border-radius: 28px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  max-width: 500px;
+  margin: 15px auto;
+  position: relative;
+}
+
+.form-catador {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Container do botão voltar no cadastro */
+.register-screen-catador .Btn-back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+/* Inputs específicos do cadastro catador */
+.input-container-catador {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.input-container-catador .usuario-input {
+  width: 100%;
+  padding: 16px 16px 8px 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #333;
+  background-color: #f9f9f9;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-container-catador .usuario-input::placeholder {
+  color: transparent;
+}
+
+.input-container-catador .usuario-input:focus {
+  border-color: #086C4C;
+  background-color: #fff;
+  box-shadow: 0 0 0 4px rgba(8, 108, 76, 0.1);
+}
+
+.input-container-catador .usuario-input:not(:placeholder-shown) ~ .floating-label,
+.input-container-catador .usuario-input:focus ~ .floating-label {
+  top: 8px;
+  font-size: 0.75rem;
+  color: #086C4C;
+  font-weight: 600;
+}
+
+.input-container-catador .floating-label {
+  position: absolute;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  background-color: #ffffff;
+  padding: 0 4px;
+  font-weight: 500;
+  border-radius: 20px;
+}
+
+.input-container-catador .usuario-input:focus ~ .floating-label {
+  color: #086C4C;
+}
+
+/* Botão de cadastro específico */
+.form-catador .button-catador {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 420px;
+  margin: 20px auto 0;
+  padding: 16px 36px;
+  border-radius: 100px;
+  font-size: clamp(16px, 4.5vw, 18px);
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  border: 4px solid transparent;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  touch-action: manipulation;
+  justify-content: center;
+  --accent: #0d7377;
+  --bg: transparent;
+  --text-color: var(--accent);
+  border: 4px solid var(--accent);
+  box-shadow: 0 0 0 2px rgba(13,115,119,0.04);
+}
+
+.form-catador .button-catador svg {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  fill: var(--text-color, #fff);
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.form-catador .button-catador .arr-1 { 
+  right: 16px; 
+}
+
+.form-catador .button-catador .arr-2 { 
+  left: -25%; 
+}
+
+.form-catador .button-catador .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-color, var(--accent));
+  border-radius: 100%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.form-catador .button-catador .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-6px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Hover effects apenas para desktop */
+@media (hover: hover) {
+  .form-catador .button-catador:hover {
+    background: #0d7377;
+    color: white;
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(13, 115, 119, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 0 0 12px transparent;
+  }
+
+  .form-catador .button-catador:hover .arr-1 { 
+    right: -25%; 
+  }
+  
+  .form-catador .button-catador:hover .arr-2 { 
+    left: 16px; 
+  }
+  
+  .form-catador .button-catador:hover .text { 
+    transform: translateX(12px); 
+  }
+  
+  .form-catador .button-catador:hover svg { 
+    fill: #ffffff; 
+  }
+
+  .form-catador .button-catador:hover .circle { 
+    width: 100%; 
+    height: 220px; 
+    opacity: 1; 
+  }
+}
+
+.form-catador .button-catador:active { 
+  transform: scale(0.95); 
+  box-shadow: 0 0 0 4px rgba(13,115,119,0.18); 
+}
+
+/* Logo no cadastro */
+.register-screen-catador .logo {
+  width: clamp(250px, 70vw, 300px);
+  height: auto;
+  margin: 40px auto 24px;
+  display: flex;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .register-screen-catador {
+    padding: 30px 24px;
+    margin: 10px auto;
+  }
+  
+  .form-catador {
+    max-width: 100%;
+  }
+  
+  .register-screen-catador .Btn-back {
+    top: 15px;
+    left: 15px;
+  }
+  
+  .input-container-catador .usuario-input {
+    padding: 14px 14px 6px 14px;
+    font-size: 0.95rem;
+  }
+  
+  .input-container-catador .floating-label {
+    left: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-screen-catador {
+    padding: 25px 20px;
+    border-radius: 20px;
+  }
+  
+  .register-screen-catador .logo {
+    width: clamp(200px, 60vw, 250px);
+    margin: 30px auto 20px;
+  }
+  
+  .form-catador .button-catador {
+    padding: 14px 28px;
+    margin: 15px auto 0;
+  }
+  
+  .input-container-catador {
+    margin-bottom: 1.2rem;
+  }
+}

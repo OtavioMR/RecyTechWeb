@@ -1,0 +1,232 @@
+/* Estilos para a página de Coleta */
+
+.titulo-coleta {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.coletas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.coleta-card {
+    background-color: #ffffff;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.coleta-card:hover {
+    border-color: #4CAF50;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.coleta-card.expandida {
+    border-color: #4CAF50;
+    background-color: #f8f9fa;
+}
+
+.coleta-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.status-badge.em-andamento {
+    background-color: #FFF3CD;
+    color: #856404;
+    border: 1px solid #FFEAA7;
+}
+
+.status-badge.concluida {
+    background-color: #D1ECF1;
+    color: #0C5460;
+    border: 1px solid #BEE5EB;
+}
+
+.seta {
+    font-size: 1.2rem;
+    color: #666;
+    transition: transform 0.3s ease;
+}
+
+.coleta-card.expandida .seta {
+    transform: rotate(180deg);
+}
+
+.coleta-info {
+    margin-bottom: 1.2rem;
+}
+
+.prazo, .conclusao {
+    font-size: 0.95rem;
+    color: #555;
+    font-weight: 500;
+    margin: 0;
+}
+
+.tipos-lixo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.tipo-lixo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.8rem;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    border-left: 4px solid transparent;
+}
+
+.lixo-icone {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lixo-info {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+    flex: 1;
+}
+
+.informacoes-expandidas {
+    margin-top: 1.2rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid #e0e0e0;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    margin-bottom: 1rem;
+}
+
+.info-item:last-child {
+    margin-bottom: 0;
+}
+
+.info-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #666;
+}
+
+.info-value {
+    font-size: 1rem;
+    color: #333;
+    line-height: 1.4;
+}
+
+.nenhuma-coleta {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .coletas-container {
+        max-width: 90%;
+        gap: 0.8rem;
+    }
+    
+    .coleta-card {
+        padding: 1.2rem;
+    }
+    
+    .status-badge {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+    
+    .lixo-icone {
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+    }
+    
+    .lixo-info {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .coletas-container {
+        max-width: 95%;
+    }
+    
+    .titulo-coleta {
+        font-size: 1.3rem;
+    }
+    
+    .coleta-card {
+        padding: 1rem;
+    }
+    
+    .coleta-status {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .seta {
+        align-self: flex-end;
+    }
+    
+    .tipo-lixo-item {
+        padding: 0.6rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+    }
+}
