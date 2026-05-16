@@ -8,14 +8,14 @@ body {
   width: clamp(300px, 80vw, 300px);
   height: auto;
   margin: 0 auto 24px;
-  display: flex;
+
 }
 
 .titulo {
   margin: 20px;
 }
 
-.register-screen-catador {
+.login-screen-login-cidadao {
   background: white;
   color: #123;
   border-radius: 28px;
@@ -28,7 +28,7 @@ body {
   margin: 15px auto;
 }
 
-.input-container-catador {
+.input-container-cidadao {
   position: relative;
   margin-bottom: 1.5rem;
 }
