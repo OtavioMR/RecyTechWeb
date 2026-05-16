@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../style/Responsividade.css";
+import "../../style/cidadao/esqueci_minhaSenha_Cidadao.css"
 import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import { cidadaoService } from "../../services/cidadao/cidadaoService";
 
