@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "../../style/Responsividade.css";
+import "../../style/catador/esqueci_minhaSenha_Catador.css";
 import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import React, { useState } from "react";
 import { catadorService } from "../../services/catador/catadorService";

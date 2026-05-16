@@ -15,7 +15,7 @@ body {
   margin: 20px;
 }
 
-.register-screen-catador {
+.esqueci-senha-cidadao {
   background: white;
   color: #123;
   border-radius: 28px;
@@ -28,7 +28,7 @@ body {
   margin: 15px auto;
 }
 
-.input-container-catador {
+.input-container-cidadao {
   position: relative;
   margin-bottom: 1.5rem;
 }
@@ -144,8 +144,7 @@ body {
   .Btn-back.expanded .text-back { opacity: 1; width: 65%; padding-right: 10px; }
 }
 
-.button-cidadao,
-.button-catador {
+.button-cidadao {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -165,26 +164,14 @@ body {
   touch-action: manipulation;
   justify-content: center;
   --accent: #0d7377;
-  color: var(--text-color, var(--accent));
-  background-color: var(--bg, transparent);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0);
-}
-
-.button-cidadao {
   --bg: var(--accent);
   --text-color: #ffffff;
+  color: var(--text-color);
+  background-color: var(--bg);
   box-shadow: 0 0 0 2px rgba(13, 115, 119, 0.12);
 }
 
-.button-catador {
-  --bg: transparent;
-  --text-color: var(--accent);
-  border: 4px solid var(--accent);
-  box-shadow: 0 0 0 2px rgba(13, 115, 119, 0.04);
-}
-
-.button-cidadao svg,
-.button-catador svg {
+.button-cidadao svg {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -193,13 +180,10 @@ body {
   transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.button-cidadao .arr-1,
-.button-catador .arr-1 { right: 16px; }
-.button-cidadao .arr-2,
-.button-catador .arr-2 { left: -25%; }
+.button-cidadao .arr-1 { right: 16px; }
+.button-cidadao .arr-2 { left: -25%; }
 
-.button-cidadao .circle,
-.button-catador .circle {
+.button-cidadao .circle {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -212,32 +196,20 @@ body {
   transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.button-cidadao .text,
-.button-catador .text {
+.button-cidadao .text {
   position: relative;
   z-index: 1;
   transform: translateX(-6px);
   transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.button-cidadao:hover,
-.button-catador:hover { color: #ffffff; border-radius: 12px; box-shadow: 0 0 0 12px transparent; }
-
-.button-cidadao:hover .arr-1,
-.button-catador:hover .arr-1 { right: -25%; }
-.button-cidadao:hover .arr-2,
-.button-catador:hover .arr-2 { left: 16px; }
-.button-cidadao:hover .text,
-.button-catador:hover .text { transform: translateX(12px); }
-.button-cidadao:hover svg,
-.button-catador:hover svg { fill: #ffffff; }
-
-.button-cidadao:active,
-.button-catador:active { transform: scale(0.95); box-shadow: 0 0 0 4px rgba(13, 115, 119, 0.18); }
-
-.button-catador:hover .circle { width: 100%; height: 220px; opacity: 1; }
+.button-cidadao:hover { color: #ffffff; border-radius: 12px; box-shadow: 0 0 0 12px transparent; }
+.button-cidadao:hover .arr-1 { right: -25%; }
+.button-cidadao:hover .arr-2 { left: 16px; }
+.button-cidadao:hover .text { transform: translateX(12px); }
+.button-cidadao:hover svg { fill: #ffffff; }
+.button-cidadao:active { transform: scale(0.95); box-shadow: 0 0 0 4px rgba(13, 115, 119, 0.18); }
 
 @media (hover: hover) {
   .button-cidadao:hover { background: #0a5a5a; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(13, 115, 119, 0.4); }
-  .button-catador:hover { background: #0d7377; color: white; transform: translateY(-4px); box-shadow: 0 12px 24px rgba(13, 115, 119, 0.3); }
 }

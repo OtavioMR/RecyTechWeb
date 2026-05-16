@@ -1,7 +1,7 @@
 import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../../style/Responsividade.css";
+import "../../style/catador/cadastroCatador.css";
 import { catadorService } from "../../services/catador/catadorService";
 import type { UsuarioCreate } from "../../types/types";
 

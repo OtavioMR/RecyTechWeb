@@ -15,7 +15,7 @@ body {
   margin: 20px;
 }
 
-.register-screen-catador {
+.login-screen-login-catador {
   background: white;
   color: #123;
   border-radius: 28px;
@@ -25,7 +25,7 @@ body {
   backdrop-filter: blur(10px);
   width: 100%;
   max-width: 500px;
-  margin: 15px auto;
+  margin: auto;
 }
 
 .input-container-catador {
