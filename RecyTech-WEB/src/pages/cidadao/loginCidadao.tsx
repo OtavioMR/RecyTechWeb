@@ -1,7 +1,7 @@
 import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import "../../style/Responsividade.css";
+import "../../style/cidadao/loginCidadao.css";
 
 import { cidadaoService } from "../../services/cidadao/cidadaoService"; // serviço de login
 import type { LoginInput } from "../../types/types"; // 🔹 importando tipo

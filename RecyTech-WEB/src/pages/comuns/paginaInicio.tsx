@@ -1,6 +1,6 @@
 import LogoRecyTech from "../../assets/LogoRecyTech.png";
 import { useNavigate } from "react-router-dom";
-import "../../style/Responsividade.css";
+import "../../style/paginaInicio.css";
 
 
 
@@ -8,8 +8,9 @@ import "../../style/Responsividade.css";
 export default function Home() {
     const navigate = useNavigate();
     return (
-        <div className="login-screen-Inicio">
-            
+        <div className="page-inicio">
+            <div className="login-screen-Inicio">
+
                 <img src={LogoRecyTech} className="logo" alt="Logo Recytech" />
                 <p className="app-subtitle">Conectando pessoas à reciclagem</p>
                 <p className="welcome-text mt-20">
@@ -40,6 +41,7 @@ export default function Home() {
                     </button>
                 </div>
             </div>
+        </div>
 
     );
 }
