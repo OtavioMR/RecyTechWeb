@@ -1,293 +1,208 @@
-/* Estilos para a página de Coletas Disponíveis para Catador */
+/* ============================================================
+   Página: Coletas Disponíveis — Catador (inicioCatador.css)
+   Layout alinhado ao Figma: cards coloridos, ícone grande à
+   direita, estilo Lalamove — compacto e fácil de escanear.
+   ============================================================ */
 
-.titulo-coletas-disponiveis {
+/* ── Compatibilidade com App.css ────────────────────────────
+   O TSX usa <main className="conteudo"> mas o App.css define
+   apenas .main-content. Este alias garante que o <main> herde
+   o mesmo comportamento (margem, largura, fundo).            */
+.conteudo {
+    margin-left: 300px !important;
+    width: calc(100% - 300px) !important;
+    padding: 12px 20px 20px !important;
+    min-height: 100vh;
+    background-color: #f5f5f5 !important;
+    transition: all 0.3s ease;
+}
+
+/* Quando sidebar está colapsada */
+.sidebar-collapsed ~ .conteudo {
+    margin-left: 80px !important;
+    width: calc(100% - 80px) !important;
+}
+
+/* ── Títulos ────────────────────────────────────────────── */
+.conteudo h1 {
     font-size: 1.8rem;
     font-weight: 700;
     color: #004555;
-    margin-bottom: 0.5rem;
-    padding: 0 1rem;
-    text-align: left;
+    margin-bottom: 0 !important;
+    line-height: 1.2;
+}
+.titulo-coletas-disponiveis {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #004555;
+    margin-bottom: 0.3rem;
 }
 
 .subtitulo-coletas {
-    font-size: 0.95rem;
-    color: #666;
-    padding: 0 1rem;
-    margin: 0;
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0 0 1.2rem;
 }
 
+/* ── Grid de cards ──────────────────────────────────────── */
 .coletas-container {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-    margin-bottom: 2rem;
-    padding: 0 1rem;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 640px;
+    margin-top: 0.6rem;
 }
 
-/* Card de Coleta Disponível */
+/* ── Card ───────────────────────────────────────────────── */
 .coleta-card-catador {
-    background-color: #ffffff;
-    border: 2px solid #e0e0e0;
-    border-radius: 12px;
+    background-color: var(--card-cor, #004555);
+    border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    color: #fff;
 }
 
 .coleta-card-catador:hover {
-    border-color: #004555;
-    box-shadow: 0 4px 16px rgba(0, 69, 85, 0.15);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
 }
 
-.coleta-card-catador.expandida {
-    border-color: #004555;
-    background-color: #f8f9fa;
-}
-
-/* Header do Card (sempre visível) */
-.coleta-header {
-    padding: 1.5rem;
+/* Corpo do card — horizontal: textos à esquerda, ícone à direita */
+.coleta-body {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: flex-start;
-    gap: 1rem;
+    padding: 1.1rem 1.6rem 1.4rem;
+    gap: 1.2rem;
 }
 
-.coleta-info-base {
+/* Coluna de textos (lado esquerdo) */
+.coleta-body > *:not(.coleta-icone-principal) {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
+    min-width: 0; /* evita overflow em textos longos */
 }
 
-/* Item Individual da Coleta */
-.coleta-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    background-color: #f5f5f5;
-    border-radius: 8px;
-    transition: background-color 0.2s ease;
+.coleta-titulo {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.35rem;
 }
 
-.coleta-card-catador:hover .coleta-item {
-    background-color: #eff4f6;
-}
-
-.item-icon {
-    font-size: 1.3rem;
-    min-width: 24px;
-    text-align: center;
-}
-
-.item-label {
-    font-size: 0.75rem;
-    color: #888;
+.coleta-prazo {
+    display: block;
+    font-size: 0.88rem;
+    opacity: 0.85;
     font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    min-width: 70px;
+    margin-bottom: 0.75rem;
 }
 
-.item-value {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: #333;
-    flex: 1;
-    text-align: left;
-}
-
-/* Bairro - Destaque */
-.bairro-item {
-    border-left: 3px solid #004555;
-    background-color: #f0f7f9;
-}
-
-/* Prazo */
-.prazo-item {
-    border-left: 3px solid #ff9800;
-}
-
-/* Quantidade */
-.quantidade-item {
-    border-left: 3px solid #4CAF50;
-}
-
-/* Tipos de Lixo */
-.tipos-item {
-    flex-direction: column;
-    align-items: flex-start;
-    border-left: 3px solid #2196F3;
-}
-
-.tipos-lixo {
+/* Tags de tipos de lixo */
+.coleta-tipos {
     display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.7rem;
 }
 
-.tipo-lixo-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    padding: 0.5rem 0;
-}
-
-.tipo-icone {
-    font-size: 1.1rem;
-    min-width: 20px;
-}
-
-.tipo-nome {
-    font-weight: 600;
-    color: #333;
-    min-width: 80px;
-}
-
-.tipo-quantidade {
-    font-weight: 500;
-    color: #666;
-    margin-left: auto;
-    padding: 0.25rem 0.5rem;
-    background-color: white;
-    border-radius: 4px;
-}
-
-/* Seta Indicadora */
-.coleta-seta {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 40px;
-    height: 40px;
-}
-
-.seta {
-    font-size: 1.5rem;
-    color: #004555;
-    transition: transform 0.3s ease;
-}
-
-.coleta-card-catador.expandida .seta {
-    transform: rotate(180deg);
-}
-
-/* Conteúdo Expandido */
-.coleta-expandida {
-    padding: 1.5rem;
-    border-top: 2px solid #e0e0e0;
-    background-color: #fafafa;
-    animation: slideDown 0.3s ease;
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        max-height: 0;
-    }
-    to {
-        opacity: 1;
-        max-height: 500px;
-    }
-}
-
-/* Endereço Completo */
-.endereco-container {
-    margin-bottom: 1.5rem;
-    padding: 1rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    border-left: 4px solid #004555;
-}
-
-.endereco-titulo {
+.tipo-tag {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #004555;
-    text-transform: uppercase;
-    margin: 0 0 0.75rem 0;
-    letter-spacing: 0.5px;
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #222;
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    white-space: nowrap;
 }
 
-.endereco-texto {
-    font-size: 1rem;
-    color: #333;
-    margin: 0;
+/* Bairro */
+.coleta-bairro {
+    display: block;
+    font-size: 0.88rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Ícone principal — lado direito, grande */
+.coleta-icone-principal {
+    font-size: 4rem;
+    line-height: 1;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+    align-self: center;
+}
+
+/* ── Área expandida ─────────────────────────────────────── */
+.coleta-expandida {
+    background-color: rgba(0, 0, 0, 0.18);
+    padding: 1rem 1.4rem 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideDown 0.25s ease;
+}
+
+/* Parágrafo genérico dentro da área expandida (aviso antes de aceitar) */
+.coleta-expandida p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0 0 0.9rem;
+    font-style: italic;
+}
+
+/* Endereço completo — exibido após aceitar */
+.endereco-completo {
+    font-size: 0.95rem !important;
+    font-weight: 600;
+    font-style: normal !important;
+    opacity: 1 !important;
+    margin: 0 !important;
     line-height: 1.5;
 }
 
-/* Botões de Ação */
+@keyframes slideDown {
+    from { opacity: 0; max-height: 0; }
+    to   { opacity: 1; max-height: 200px; }
+}
+
+/* ── Botão unificado (.button-catador) ──────────────────── */
 .botoes-acao {
     display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
+    gap: 0.75rem;
 }
 
-.btn-aceitar,
-.btn-recusar {
-    padding: 0.75rem 1.5rem;
-    border: none;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    font-weight: 600;
+.button-catador {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 700;
     cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: 120px;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.btn-aceitar {
-    background-color: #4CAF50;
-    color: white;
+/* Primeiro botão = Aceitar — destaque em branco */
+.botoes-acao .button-catador:first-child {
+    background-color: #fff;
+    color: #27ae60;
+    border: none;
 }
 
-.btn-aceitar:hover {
-    background-color: #45a049;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+.button-catador:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }
 
-.btn-aceitar:active {
-    transform: translateY(0);
-}
-
-.btn-recusar {
-    background-color: #f44336;
-    color: white;
-}
-
-.btn-recusar:hover {
-    background-color: #da190b;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(244, 67, 54, 0.3);
-}
-
-.btn-recusar:active {
-    transform: translateY(0);
-}
-
-/* Nenhuma Coleta */
-.nenhuma-coleta-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
-    padding: 2rem;
-}
-
+/* ── Estados especiais ──────────────────────────────────── */
 .nenhuma-coleta {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     color: #888;
     text-align: center;
-    margin: 0;
+    margin: 4rem auto;
 }
 
 .loading-spinner {
@@ -295,104 +210,31 @@
     justify-content: center;
     align-items: center;
     min-height: 300px;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: #666;
 }
 
-/* Responsivo - Tablets */
+/* ── Responsivo: tablet ─────────────────────────────────── */
 @media (max-width: 768px) {
-    .titulo-coletas-disponiveis {
-        font-size: 1.5rem;
+    .conteudo {
+        margin-left: 0 !important;
+        width: 100% !important;
+        margin-bottom: 70px !important; /* espaço para sidebar bottom */
+        padding: 15px !important;
+    }
+}
+
+/* ── Responsivo: mobile ─────────────────────────────────── */
+@media (max-width: 480px) {
+    .coleta-body {
+        padding: 1rem 1.1rem 1.1rem;
     }
 
-    .coleta-header {
-        padding: 1rem;
-    }
-
-    .coleta-item {
-        padding: 0.6rem;
-        font-size: 0.85rem;
-    }
-
-    .item-label {
-        font-size: 0.7rem;
-        min-width: 60px;
-    }
-
-    .item-value {
-        font-size: 0.85rem;
+    .coleta-icone-principal {
+        font-size: 3rem;
     }
 
     .botoes-acao {
         flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .btn-aceitar,
-    .btn-recusar {
-        width: 100%;
-        min-width: unset;
-    }
-}
-
-/* Responsivo - Mobile */
-@media (max-width: 480px) {
-    .coletas-container {
-        padding: 0 0.75rem;
-        gap: 1rem;
-    }
-
-    .titulo-coletas-disponiveis {
-        font-size: 1.3rem;
-        padding: 0 0.75rem;
-    }
-
-    .coleta-header {
-        padding: 1rem 0.75rem;
-        flex-direction: column;
-    }
-
-    .coleta-seta {
-        align-self: flex-start;
-    }
-
-    .coleta-info-base {
-        gap: 0.75rem;
-    }
-
-    .coleta-item {
-        padding: 0.6rem;
-    }
-
-    .item-label {
-        font-size: 0.65rem;
-        min-width: 50px;
-    }
-
-    .item-value {
-        font-size: 0.8rem;
-    }
-
-    .tipos-lixo {
-        gap: 0.4rem;
-    }
-
-    .tipo-lixo-item {
-        font-size: 0.8rem;
-        gap: 0.4rem;
-    }
-
-    .endereco-container {
-        padding: 0.75rem;
-    }
-
-    .endereco-texto {
-        font-size: 0.9rem;
-    }
-
-    .btn-aceitar,
-    .btn-recusar {
-        padding: 0.6rem 1rem;
-        font-size: 0.85rem;
     }
 }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import SidebarCatador from "../../components/SidebarCatador.tsx";
+import Sidebar from "../../components/Sidebar.tsx";
 import "../../style/catador/minhasColetas.css";
 import type { Coleta } from "../../types/types.ts";
 import { routesMapCatador } from "../../routes/routesMap.ts";
@@ -83,7 +83,7 @@ export default function MinhasColetas() {
     if (loading) {
         return (
             <div className="app-layout">
-                <SidebarCatador
+                <Sidebar
                     onMenuSelect={handleMenuSelect}
                     activeMenu={activeMenu}
                     onToggle={handleSidebarToggle}
@@ -102,7 +102,7 @@ export default function MinhasColetas() {
 
     return (
         <div className="app-layout">
-            <SidebarCatador
+            <Sidebar
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={handleSidebarToggle}

@@ -44,6 +44,8 @@ export default function Router() {
         <Route path="/loginCatador" element={<LoginCatador />} />
         <Route path="/cadastroCatador" element={<CadastroCatador />} />
         <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
+                  <Route path="/inicioCatador" element={<InicioCatador />} />
+          <Route path="/minhasColetas" element={<MinhasColetas />} />
 
         {/* ================= PROTEGIDAS ================= */}
         <Route element={<PrivateRoute />}>
@@ -57,8 +59,7 @@ export default function Router() {
           <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
 
           {/* Catador (futuro) */}
-          <Route path="/inicioCatador" element={<InicioCatador />} />
-          <Route path="/minhasColetas" element={<MinhasColetas />} />
+
           {/*
           <Route path="/perfilCatador" element={<PerfilCatador />} />
           */}
