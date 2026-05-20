@@ -149,11 +149,7 @@ export default function contaCatador() {
                                 </div>
                             ))}
 
-                            {!mostrarFormEndereco && (
-                                <button className="btn-adicionar-endereco" onClick={() => setMostrarFormEndereco(true)}>
-                                    + Adicionar Endereço
-                                </button>
-                            )}
+                        
 
                             {mostrarFormEndereco && (
                                 <div className="form-endereco">
