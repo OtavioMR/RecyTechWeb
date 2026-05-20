@@ -138,11 +138,18 @@ export default function contaCatador() {
                 </div>
               </div>
 
-              <div className="input-container-catador">
+              <div className="info-item">
+                <label className="info-label">Tipo de transporte</label>
                 <select
                   name="transporte"
                   className="usuario-input w-100"
-                 
+                  value={usuario?.transporte || ""}
+                  onChange={(e) =>
+                    setUsuario((prev: any) => ({
+                      ...prev,
+                      transporte: e.target.value,
+                    }))
+                  }
                 >
                   <option value="" disabled>
                     Selecione o transporte
@@ -151,7 +158,6 @@ export default function contaCatador() {
                   <option value="Carro">Carro</option>
                   <option value="Caminhão">Caminhão</option>
                 </select>
-                <label className="floating-label">Tipo de transporte</label>
               </div>
             </div>
 

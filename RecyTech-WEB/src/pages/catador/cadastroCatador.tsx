@@ -17,6 +17,7 @@ export default function CadastroCatador() {
     nomeUsuario: "",
     senha: "",
     confirmarSenha: "",
+    transporte: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -44,6 +45,7 @@ export default function CadastroCatador() {
         email: formData.email,
         nomeUsuario: formData.nomeUsuario,
         senha: formData.senha,
+        transporte: formData.transporte
       });
 
       alert("Catador cadastrado com sucesso!");
@@ -54,6 +56,7 @@ export default function CadastroCatador() {
         nomeUsuario: "",
         senha: "",
         confirmarSenha: "",
+        transporte: "",
       });
 
       // 🔹 Navegação SPA

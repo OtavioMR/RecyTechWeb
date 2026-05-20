@@ -54,6 +54,7 @@ export interface UsuarioCreate {
   email: string;
   nomeUsuario: string;
   senha: string;
+  transporte: string;
 }
 
 export interface UsuarioUpdate {
