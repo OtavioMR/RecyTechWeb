@@ -5,7 +5,7 @@ import "../../style/catador/inicioCatador.css";
 import type { Coleta } from "../../types/types";
 import { routesMapCatador } from "../../routes/routesMap";
 import { lixoMap } from "../../utils/lixoMap";
-// import { catadorService } from "../../services/catador/catadorService"; // ✅ futuro backend
+import { catadorService } from "../../services/catador/catadorService"; // ✅ agora integrado
 
 // 🔹 Tipo local para UI
 interface ColetaDisponivel extends Coleta {
@@ -23,54 +23,16 @@ export default function InicioCatador() {
   useEffect(() => {
     const carregarColetas = async () => {
       try {
-        // ✅ Futuro: consumir API
-        // const response = await catadorService.listarColetasDisponiveis();
-        // setColetas(response.filter(c => c.status === "disponivel"));
+        // ✅ Chamada real ao back-end
+        const response = await catadorService.listarColetasDisponiveis();
 
-        // 🔹 Mock temporário
-        const data: ColetaDisponivel[] = [
-          {
-            id: "1",
-            status: "disponivel", // ✅ só aparece aqui porque está disponível
-            prazo: "17:00",
-            tiposLixo: [{ tipo: "Metal", quantidade: "50Kg" }],
-            cidade: "São Paulo",
-            bairro: "Centro",
-            expandida: false,
-          },
-          {
-            id: "2",
-            status: "disponivel",
-            prazo: "19:00",
-            tiposLixo: [{ tipo: "Plástico", quantidade: "15Kg" }],
-            cidade: "Osasco",
-            bairro: "Jardim América",
-            expandida: false,
-          },
-          {
-            id: "3",
-            status: "disponivel",
-            prazo: "18:00",
-            tiposLixo: [{ tipo: "Papel", quantidade: "+50Kg" }],
-            cidade: "São Paulo",
-            bairro: "Vila Verde",
-            expandida: false,
-          },
-          {
-            id: "4",
-            status: "disponivel",
-            prazo: "16:00",
-            tiposLixo: [
-              { tipo: "Eletrônico", quantidade: "5Kg" },
-              { tipo: "Vidro", quantidade: "8Kg" },
-            ],
-            cidade: "Barueri",
-            bairro: "Bom Retiro",
-            expandida: false,
-          },
-        ];
+        // 🔹 Adiciona campo expandida para controle da UI
+        const data: ColetaDisponivel[] = response.map((c) => ({
+          ...c,
+          expandida: false,
+        }));
 
-        // 🔹 Filtra apenas coletas disponíveis
+        // 🔹 Filtra apenas coletas com status "disponivel"
         setColetas(data.filter((c) => c.status === "disponivel"));
       } catch (err) {
         console.error("Erro ao buscar coletas disponíveis:", err);
@@ -98,8 +60,8 @@ export default function InicioCatador() {
   // 🔹 Aceitar coleta — dispara API e remove da lista
   const handleAceitarColeta = async (id: string) => {
     try {
-      // ✅ Futuro: chamar API
-      // await catadorService.aceitarColeta(id);
+      // ✅ Chamada real ao back-end
+      await catadorService.aceitarColeta(id);
 
       // 🔹 Remove da lista local (não é mais "disponivel")
       setColetas((prev) => prev.filter((c) => c.id !== id));

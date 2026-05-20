@@ -18,7 +18,7 @@
 }
 
 /* Quando sidebar está colapsada */
-.sidebar-collapsed ~ .conteudo {
+.sidebar-collapsed~.conteudo {
     margin-left: 80px !important;
     width: calc(100% - 80px) !important;
 }
@@ -31,6 +31,7 @@
     margin-bottom: 0 !important;
     line-height: 1.2;
 }
+
 .titulo-coletas-disponiveis {
     font-size: 1.6rem;
     font-weight: 700;
@@ -55,7 +56,6 @@
 
 /* ── Card ───────────────────────────────────────────────── */
 .coleta-card-catador {
-    background-color: var(--card-cor, #004555);
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;
@@ -79,9 +79,10 @@
 }
 
 /* Coluna de textos (lado esquerdo) */
-.coleta-body > *:not(.coleta-icone-principal) {
+.coleta-body>*:not(.coleta-icone-principal) {
     flex: 1;
-    min-width: 0; /* evita overflow em textos longos */
+    min-width: 0;
+    /* evita overflow em textos longos */
 }
 
 .coleta-titulo {
@@ -110,16 +111,16 @@
 
 .tipo-tag {
     font-size: 0.9rem;
-    font-weight: 600;
+    font-weight: 700;
     background-color: rgba(255, 255, 255, 0.85);
-    color: #222;
     border-radius: 20px;
     padding: 0.3rem 0.85rem;
     white-space: nowrap;
+    /* cor do texto vem do style inline via lixoMap */
 }
 
-/* Bairro */
-.coleta-bairro {
+/* Localização (cidade + bairro) */
+.coleta-localizacao {
     display: block;
     font-size: 0.88rem;
     opacity: 0.9;
@@ -162,8 +163,15 @@
 }
 
 @keyframes slideDown {
-    from { opacity: 0; max-height: 0; }
-    to   { opacity: 1; max-height: 200px; }
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 200px;
+    }
 }
 
 /* ── Botão unificado (.button-catador) ──────────────────── */
@@ -172,7 +180,7 @@
     gap: 0.75rem;
 }
 
-.button-catador {
+.coleta-card-catador .button-catador {
     flex: 1;
     padding: 0.65rem 1rem;
     border: 1.5px solid rgba(255, 255, 255, 0.5);
@@ -186,15 +194,16 @@
 }
 
 /* Primeiro botão = Aceitar — destaque em branco */
-.botoes-acao .button-catador:first-child {
+.coleta-card-catador .botoes-acao .button-catador:first-child {
     background-color: #fff;
     color: #27ae60;
     border: none;
 }
 
-.button-catador:hover {
+.coleta-card-catador .button-catador:hover {
     opacity: 0.9;
     transform: translateY(-1px);
+    border-color: inherit;
 }
 
 /* ── Estados especiais ──────────────────────────────────── */
@@ -219,7 +228,8 @@
     .conteudo {
         margin-left: 0 !important;
         width: 100% !important;
-        margin-bottom: 70px !important; /* espaço para sidebar bottom */
+        margin-bottom: 70px !important;
+        /* espaço para sidebar bottom */
         padding: 15px !important;
     }
 }
