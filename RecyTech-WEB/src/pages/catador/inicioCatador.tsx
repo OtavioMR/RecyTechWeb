@@ -5,7 +5,7 @@ import "../../style/catador/inicioCatador.css";
 import type { Coleta } from "../../types/types";
 import { routesMapCatador } from "../../routes/routesMap";
 import { lixoMap } from "../../utils/lixoMap";
-import { catadorService } from "../../services/catador/catadorService"; // ✅ agora integrado
+import { catadorService } from "../../services/catador/catadorService"; // ✅ integrado
 
 // 🔹 Tipo local para UI
 interface ColetaDisponivel extends Coleta {
@@ -26,16 +26,22 @@ export default function InicioCatador() {
         // ✅ Chamada real ao back-end
         const response = await catadorService.listarColetasDisponiveis();
 
-        // 🔹 Adiciona campo expandida para controle da UI
-        const data: ColetaDisponivel[] = response.map((c) => ({
+        let data: ColetaDisponivel[] = response.map((c) => ({
           ...c,
           expandida: false,
         }));
 
-        // 🔹 Filtra apenas coletas com status "disponivel"
+        // 🔹 Se não vier nada da API, usa mock para testar design
+        if (data.length === 0) {
+          data = getMockColetas();
+        }
+
         setColetas(data.filter((c) => c.status === "disponivel"));
       } catch (err) {
         console.error("Erro ao buscar coletas disponíveis:", err);
+
+        // 🔹 Se der erro na API, também usa mock completo
+        setColetas(getMockColetas());
       } finally {
         setLoading(false);
       }
@@ -43,6 +49,59 @@ export default function InicioCatador() {
 
     carregarColetas();
   }, []);
+
+  // 🔹 Mock centralizado
+  const getMockColetas = (): ColetaDisponivel[] => [
+    
+    {
+      id: "mock0",
+      status: "disponivel",
+      prazo: "17:00",
+      tiposLixo: [{ tipo: "Vidro", quantidade: "50Kg" }],
+      cidade: "Cotia",
+      bairro: "Jardim Petropolis",
+      expandida: false,
+    },
+    {
+      id: "mock1",
+      status: "disponivel",
+      prazo: "17:00",
+      tiposLixo: [{ tipo: "Metal", quantidade: "50Kg" }],
+      cidade: "São Paulo",
+      bairro: "Centro",
+      expandida: false,
+    },
+    {
+      id: "mock2",
+      status: "disponivel",
+      prazo: "19:00",
+      tiposLixo: [{ tipo: "Plástico", quantidade: "15Kg" }],
+      cidade: "Osasco",
+      bairro: "Jardim América",
+      expandida: false,
+    },
+    {
+      id: "mock3",
+      status: "disponivel",
+      prazo: "18:00",
+      tiposLixo: [{ tipo: "Papel", quantidade: "+50Kg" }],
+      cidade: "São Paulo",
+      bairro: "Vila Verde",
+      expandida: false,
+    },
+    {
+      id: "mock4",
+      status: "disponivel",
+      prazo: "16:00",
+      tiposLixo: [
+        { tipo: "Eletrônico", quantidade: "5Kg" },
+        { tipo: "Vidro", quantidade: "8Kg" },
+      ],
+      cidade: "Barueri",
+      bairro: "Bom Retiro",
+      expandida: false,
+    },
+  ];
 
   // 🔹 Navegação SPA
   const handleMenuSelect = (menu: string) => {
@@ -60,10 +119,7 @@ export default function InicioCatador() {
   // 🔹 Aceitar coleta — dispara API e remove da lista
   const handleAceitarColeta = async (id: string) => {
     try {
-      // ✅ Chamada real ao back-end
       await catadorService.aceitarColeta(id);
-
-      // 🔹 Remove da lista local (não é mais "disponivel")
       setColetas((prev) => prev.filter((c) => c.id !== id));
     } catch (err) {
       console.error("Erro ao aceitar coleta:", err);
@@ -109,7 +165,6 @@ export default function InicioCatador() {
                 >
                   {/* Corpo do card */}
                   <div className="coleta-body">
-                    {/* Coluna de textos — lado esquerdo */}
                     <div>
                       <span className="coleta-titulo">Colete agora</span>
                       <span className="coleta-prazo">
@@ -132,19 +187,16 @@ export default function InicioCatador() {
                         })}
                       </div>
 
-                      {/* ✅ Mostra apenas cidade e bairro */}
                       <span className="coleta-localizacao">
                         📍 {coleta.cidade} — {coleta.bairro}
                       </span>
                     </div>
 
-                    {/* Ícone principal — lado direito */}
                     <div className="coleta-icone-principal">
                       {lixoMap[coleta.tiposLixo[0].tipo]?.icone || "❓"}
                     </div>
                   </div>
 
-                  {/* Área expandida */}
                   {coleta.expandida && (
                     <div
                       className="coleta-expandida"
