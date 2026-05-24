@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../../components/Sidebar.tsx";
 import { routesMapCatador } from "../../routes/routesMap.ts";
-import "../../style/cidadao/conta.css";
+import "../../style/catador/contaCatador.css";
 import { catadorService } from "../../services/catador/catadorService.ts";
 import { enderecoService } from "../../services/cidadao/enderecoService.ts";
 import type { Endereco, EnderecoInput } from "../../types/types.ts";
