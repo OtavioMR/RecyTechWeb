@@ -143,20 +143,20 @@ export default function contaCatador() {
                 <select
                   name="transporte"
                   className="usuario-input w-100"
-                  value={usuario?.transporte || ""}
+                  value={usuario?.transporte ?? ""}
                   onChange={(e) =>
                     setUsuario((prev: any) => ({
                       ...prev,
-                      transporte: e.target.value,
+                      transporte: parseInt(e.target.value, 10),
                     }))
                   }
                 >
                   <option value="" disabled>
                     Selecione o transporte
                   </option>
-                  <option value="Carrinho de mão">Carrinho de mão</option>
-                  <option value="Carro">Carro</option>
-                  <option value="Caminhão">Caminhão</option>
+                  <option value={1}>Carrinho de mão</option>
+                  <option value={2}>Carro</option>
+                  <option value={3}>Caminhão</option>
                 </select>
               </div>
             </div>

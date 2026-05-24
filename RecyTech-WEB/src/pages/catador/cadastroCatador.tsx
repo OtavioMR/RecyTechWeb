@@ -10,7 +10,7 @@ export default function CadastroCatador() {
 
   // 🔹 Tipagem explícita
   const [formData, setFormData] = useState<
-    UsuarioCreate & { confirmarSenha: string }
+    Omit<UsuarioCreate, "transporte"> & { confirmarSenha: string; transporte: number | "" }
   >({
     nomeCompleto: "",
     email: "",
@@ -45,7 +45,7 @@ export default function CadastroCatador() {
         email: formData.email,
         nomeUsuario: formData.nomeUsuario,
         senha: formData.senha,
-        transporte: formData.transporte
+        transporte: formData.transporte,
       });
 
       alert("Catador cadastrado com sucesso!");
@@ -176,15 +176,20 @@ export default function CadastroCatador() {
             <select
               name="transporte"
               className="usuario-input w-100"
-              
-              value={(formData as any).transporte || ""}
+              value={formData.transporte || ""}
+              onChange={(e) =>
+                setFormData({
+                  ...formData,
+                  transporte: parseInt(e.target.value, 10), // 🔹 converte para número
+                })
+              }
             >
               <option value="" disabled>
                 Selecione o transporte
               </option>
-              <option value="Carrinho de mão">Carrinho de mão</option>
-              <option value="Carro">Carro</option>
-              <option value="Caminhão">Caminhão</option>
+              <option value={1}>Carrinho de mão</option>
+              <option value={2}>Carro</option>
+              <option value={3}>Caminhão</option>
             </select>
             <label className="floating-label">Tipo de transporte</label>
           </div>
