@@ -1,7 +1,7 @@
 /* Estilos para a página de Minhas Coletas do Catador */
 
 .titulo-minhas-coletas {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-weight: 600;
     color: #333;
     margin-bottom: 2rem;
@@ -21,7 +21,7 @@
 }
 
 .coleta-card {
-    background-color: #ffffff;
+    background-color: #004555;
     border: 2px solid #e0e0e0;
     border-radius: 15px;
     padding: 1.5rem;
@@ -38,7 +38,7 @@
 
 .coleta-card.expandida {
     border-color: #004555;
-    background-color: #f8f9fa;
+    background-color: #004555;
 }
 
 .coleta-card.concluida {
@@ -56,25 +56,25 @@
 .status-badge {
     padding: 0.5rem 1rem;
     border-radius: 20px;
-    font-size: 0.9rem;
     font-weight: 600;
 }
 
 .status-badge.em-andamento {
-    background-color: #FFF3CD;
+    background-color: #eef76e;
     color: #856404;
     border: 1px solid #FFEAA7;
 }
 
 .status-badge.concluida {
-    background-color: #D1ECF1;
-    color: #0C5460;
-    border: 1px solid #BEE5EB;
+    background-color: #4CAF50;
+    color: #154b04;
+    border: 1px solid #00b7d3;
 }
 
 .seta {
-    font-size: 1.2rem;
-    color: #666;
+    font-family: 'Arial', sans-serif;
+    font-size: 2.25rem;
+    color: #ffffff;
     transition: transform 0.3s ease;
 }
 
@@ -87,9 +87,8 @@
 }
 
 .prazo, .conclusao {
-    font-size: 0.95rem;
-    color: #555;
-    font-weight: 500;
+    font-size: 1.5rem;
+    font-weight: 700;
     margin: 0;
 }
 
@@ -119,19 +118,21 @@
 }
 
 .tipo-icone {
-    font-size: 1.2rem;
+    font-size: 2.2rem;
     min-width: 24px;
 }
 
 .tipo-nome {
+    font-size: 1.3rem;
     font-weight: 600;
     color: #333;
     flex: 1;
 }
 
 .tipo-quantidade {
+    font-size: 1.1rem;
     font-weight: 500;
-    color: #666;
+    color: #665;
 }
 
 .coleta-expandida {
@@ -157,6 +158,7 @@
 }
 
 .endereco-container {
+    flex-direction: column;
     margin-bottom: 1.5rem;
     padding: 1rem;
     background-color: #f9f9f9;
@@ -165,7 +167,7 @@
 }
 
 .endereco-titulo {
-    font-size: 0.9rem;
+    font-size: 1.25rem;
     font-weight: 600;
     color: #004555;
     text-transform: uppercase;
@@ -173,8 +175,8 @@
     letter-spacing: 0.5px;
 }
 
-.endereco-texto {
-    font-size: 0.95rem;
+.endereco-detalhes {
+    font-size: 1.1rem;
     color: #333;
     margin: 0;
     line-height: 1.5;
@@ -184,23 +186,24 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
+    padding: 1.75rem;
     background-color: #f0f7f9;
     border-radius: 8px;
     margin-bottom: 1rem;
 }
 
 .data-label {
-    font-size: 0.85rem;
-    color: #666;
+    font-size: 1.25rem;
     font-weight: 600;
+    color: #004555;
     text-transform: uppercase;
 }
 
 .data-valor {
-    font-size: 0.9rem;
-    color: #333;
-    font-weight: 500;
+    font-size: large;
+    color: #004555;
+    margin: 0;
+    line-height: 1.5;
 }
 
 .acoes-container {
@@ -213,7 +216,7 @@
     background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 50px;
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
@@ -221,13 +224,8 @@
 }
 
 .btn-marcar-completo:hover {
-    background-color: #45a049;
+    background-color: #63e031f5;
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-}
-
-.btn-marcar-completo:active {
-    transform: translateY(0);
 }
 
 .nenhuma-coleta-container {
@@ -261,7 +259,7 @@
     }
 
     .coletas-container {
-        padding: 0 0.75rem;
+        padding: 0.75rem;
     }
 
     .coleta-card {
