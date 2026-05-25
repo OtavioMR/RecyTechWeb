@@ -26,19 +26,20 @@ export interface ColetaInput {
 
 export interface Coleta {
   id: string;
-  status: "disponivel" | "em-andamento" | "concluida"; // ✅ ciclo completo
+  status: "disponivel" | "em-andamento" | "concluida";
   prazo?: string;
   dataConclusao?: string;
   tiposLixo: {
     tipo: string;
     quantidade: string;
-    icone: string;
-    cor: string;
   }[];
   cidade: string;
   bairro: string;
-  catador?: string; // ✅ opcional, só aparece quando coleta é aceita
+  endereco?: EnderecoInput;   // ✅ corrigido
+  catador?: string;
 }
+
+
 
 // 🔹 Usuário
 export interface Usuario {

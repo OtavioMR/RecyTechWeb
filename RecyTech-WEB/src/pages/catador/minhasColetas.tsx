@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Sidebar from "../../components/Sidebar.tsx";
+import Sidebar from "../../components/Sidebar";
 import "../../style/catador/minhasColetas.css";
-import type { Coleta } from "../../types/types.ts";
-import { routesMapCatador } from "../../routes/routesMap.ts";
-// import { catadorService } from "../../services/catador/catadorService"; // futuro backend
+import type { Coleta } from "../../types/types";
+import { routesMapCatador } from "../../routes/routesMap";
+import { lixoMap } from "../../utils/lixoMap";
+import { catadorService } from "../../services/catador/catadorService"; // ✅ integração real
 
 // 🔹 Tipo local para UI (coletas aceitas)
 interface ColetaAceita extends Coleta {
@@ -19,44 +20,64 @@ export default function MinhasColetas() {
     const [coletas, setColetas] = useState<ColetaAceita[]>([]);
     const [loading, setLoading] = useState(true);
 
-    // 🔹 Buscar coletas aceitas (simulação sem backend, depois troca para catadorService)
     useEffect(() => {
         const carregarColetas = async () => {
             try {
-                // Futuro: const data = await catadorService.listarMinhasColetas();
-                const data = [
+                const data = await catadorService.listarMinhasColetas();
+                setColetas(data.map(c => ({ ...c, expandida: false })));
+            } catch (err) {
+                console.error("Erro ao buscar minhas coletas:", err);
+
+                // 🔹 Fallback mock para visualizar layout
+                const mock: ColetaAceita[] = [
                     {
                         id: "1",
                         status: "em-andamento",
                         prazo: "17:00 do dia 03/03/2026",
                         tiposLixo: [
-                            { tipo: "Plástico", quantidade: "15Kg", icone: "🥤", cor: "#F44336" },
-                            { tipo: "Vidro", quantidade: "10Kg", icone: "🍶", cor: "#4CAF50" }
+                            { tipo: "Plástico", quantidade: "15Kg" },
+                            { tipo: "Vidro", quantidade: "10Kg" }
                         ],
                         cidade: "São Paulo",
                         bairro: "Centro",
+                        endereco: {
+                            logradouro: "Rua das Flores",
+                            numero: "123",
+                            bairro: "Centro",
+                            cidade: "São Paulo",
+                            estado: "SP",
+                            cep: "01000-000",
+                            complemento: "Apto 45"
+                        },
                         catador: "João Silva",
-                        dataAceita: "15/11/2024 às 10:30"
+                        dataAceita: "15/11/2024 às 10:30",
+                        expandida: false
                     },
                     {
                         id: "2",
                         status: "concluida",
                         dataConclusao: "27/05/2026 às 19:00",
                         tiposLixo: [
-                            { tipo: "Metais", quantidade: "25Kg", icone: "🔩", cor: "#FFEB3B" },
-                            { tipo: "Papel", quantidade: "12Kg", icone: "📄", cor: "#2196F3" },
-                            { tipo: "Eletrônicos", quantidade: "5Kg", icone: "💻", cor: "#9E9E9E" }
+                            { tipo: "Metal", quantidade: "25Kg" },
+                            { tipo: "Papel", quantidade: "12Kg" },
+                            { tipo: "Eletrônico", quantidade: "5Kg" }
                         ],
                         cidade: "Rio de Janeiro",
                         bairro: "Jardim",
+                        endereco: {
+                            logradouro: "Av. Atlântica",
+                            numero: "500",
+                            bairro: "Jardim",
+                            cidade: "Rio de Janeiro",
+                            estado: "RJ",
+                            cep: "22000-000"
+                        },
                         catador: "João Silva",
-                        dataAceita: "13/11/2024 às 09:15"
+                        dataAceita: "13/11/2024 às 09:15",
+                        expandida: false
                     }
                 ];
-
-                setColetas(data.map((c) => ({ ...c, expandida: false } as any)));
-                } catch (err) {
-                console.error("Erro ao buscar minhas coletas:", err);
+                setColetas(mock);
             } finally {
                 setLoading(false);
             }
@@ -65,49 +86,37 @@ export default function MinhasColetas() {
         carregarColetas();
     }, []);
 
-    // 🔹 Navegação SPA (alinhada com Sidebar)
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
         if (routesMapCatador[menu]) navigate(routesMapCatador[menu]);
     };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log("Sidebar collapsed:", collapsed);
-    };
-
-    // 🔹 Expandir card
     const toggleExpansao = (id: string) => {
-        setColetas((prev) =>
-            prev.map((c) => (c.id === id ? { ...c, expandida: !c.expandida } : c))
+        setColetas(prev =>
+            prev.map(c => (c.id === id ? { ...c, expandida: !c.expandida } : c))
         );
     };
 
-    if (loading) {
-        return (
-            <div className="app-layout">
-                <Sidebar
-                    onMenuSelect={handleMenuSelect}
-                    activeMenu={activeMenu}
-                    onToggle={handleSidebarToggle}
-                />
-                <main className="main-content">
-                    <div className="content-area container-fluid px-0">
-                        <div className="nomeApp mb-3 ps-0">
-                            <h1 className="m-0">RecyTech</h1>
-                        </div>
-                        <div className="loading-spinner">Carregando minhas coletas...</div>
-                    </div>
-                </main>
-            </div>
-        );
-    }
+    // 🔹 Concluir coleta via API
+    const handleConcluir = async (id: string) => {
+        try {
+            const coletaAtualizada = await catadorService.concluirColeta(id);
+            setColetas(prev =>
+                prev.map(c => c.id === id ? { ...c, ...coletaAtualizada, expandida: false } : c)
+            );
+            alert("✅ Coleta concluída com sucesso!");
+        } catch (err) {
+            console.error("Erro ao concluir coleta:", err);
+            alert("❌ Não foi possível concluir a coleta. Tente novamente.");
+        }
+    };
 
     return (
         <div className="app-layout">
             <Sidebar
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
-                onToggle={handleSidebarToggle}
+                onToggle={(collapsed) => console.log("Sidebar collapsed:", collapsed)}
             />
 
             <main className="main-content">
@@ -122,8 +131,10 @@ export default function MinhasColetas() {
                         <h2 className="titulo-minhas-coletas">Minhas Coletas</h2>
                     </div>
 
-                    {/* Lista de Coletas Aceitas */}
-                    {coletas.length === 0 ? (
+                    {/* Conteúdo condicional */}
+                    {loading ? (
+                        <div className="loading-spinner">Carregando minhas coletas...</div>
+                    ) : coletas.length === 0 ? (
                         <div className="nenhuma-coleta-container">
                             <p className="nenhuma-coleta">
                                 📦 Você ainda não aceitou nenhuma coleta. Volte para coletas disponíveis!
@@ -134,16 +145,12 @@ export default function MinhasColetas() {
                             {coletas.map((coleta) => (
                                 <div
                                     key={coleta.id}
-                                    className={`coleta-card ${coleta.expandida ? "expandida" : ""} ${
-                                        coleta.status === "concluida" ? "concluida" : "em-andamento"
-                                    }`}
+                                    className={`coleta-card ${coleta.expandida ? "expandida" : ""} ${coleta.status === "concluida" ? "concluida" : "em-andamento"}`}
                                     onClick={() => toggleExpansao(coleta.id)}
                                 >
                                     {/* Status Badge */}
                                     <div className="coleta-status">
-                                        <span
-                                            className={`status-badge ${coleta.status}`}
-                                        >
+                                        <span className={`status-badge ${coleta.status}`}>
                                             {coleta.status === "em-andamento" ? "Em Andamento" : "Concluída"}
                                         </span>
                                         <span className="seta">v</span>
@@ -160,23 +167,39 @@ export default function MinhasColetas() {
 
                                     {/* Tipos de Lixo */}
                                     <div className="tipos-lixo">
-                                        {coleta.tiposLixo.map((tipo, idx) => (
-                                            <div key={idx} className="tipo-lixo-item">
-                                                <span className="tipo-icone">{tipo.icone}</span>
-                                                <span className="tipo-nome">{tipo.tipo}</span>
-                                                <span className="tipo-quantidade">{tipo.quantidade}</span>
-                                            </div>
-                                        ))}
+                                        {coleta.tiposLixo.map((tipo, idx) => {
+                                            const visual = lixoMap[tipo.tipo] || { icone: "❓", cor: "#ccc" };
+                                            return (
+                                                <div key={idx} className="tipo-lixo-item" style={{ color: visual.cor }}>
+                                                    <span className="tipo-icone">{visual.icone}</span>
+                                                    <span className="tipo-nome">{tipo.tipo}</span>
+                                                    <span className="tipo-quantidade">{tipo.quantidade}</span>
+                                                </div>
+                                            );
+                                        })}
                                     </div>
 
-                                    {/* Conteúdo Expandido - Endereço Completo */}
+                                    {/* Conteúdo Expandido */}
                                     {coleta.expandida && (
                                         <div className="coleta-expandida">
                                             <hr className="separator" />
-                                            
+
                                             <div className="endereco-container">
                                                 <h4 className="endereco-titulo">Endereço Completo</h4>
-                                                <p className="endereco-texto">{coleta.bairro} — {coleta.cidade}</p>
+                                                {coleta.endereco ? (
+                                                    <p className="endereco-texto">
+                                                        {coleta.endereco.logradouro}, {coleta.endereco.numero}
+                                                        {coleta.endereco.complemento ? ` - ${coleta.endereco.complemento}` : ""}
+                                                        <br />
+                                                        {coleta.endereco.bairro} — {coleta.endereco.cidade}/{coleta.endereco.estado}
+                                                        <br />
+                                                        CEP: {coleta.endereco.cep}
+                                                    </p>
+                                                ) : (
+                                                    <p className="endereco-texto">
+                                                        {coleta.bairro} — {coleta.cidade}
+                                                    </p>
+                                                )}
                                             </div>
 
                                             <div className="data-aceita">
@@ -186,7 +209,13 @@ export default function MinhasColetas() {
 
                                             {coleta.status === "em-andamento" && (
                                                 <div className="acoes-container">
-                                                    <button className="btn-marcar-completo">
+                                                    <button
+                                                        className="btn-marcar-completo"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation(); // evita disparar o toggleExpansao
+                                                            handleConcluir(coleta.id);
+                                                        }}
+                                                    >
                                                         ✓ Marcar como Completo
                                                     </button>
                                                 </div>
