@@ -21,6 +21,7 @@ import InicioSolicitarColeta from "../pages/cidadao/inicio_solicitar_coleta";
 import LoginCatador from "../pages/catador/loginCatador";
 import CadastroCatador from "../pages/catador/cadastroCatador";
 import EsqueciMinhaSenhaCatador from "../pages/catador/esqueciMinhasenha-catador";
+import ContaCatador from "../pages/catador/contaCatador";
 import InicioCatador from "../pages/catador/inicioCatador";
 import MinhasColetas from "../pages/catador/minhasColetas";
 
@@ -44,6 +45,9 @@ export default function Router() {
         <Route path="/loginCatador" element={<LoginCatador />} />
         <Route path="/cadastroCatador" element={<CadastroCatador />} />
         <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
+        <Route path="/contaCatador" element={<ContaCatador />} />
+
+        
                   <Route path="/inicioCatador" element={<InicioCatador />} />
           <Route path="/minhasColetas" element={<MinhasColetas />} />
 
@@ -57,7 +61,7 @@ export default function Router() {
           <Route path="/inicioTiposLixo" element={<InicioTiposLixo />} />
           <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
           <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
-
+          
           {/* Catador (futuro) */}
 
           {/*

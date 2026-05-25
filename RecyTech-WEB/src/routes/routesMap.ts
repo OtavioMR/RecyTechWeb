@@ -15,5 +15,5 @@ export const routesMapCidadao: Record<string, string> = {
 export const routesMapCatador: Record<string, string> = {
   inicio: "/inicioCatador",
   minhasColetas: "/minhasColetas",
-  perfil: "/perfilCatador"
+  conta: "/contaCatador"
 };
