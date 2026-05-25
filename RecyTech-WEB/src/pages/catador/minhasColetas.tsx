@@ -28,32 +28,34 @@ export default function MinhasColetas() {
                     {
                         id: "1",
                         status: "em-andamento",
-                        prazo: "17:00 do dia 15/11/2024",
+                        prazo: "17:00 do dia 03/03/2026",
                         tiposLixo: [
                             { tipo: "Plástico", quantidade: "15Kg", icone: "🥤", cor: "#F44336" },
                             { tipo: "Vidro", quantidade: "10Kg", icone: "🍶", cor: "#4CAF50" }
                         ],
-                        endereco: "Rua das Flores, 123 - Centro, São Paulo - SP",
+                        cidade: "São Paulo",
+                        bairro: "Centro",
                         catador: "João Silva",
                         dataAceita: "15/11/2024 às 10:30"
                     },
                     {
                         id: "2",
                         status: "concluida",
-                        dataConclusao: "14/11/2024 às 14:30",
+                        dataConclusao: "27/05/2026 às 19:00",
                         tiposLixo: [
                             { tipo: "Metais", quantidade: "25Kg", icone: "🔩", cor: "#FFEB3B" },
                             { tipo: "Papel", quantidade: "12Kg", icone: "📄", cor: "#2196F3" },
                             { tipo: "Eletrônicos", quantidade: "5Kg", icone: "💻", cor: "#9E9E9E" }
                         ],
-                        endereco: "Av. Principal, 456 - Jardim, Rio de Janeiro - RJ",
+                        cidade: "Rio de Janeiro",
+                        bairro: "Jardim",
                         catador: "João Silva",
                         dataAceita: "13/11/2024 às 09:15"
                     }
                 ];
 
-                setColetas(data.map((c) => ({ ...c, expandida: false }) as ColetaAceita));
-            } catch (err) {
+                setColetas(data.map((c) => ({ ...c, expandida: false } as any)));
+                } catch (err) {
                 console.error("Erro ao buscar minhas coletas:", err);
             } finally {
                 setLoading(false);
@@ -144,7 +146,7 @@ export default function MinhasColetas() {
                                         >
                                             {coleta.status === "em-andamento" ? "Em Andamento" : "Concluída"}
                                         </span>
-                                        <span className="seta">⌄</span>
+                                        <span className="seta">v</span>
                                     </div>
 
                                     {/* Conteúdo do Card - Sempre Visível */}
@@ -174,7 +176,7 @@ export default function MinhasColetas() {
                                             
                                             <div className="endereco-container">
                                                 <h4 className="endereco-titulo">Endereço Completo</h4>
-                                                <p className="endereco-texto">{coleta.endereco}</p>
+                                                <p className="endereco-texto">{coleta.bairro} — {coleta.cidade}</p>
                                             </div>
 
                                             <div className="data-aceita">

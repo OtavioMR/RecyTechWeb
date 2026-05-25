@@ -32,6 +32,8 @@ export interface Coleta {
   tiposLixo: {
     tipo: string;
     quantidade: string;
+    icone: string;
+    cor: string;
   }[];
   cidade: string;
   bairro: string;
