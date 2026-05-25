@@ -22,10 +22,10 @@ import LoginCatador from "../pages/catador/loginCatador";
 import CadastroCatador from "../pages/catador/cadastroCatador";
 import EsqueciMinhaSenhaCatador from "../pages/catador/esqueciMinhasenha-catador";
 import ContaCatador from "../pages/catador/contaCatador";
+import InicioCatador from "../pages/catador/inicioCatador";
+import MinhasColetas from "../pages/catador/minhasColetas";
 
 // (futuro) telas protegidas do Catador
-// import InicioCatador from "../pages/catador/inicioCatador";
-// import MinhasColetas from "../pages/catador/minhasColetas";
 // import PerfilCatador from "../pages/catador/perfilCatador";
 
 export default function Router() {
@@ -48,6 +48,8 @@ export default function Router() {
         <Route path="/contaCatador" element={<ContaCatador />} />
 
         
+                  <Route path="/inicioCatador" element={<InicioCatador />} />
+          <Route path="/minhasColetas" element={<MinhasColetas />} />
 
         {/* ================= PROTEGIDAS ================= */}
         <Route element={<PrivateRoute />}>
@@ -61,9 +63,8 @@ export default function Router() {
           <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
           
           {/* Catador (futuro) */}
+
           {/*
-          <Route path="/inicioCatador" element={<InicioCatador />} />
-          <Route path="/minhasColetas" element={<MinhasColetas />} />
           <Route path="/perfilCatador" element={<PerfilCatador />} />
           */}
         </Route>

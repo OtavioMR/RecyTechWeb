@@ -1,4 +1,4 @@
-// types.ts (pode ser um arquivo separado para centralizar tipos)
+// types.ts
 
 // 🔹 Endereço
 export interface EnderecoInput {
@@ -26,18 +26,20 @@ export interface ColetaInput {
 
 export interface Coleta {
   id: string;
-  status: "em-andamento" | "concluida";
+  status: "disponivel" | "em-andamento" | "concluida";
   prazo?: string;
   dataConclusao?: string;
   tiposLixo: {
     tipo: string;
     quantidade: string;
-    icone: string;
-    cor: string;
   }[];
-  endereco: string;
-  catador: string;
+  cidade: string;
+  bairro: string;
+  endereco?: EnderecoInput;   // ✅ corrigido
+  catador?: string;
 }
+
+
 
 // 🔹 Usuário
 export interface Usuario {
@@ -73,4 +75,3 @@ export interface LoginInput {
 export interface AuthResponse {
   access_token: string;
 }
-

@@ -1,0 +1,250 @@
+/* ============================================================
+   Página: Coletas Disponíveis — Catador (inicioCatador.css)
+   Layout alinhado ao Figma: cards coloridos, ícone grande à
+   direita, estilo Lalamove — compacto e fácil de escanear.
+   ============================================================ */
+
+/* ── Compatibilidade com App.css ────────────────────────────
+   O TSX usa <main className="conteudo"> mas o App.css define
+   apenas .main-content. Este alias garante que o <main> herde
+   o mesmo comportamento (margem, largura, fundo).            */
+.conteudo {
+    margin-left: 300px !important;
+    width: calc(100% - 300px) !important;
+    padding: 12px 20px 20px !important;
+    min-height: 100vh;
+    background-color: #f5f5f5 !important;
+    transition: all 0.3s ease;
+}
+
+/* Quando sidebar está colapsada */
+.sidebar-collapsed~.conteudo {
+    margin-left: 80px !important;
+    width: calc(100% - 80px) !important;
+}
+
+/* ── Títulos ────────────────────────────────────────────── */
+.conteudo h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #004555;
+    margin-bottom: 0 !important;
+    line-height: 1.2;
+}
+
+.titulo-coletas-disponiveis {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #004555;
+    margin-bottom: 0.3rem;
+}
+
+.subtitulo-coletas {
+    font-size: 0.9rem;
+    color: #888;
+    margin: 0 0 1.2rem;
+}
+
+/* ── Grid de cards ──────────────────────────────────────── */
+.coletas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 640px;
+    margin-top: 0.6rem;
+}
+
+/* ── Card ───────────────────────────────────────────────── */
+.coleta-card-catador {
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.coleta-card-catador:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+}
+
+/* Corpo do card — horizontal: textos à esquerda, ícone à direita */
+.coleta-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.6rem 1.4rem;
+    gap: 1.2rem;
+}
+
+/* Coluna de textos (lado esquerdo) */
+.coleta-body>*:not(.coleta-icone-principal) {
+    flex: 1;
+    min-width: 0;
+    /* evita overflow em textos longos */
+}
+
+.coleta-titulo {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.35rem;
+}
+
+.coleta-prazo {
+    display: block;
+    font-size: 0.88rem;
+    opacity: 0.85;
+    font-weight: 500;
+    margin-bottom: 0.75rem;
+}
+
+/* Tags de tipos de lixo */
+.coleta-tipos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.7rem;
+}
+
+.tipo-tag {
+    font-size: 0.9rem;
+    font-weight: 700;
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 20px;
+    padding: 0.3rem 0.85rem;
+    white-space: nowrap;
+    /* cor do texto vem do style inline via lixoMap */
+}
+
+/* Localização (cidade + bairro) */
+.coleta-localizacao {
+    display: block;
+    font-size: 0.88rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Ícone principal — lado direito, grande */
+.coleta-icone-principal {
+    font-size: 4rem;
+    line-height: 1;
+    flex-shrink: 0;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.25));
+    align-self: center;
+}
+
+/* ── Área expandida ─────────────────────────────────────── */
+.coleta-expandida {
+    background-color: rgba(0, 0, 0, 0.18);
+    padding: 1rem 1.4rem 1.2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    animation: slideDown 0.25s ease;
+}
+
+/* Parágrafo genérico dentro da área expandida (aviso antes de aceitar) */
+.coleta-expandida p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0 0 0.9rem;
+    font-style: italic;
+}
+
+/* Endereço completo — exibido após aceitar */
+.endereco-completo {
+    font-size: 0.95rem !important;
+    font-weight: 600;
+    font-style: normal !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    line-height: 1.5;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        max-height: 0;
+    }
+
+    to {
+        opacity: 1;
+        max-height: 200px;
+    }
+}
+
+/* ── Botão unificado (.button-catador) ──────────────────── */
+.botoes-acao {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.coleta-card-catador .button-catador {
+    flex: 1;
+    padding: 0.65rem 1rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: 10px;
+    font-size: 0.92rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: opacity 0.2s ease, transform 0.15s ease;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Primeiro botão = Aceitar — destaque em branco */
+.coleta-card-catador .botoes-acao .button-catador:first-child {
+    background-color: #fff;
+    color: #27ae60;
+    border: none;
+}
+
+.coleta-card-catador .button-catador:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+    border-color: inherit;
+}
+
+/* ── Estados especiais ──────────────────────────────────── */
+.nenhuma-coleta {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    margin: 4rem auto;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    font-size: 1.05rem;
+    color: #666;
+}
+
+/* ── Responsivo: tablet ─────────────────────────────────── */
+@media (max-width: 768px) {
+    .conteudo {
+        margin-left: 0 !important;
+        width: 100% !important;
+        margin-bottom: 70px !important;
+        /* espaço para sidebar bottom */
+        padding: 15px !important;
+    }
+}
+
+/* ── Responsivo: mobile ─────────────────────────────────── */
+@media (max-width: 480px) {
+    .coleta-body {
+        padding: 1rem 1.1rem 1.1rem;
+    }
+
+    .coleta-icone-principal {
+        font-size: 3rem;
+    }
+
+    .botoes-acao {
+        flex-direction: column;
+    }
+}
