@@ -52,7 +52,7 @@ export default function InicioCatador() {
 
   // 🔹 Mock centralizado
   const getMockColetas = (): ColetaDisponivel[] => [
-    
+
     {
       id: "mock0",
       status: "disponivel",
@@ -139,7 +139,9 @@ export default function InicioCatador() {
         onMenuSelect={handleMenuSelect}
         activeMenu={activeMenu}
         onToggle={(collapsed) => console.log("Sidebar collapsed:", collapsed)}
+        perfil="catador"   // 🔹 obrigatório agora
       />
+
 
       <main className="conteudo">
         <div className="content-area container-fluid px-0">
@@ -152,7 +154,7 @@ export default function InicioCatador() {
               😊 Nenhuma coleta disponível no momento. Volte mais tarde!
             </p>
           ) : (
-            <div className="coletas-container">
+            <div className="id-inicio-catador">
               {coletas.map((coleta) => (
                 <div
                   key={coleta.id}

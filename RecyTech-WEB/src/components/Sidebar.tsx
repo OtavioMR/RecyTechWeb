@@ -12,21 +12,23 @@ interface SidebarProps {
     onMenuSelect: (menu: string) => void;
     activeMenu?: string;
     onToggle?: (collapsed: boolean) => void;
+    perfil: "cidadao" | "catador"; // 🔹 novo prop
 }
 
 const Sidebar: React.FC<SidebarProps> = ({
     onMenuSelect,
     activeMenu = "inicio",
-    onToggle
+    onToggle,
+    perfil,
 }) => {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const navigate = useNavigate();
 
     const menuItems = [
         { key: "inicio", label: "Início", icon: <InicioIcon /> },
-        { key: "opcoes", label: "Opções", icon: <OpcoesIcon /> },
+        { key: "opcoes", label: "Opções", icon: <OpcoesIcon /> }, // 🔹 mantém para ambos
         { key: "coleta", label: "Coleta", icon: <ColetaIcon /> },
-        { key: "conta", label: "Conta", icon: <ContaIcon /> }
+        { key: "conta", label: "Conta", icon: <ContaIcon /> },
     ];
 
     const handleToggle = () => {
@@ -37,11 +39,11 @@ const Sidebar: React.FC<SidebarProps> = ({
 
     const handleLogout = () => {
         localStorage.removeItem("token");
-        navigate("/loginCidadao");
+        navigate(perfil === "catador" ? "/loginCatador" : "/loginCidadao"); // 🔹 dinâmico
     };
 
     const handleMenuClick = (menuKey: string) => {
-        onMenuSelect(menuKey); // 🔹 deixa o pai decidir rota
+        onMenuSelect(menuKey); // 🔹 pai decide rota com routesMap
     };
 
     return (
@@ -67,8 +69,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                     {menuItems.map((item) => (
                         <button
                             key={item.key}
-                            className={`sidebar-item ${activeMenu === item.key ? "active" : ""
-                                }`}
+                            className={`sidebar-item ${activeMenu === item.key ? "active" : ""}`}
                             onClick={() => handleMenuClick(item.key)}
                         >
                             <span className="sidebar-icon">{item.icon}</span>
