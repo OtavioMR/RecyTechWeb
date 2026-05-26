@@ -1,5 +1,3 @@
-// types.ts
-
 // 🔹 Endereço
 export interface EnderecoInput {
   logradouro: string;
@@ -26,21 +24,20 @@ export interface ColetaInput {
 
 export interface Coleta {
   id: string;
-  status: "disponivel" | "em-andamento" | "concluida"; // ✅ ciclo completo
+  status: "disponivel" | "em-andamento" | "concluida";
   prazo?: string;
   dataConclusao?: string;
   tiposLixo: {
     tipo: string;
     quantidade: string;
-    icone: string;
-    cor: string;
   }[];
   cidade: string;
   bairro: string;
-  catador?: string; // ✅ opcional, só aparece quando coleta é aceita
+  endereco?: EnderecoInput;
+  catador?: string;
 }
 
-// 🔹 Usuário
+// 🔹 Usuário (base)
 export interface Usuario {
   id: string;
   nomeCompleto: string;
@@ -63,6 +60,20 @@ export interface UsuarioUpdate {
   cpf?: string;
   telefone?: string;
 }
+
+// 🔹 Catador (especialização de Usuário)
+export interface Catador extends Usuario {
+  transporte: number; // 1 = carrinho, 2 = carro, 3 = caminhão
+}
+
+export interface CatadorCreate extends UsuarioCreate {
+  transporte: number;
+}
+
+export interface CatadorUpdate extends UsuarioUpdate {
+  transporte?: number;
+}
+
 
 // 🔹 Login
 export interface LoginInput {

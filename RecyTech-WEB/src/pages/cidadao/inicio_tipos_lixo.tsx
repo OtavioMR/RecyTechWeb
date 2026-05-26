@@ -64,6 +64,7 @@ export default function InicioTiposLixo() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={handleSidebarToggle}
+                perfil="cidadao"
             />
 
             <main className="main-content">

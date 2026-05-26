@@ -129,7 +129,9 @@ export default function InicioSolicitarColeta() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={() => { }}
+                perfil="cidadao"
             />
+
 
             <main className="main-content">
                 <div className="content-area container-fluid px-0">
