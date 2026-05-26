@@ -1,5 +1,3 @@
-// types.ts
-
 // 🔹 Endereço
 export interface EnderecoInput {
   logradouro: string;
@@ -35,13 +33,11 @@ export interface Coleta {
   }[];
   cidade: string;
   bairro: string;
-  endereco?: EnderecoInput;   // ✅ corrigido
+  endereco?: EnderecoInput;
   catador?: string;
 }
 
-
-
-// 🔹 Usuário
+// 🔹 Usuário (base)
 export interface Usuario {
   id: string;
   nomeCompleto: string;
@@ -56,7 +52,6 @@ export interface UsuarioCreate {
   email: string;
   nomeUsuario: string;
   senha: string;
-  transporte: number | "";
 }
 
 export interface UsuarioUpdate {
@@ -65,6 +60,20 @@ export interface UsuarioUpdate {
   cpf?: string;
   telefone?: string;
 }
+
+// 🔹 Catador (especialização de Usuário)
+export interface Catador extends Usuario {
+  transporte: number; // 1 = carrinho, 2 = carro, 3 = caminhão
+}
+
+export interface CatadorCreate extends UsuarioCreate {
+  transporte: number;
+}
+
+export interface CatadorUpdate extends UsuarioUpdate {
+  transporte?: number;
+}
+
 
 // 🔹 Login
 export interface LoginInput {

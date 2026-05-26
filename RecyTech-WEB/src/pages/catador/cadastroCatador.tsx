@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../style/catador/cadastroCatador.css";
 import { catadorService } from "../../services/catador/catadorService";
-import type { UsuarioCreate } from "../../types/types";
+import type { CatadorCreate } from "../../types/types";
 
 export default function CadastroCatador() {
   const navigate = useNavigate();
 
-  // 🔹 Tipagem explícita
+  // 🔹 Estado do formulário
   const [formData, setFormData] = useState<
-    Omit<UsuarioCreate, "transporte"> & { confirmarSenha: string; transporte: number | "" }
+    Omit<CatadorCreate, "transporte"> & { confirmarSenha: string; transporte: number | "" }
   >({
     nomeCompleto: "",
     email: "",
@@ -37,6 +37,11 @@ export default function CadastroCatador() {
       return;
     }
 
+    if (formData.transporte === "") {
+      alert("Selecione o transporte!");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -45,11 +50,13 @@ export default function CadastroCatador() {
         email: formData.email,
         nomeUsuario: formData.nomeUsuario,
         senha: formData.senha,
-        transporte: formData.transporte,
+        transporte: Number(formData.transporte), // ✅ garante que é number
       });
 
       alert("Catador cadastrado com sucesso!");
+      navigate("/loginCatador");
 
+      // Reset do formulário
       setFormData({
         nomeCompleto: "",
         email: "",
@@ -58,9 +65,6 @@ export default function CadastroCatador() {
         confirmarSenha: "",
         transporte: "",
       });
-
-      // 🔹 Navegação SPA
-      navigate("/loginCatador");
     } catch (error: any) {
       console.error(error);
       alert(error?.response?.data?.message || "Erro ao cadastrar catador");
@@ -96,11 +100,7 @@ export default function CadastroCatador() {
 
       {/* Logo */}
       <div className="col-12 mb-4">
-        <img
-          src={LogoRecyTech}
-          alt="Logo RecyTech"
-          className="logo img-fluid"
-        />
+        <img src={LogoRecyTech} alt="Logo RecyTech" className="logo img-fluid" />
       </div>
 
       {/* Formulário */}
@@ -180,7 +180,7 @@ export default function CadastroCatador() {
               onChange={(e) =>
                 setFormData({
                   ...formData,
-                  transporte: parseInt(e.target.value, 10), // 🔹 converte para número
+                  transporte: e.target.value === "" ? "" : parseInt(e.target.value, 10),
                 })
               }
             >
@@ -197,9 +197,7 @@ export default function CadastroCatador() {
           {/* Botão Cadastrar */}
           <div>
             <button type="submit" className="button-catador" disabled={loading}>
-              <span className="text">
-                {loading ? "Cadastrando..." : "Cadastrar-se"}
-              </span>
+              <span className="text">{loading ? "Cadastrando..." : "Cadastrar-se"}</span>
               <svg className="arr-1" viewBox="0 0 24 24">
                 <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
               </svg>
