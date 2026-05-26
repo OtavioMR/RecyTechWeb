@@ -117,7 +117,10 @@ export default function MinhasColetas() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={(collapsed) => console.log("Sidebar collapsed:", collapsed)}
+                perfil="catador"   // 🔹 obrigatório agora
             />
+
+
 
             <main className="main-content">
                 <div className="content-area container-fluid px-0">
@@ -141,7 +144,7 @@ export default function MinhasColetas() {
                             </p>
                         </div>
                     ) : (
-                        <div className="coletas-container">
+                        <div className="coletas-container id-coleta-catador">
                             {coletas.map((coleta) => (
                                 <div
                                     key={coleta.id}

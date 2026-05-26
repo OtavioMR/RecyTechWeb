@@ -46,12 +46,14 @@
 }
 
 /* ── Grid de cards ──────────────────────────────────────── */
-.coletas-container {
+.id-inicio-catador {
     display: flex;
     flex-direction: column;
     gap: 1rem;
     max-width: 640px;
     margin-top: 0.6rem;
+    margin-left: auto;   /* ← adicionar */
+    margin-right: auto;  /* ← adicionar */
 }
 
 /* ── Card ───────────────────────────────────────────────── */

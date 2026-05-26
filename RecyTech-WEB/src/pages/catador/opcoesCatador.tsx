@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar.tsx';
 import '../../style/cidadao/opcoes.css';
-import { routesMapCidadao } from "../../routes/routesMap.ts";
+import { routesMapCatador } from "../../routes/routesMap.ts";
 
 interface Opcao {
     id: string;
@@ -10,7 +10,7 @@ interface Opcao {
     icone: string;
 }
 
-export default function Opcoes() {
+export default function OpcoesCatador() {
     const navigate = useNavigate();
     const [activeMenu, setActiveMenu] = useState('opcoes');
 
@@ -25,7 +25,7 @@ export default function Opcoes() {
     // 🔹 Navegação SPA alinhada com Sidebar
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
-        if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
+        if (routesMapCatador[menu]) navigate(routesMapCatador[menu]);
     };
 
     const handleSidebarToggle = (collapsed: boolean) => {
@@ -47,7 +47,7 @@ export default function Opcoes() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={handleSidebarToggle}
-                perfil="cidadao"
+                perfil="catador"
             />
 
             {/* Conteúdo Principal */}

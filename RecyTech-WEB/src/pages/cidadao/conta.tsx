@@ -94,7 +94,9 @@ export default function Conta() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={handleSidebarToggle}
+                perfil="cidadao"
             />
+
 
             <main className="main-content">
                 <div className="content-area container-fluid px-0">

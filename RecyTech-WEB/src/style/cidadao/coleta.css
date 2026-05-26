@@ -1,4 +1,4 @@
-/* Estilos para a página de Coleta */
+/* Estilos exclusivos da página Coleta (cidadão) */
 
 .titulo-coleta {
     font-size: 1.5rem;
@@ -9,7 +9,7 @@
     text-align: center;
 }
 
-.coletas-container {
+.id-coleta-cidadao {
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -20,7 +20,7 @@
     margin-right: auto;
 }
 
-.coleta-card {
+.id-coleta-cidadao .coleta-card {
     background-color: #ffffff;
     border: 2px solid #e0e0e0;
     border-radius: 15px;
@@ -30,72 +30,73 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.coleta-card:hover {
+.id-coleta-cidadao .coleta-card:hover {
     border-color: #4CAF50;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
 }
 
-.coleta-card.expandida {
+.id-coleta-cidadao .coleta-card.expandida {
     border-color: #4CAF50;
     background-color: #f8f9fa;
 }
 
-.coleta-status {
+.id-coleta-cidadao .coleta-status {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1rem;
 }
 
-.status-badge {
+.id-coleta-cidadao .status-badge {
     padding: 0.5rem 1rem;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: 600;
 }
 
-.status-badge.em-andamento {
+.id-coleta-cidadao .status-badge.em-andamento {
     background-color: #FFF3CD;
     color: #856404;
     border: 1px solid #FFEAA7;
 }
 
-.status-badge.concluida {
+.id-coleta-cidadao .status-badge.concluida {
     background-color: #D1ECF1;
     color: #0C5460;
     border: 1px solid #BEE5EB;
 }
 
-.seta {
+.id-coleta-cidadao .seta {
     font-size: 1.2rem;
     color: #666;
     transition: transform 0.3s ease;
 }
 
-.coleta-card.expandida .seta {
+.id-coleta-cidadao .coleta-card.expandida .seta {
     transform: rotate(180deg);
 }
 
-.coleta-info {
+.id-coleta-cidadao .coleta-info {
     margin-bottom: 1.2rem;
 }
 
-.prazo, .conclusao {
+.id-coleta-cidadao .prazo,
+.id-coleta-cidadao .conclusao {
     font-size: 0.95rem;
     color: #555;
     font-weight: 500;
     margin: 0;
 }
 
-.tipos-lixo {
+.id-coleta-cidadao .tipos-lixo {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     margin-bottom: 1rem;
 }
 
-.tipo-lixo-item {
+.id-coleta-cidadao .tipo-lixo-item {
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -105,7 +106,7 @@
     border-left: 4px solid transparent;
 }
 
-.lixo-icone {
+.id-coleta-cidadao .lixo-icone {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -117,49 +118,43 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.lixo-info {
+.id-coleta-cidadao .lixo-info {
     font-size: 1rem;
     font-weight: 500;
     color: #333;
     flex: 1;
 }
 
-.informacoes-expandidas {
+.id-coleta-cidadao .informacoes-expandidas {
     margin-top: 1.2rem;
     padding-top: 1.2rem;
     border-top: 1px solid #e0e0e0;
-    animation: slideDown 0.3s ease-out;
+    animation: slideDownCidadao 0.3s ease-out;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes slideDownCidadao {
+    from { opacity: 0; transform: translateY(-10px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 
-.info-item {
+.id-coleta-cidadao .info-item {
     display: flex;
     flex-direction: column;
     gap: 0.3rem;
     margin-bottom: 1rem;
 }
 
-.info-item:last-child {
+.id-coleta-cidadao .info-item:last-child {
     margin-bottom: 0;
 }
 
-.info-label {
+.id-coleta-cidadao .info-label {
     font-size: 0.9rem;
     font-weight: 600;
     color: #666;
 }
 
-.info-value {
+.id-coleta-cidadao .info-value {
     font-size: 1rem;
     color: #333;
     line-height: 1.4;
@@ -172,61 +167,60 @@
     font-size: 1.1rem;
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
-    .coletas-container {
+    .id-coleta-cidadao {
         max-width: 90%;
         gap: 0.8rem;
     }
-    
-    .coleta-card {
+
+    .id-coleta-cidadao .coleta-card {
         padding: 1.2rem;
     }
-    
-    .status-badge {
+
+    .id-coleta-cidadao .status-badge {
         font-size: 0.85rem;
         padding: 0.4rem 0.8rem;
     }
-    
-    .lixo-icone {
+
+    .id-coleta-cidadao .lixo-icone {
         width: 35px;
         height: 35px;
         font-size: 1.1rem;
     }
-    
-    .lixo-info {
+
+    .id-coleta-cidadao .lixo-info {
         font-size: 0.95rem;
     }
 }
 
 @media (max-width: 480px) {
-    .coletas-container {
+    .id-coleta-cidadao {
         max-width: 95%;
     }
-    
+
     .titulo-coleta {
         font-size: 1.3rem;
     }
-    
-    .coleta-card {
+
+    .id-coleta-cidadao .coleta-card {
         padding: 1rem;
     }
-    
-    .coleta-status {
+
+    .id-coleta-cidadao .coleta-status {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
     }
-    
-    .seta {
+
+    .id-coleta-cidadao .seta {
         align-self: flex-end;
     }
-    
-    .tipo-lixo-item {
+
+    .id-coleta-cidadao .tipo-lixo-item {
         padding: 0.6rem;
     }
-    
-    .info-item {
+
+    .id-coleta-cidadao .info-item {
         flex-direction: column;
     }
 }

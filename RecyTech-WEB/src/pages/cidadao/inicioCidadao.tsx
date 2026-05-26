@@ -88,6 +88,7 @@ export default function InicioCidadao() {
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
                 onToggle={handleSidebarToggle}
+                perfil="cidadao"
             />
 
             <main className="main-content">
