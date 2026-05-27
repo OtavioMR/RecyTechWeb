@@ -1,0 +1,266 @@
+/* Estilos exclusivos da página MinhasColetas (catador) */
+
+.titulo-minhas-coletas {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+    text-align: center;
+}
+
+.id-coleta-catador {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 auto 2rem;
+    padding: 0 1rem;
+    max-width: 600px;
+}
+
+.id-coleta-catador .coleta-card {
+    background-color: #004555;
+    border: 2px solid #e0e0e0;
+    border-radius: 15px;
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.id-coleta-catador .coleta-card:hover {
+    border-color: #004555;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px);
+}
+
+.id-coleta-catador .coleta-card.expandida {
+    border-color: #004555;
+    background-color: #004555;
+}
+
+.id-coleta-catador .coleta-card.concluida {
+    opacity: 0.85;
+    border-color: #4CAF50;
+}
+
+.id-coleta-catador .coleta-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.id-coleta-catador .status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.id-coleta-catador .status-badge.em-andamento {
+    background-color: #eef76e;
+    color: #856404;
+    border: 1px solid #FFEAA7;
+}
+
+.id-coleta-catador .status-badge.concluida {
+    background-color: #4CAF50;
+    color: #154b04;
+    border: 1px solid #2e7d32;
+}
+
+.id-coleta-catador .seta {
+    font-family: 'Arial', sans-serif;
+    font-size: 2.25rem;
+    color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.id-coleta-catador .coleta-card.expandida .seta {
+    transform: rotate(180deg);
+}
+
+.id-coleta-catador .coleta-info {
+    margin-bottom: 1.2rem;
+}
+
+.id-coleta-catador .prazo,
+.id-coleta-catador .conclusao {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.id-coleta-catador .prazo {
+    color: #ff9800;
+}
+
+.id-coleta-catador .conclusao {
+    color: #4CAF50;
+}
+
+.id-coleta-catador .tipos-lixo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.id-coleta-catador .tipo-lixo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    font-size: 0.9rem;
+}
+
+.id-coleta-catador .tipo-icone {
+    font-size: 2.2rem;
+    min-width: 24px;
+}
+
+.id-coleta-catador .tipo-nome {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    flex: 1;
+}
+
+.id-coleta-catador .tipo-quantidade {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #665;
+}
+
+.id-coleta-catador .coleta-expandida {
+    padding-top: 1rem;
+    animation: slideDownCatador 0.3s ease;
+}
+
+@keyframes slideDownCatador {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.id-coleta-catador .separator {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 1rem 0;
+}
+
+.id-coleta-catador .endereco-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-left: 4px solid #004555;
+    border-radius: 8px;
+}
+
+.id-coleta-catador .endereco-titulo {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #004555;
+    text-transform: uppercase;
+    margin: 0 0 0.75rem 0;
+    letter-spacing: 0.5px;
+}
+
+.id-coleta-catador .endereco-texto {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.id-coleta-catador .data-aceita {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.75rem;
+    background-color: #f0f7f9;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.id-coleta-catador .data-label {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #004555;
+    text-transform: uppercase;
+}
+
+.id-coleta-catador .data-valor {
+    font-size: large;
+    color: #004555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.id-coleta-catador .acoes-container {
+    margin-top: 1rem;
+}
+
+.id-coleta-catador .btn-marcar-completo {
+    width: 100%;
+    padding: 0.75rem;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.id-coleta-catador .btn-marcar-completo:hover {
+    background-color: #63e031f5;
+    transform: translateY(-2px);
+}
+
+.nenhuma-coleta-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    padding: 2rem;
+}
+
+.nenhuma-coleta {
+    font-size: 1.2rem;
+    color: #888;
+    text-align: center;
+    margin: 0;
+}
+
+.loading-spinner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    font-size: 1.1rem;
+    color: #666;
+}
+
+@media (max-width: 768px) {
+    .titulo-minhas-coletas {
+        font-size: 1.3rem;
+    }
+
+    .id-coleta-catador {
+        padding: 0.75rem;
+    }
+
+    .id-coleta-catador .coleta-card {
+        padding: 1rem;
+    }
+
+    .id-coleta-catador .tipo-lixo-item {
+        font-size: 0.85rem;
+        gap: 0.6rem;
+    }
+}
