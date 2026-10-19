@@ -1,0 +1,21 @@
+// src/routes/appRoutes.ts
+
+// Rotas do Cidadão
+export const routesMapCidadao: Record<string, string> = {
+  inicio: "/inicioCidadao",
+  opcoes: "/opcoes",
+  coleta: "/coleta",
+  conta: "/conta",
+  inicioTiposLixo: "/inicioTiposLixo",
+  inicioQuantidade: "/inicioQuantidade",
+  inicioSolicitarColeta: "/inicioSolicitarColeta",
+  solicitarColetaRapida: "/solicitar-coleta-rapida"
+};
+
+// Rotas do Catador
+export const routesMapCatador: Record<string, string> = {
+  inicio: "/inicioCatador",
+  opcoes: "/opcoesCatador",
+  coleta: "/minhasColetas",
+  conta: "/contaCatador"
+};
