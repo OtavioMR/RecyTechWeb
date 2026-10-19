@@ -1,0 +1,48 @@
+/* ABComparisonHeader.css - Minimalista e Clean */
+
+.ab-minimal-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.ab-minimal-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ab-segmented-pill {
+    display: inline-flex;
+    background: #f3f4f6;
+    padding: 3px;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+}
+
+.ab-seg-btn {
+    border: none;
+    background: transparent;
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6b7280;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.ab-seg-btn:hover {
+    color: #111827;
+}
+
+.ab-seg-btn.active {
+    background: #ffffff;
+    color: #15803d;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}

@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar.tsx';
 import '../../style/cidadao/inicio_tipos_lixo.css';
 import { routesMapCidadao } from "../../routes/routesMap.ts";
+import { storageService } from '../../services/storageService.ts';
+import { ABComparisonHeader } from '../../components/ABComparisonHeader.tsx';
 
 interface TipoLixo {
     id: string;
@@ -22,20 +24,32 @@ export default function InicioTiposLixo() {
         { id: 'plastico', label: 'Plástico', selecionado: false, cor: '#F44336', corTexto: '#FFFFFF', icone: '🥤' },
         { id: 'vidro', label: 'Vidro', selecionado: false, cor: '#4CAF50', corTexto: '#FFFFFF', icone: '🍶' },
         { id: 'metais', label: 'Metais', selecionado: false, cor: '#FFEB3B', corTexto: '#666666', icone: '🔩' },
-        { id: 'eletronicos', label: 'Eletrónicos', selecionado: false, cor: '#9E9E9E', corTexto: '#FFFFFF', icone: '💻' },
+        { id: 'eletronicos', label: 'Eletrônicos', selecionado: false, cor: '#9E9E9E', corTexto: '#FFFFFF', icone: '💻' },
     ]);
 
-    // 🔹 Navegação SPA
+    useEffect(() => {
+        const draft = storageService.getDraftColeta();
+        const salvos = draft.tipos || (() => {
+            const ls = localStorage.getItem('tiposSelecionados');
+            return ls ? JSON.parse(ls) : null;
+        })();
+
+        if (salvos && Array.isArray(salvos) && salvos.length > 0) {
+            const idsSalvos = new Set(salvos.map((s: any) => s.id));
+            setTiposLixo(prev =>
+                prev.map(item => ({
+                    ...item,
+                    selecionado: idsSalvos.has(item.id)
+                }))
+            );
+        }
+    }, []);
+
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
         if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log('Sidebar collapsed:', collapsed);
-    };
-
-    // 🔹 Toggle seleção
     const toggleTipoLixo = (id: string) => {
         setTiposLixo(prev =>
             prev.map(tipo =>
@@ -46,14 +60,18 @@ export default function InicioTiposLixo() {
         );
     };
 
-    // 🔹 Confirmar: salva no localStorage e vai para quantidade
     const handleConfirmar = () => {
         const selecionados = tiposLixo.filter(t => t.selecionado);
+        if (selecionados.length === 0) {
+            alert('Selecione ao menos um tipo de material.');
+            return;
+        }
+
         localStorage.setItem('tiposSelecionados', JSON.stringify(selecionados));
+        storageService.saveDraftColeta({ tipos: selecionados });
         navigate('/inicioQuantidade');
     };
 
-    // 🔹 Voltar
     const handleVoltar = () => {
         navigate('/inicioCidadao');
     };
@@ -63,32 +81,23 @@ export default function InicioTiposLixo() {
             <Sidebar
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
-                onToggle={handleSidebarToggle}
+                onToggle={() => {}}
                 perfil="cidadao"
             />
 
             <main className="main-content">
-                <div className="content-area container-fluid px-0">
-
-                    {/* Header */}
-                    <div className="nomeApp mb-3 ps-0">
-                        <h1 className="m-0">RecyTech</h1>
+                <div className="content-area container-fluid px-0" style={{ maxWidth: '680px', margin: '0 auto' }}>
+                    {/* Header Limpo */}
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                        <h2 className="titulo-coleta">O que vai descartar?</h2>
+                        <span className="badge bg-light text-muted border">Passo 2 de 4</span>
                     </div>
 
-                    {/* Botão Voltar */}
-                    <div className="voltar-container mb-4">
-                        <button className="btn-voltar" onClick={handleVoltar}>
-                            ← Voltar
-                        </button>
-                    </div>
-
-                    {/* Título */}
-                    <div className="mb-4">
-                        <h2 className="titulo-tipos-lixo">Quais o tipo de lixo:</h2>
-                    </div>
+                    {/* Switcher A/B Minimalista */}
+                    <ABComparisonHeader currentVariant="A" />
 
                     {/* Grid de Tipos de Lixo */}
-                    <div className="tipos-lixo-container">
+                    <div className="tipos-lixo-container mb-4">
                         {tiposLixo.map((tipo) => (
                             <button
                                 key={tipo.id}
@@ -109,10 +118,13 @@ export default function InicioTiposLixo() {
                         ))}
                     </div>
 
-                    {/* Botão Confirmar */}
-                    <div className="confirmar-container">
-                        <button className="btn-confirmar" onClick={handleConfirmar}>
-                            Confirmar
+                    {/* Botões de Ação */}
+                    <div className="d-flex justify-content-between align-items-center gap-2">
+                        <button className="btn btn-outline-secondary" onClick={handleVoltar}>
+                            ← Voltar
+                        </button>
+                        <button className="btn btn-success px-4" onClick={handleConfirmar}>
+                            Avançar ➔
                         </button>
                     </div>
                 </div>

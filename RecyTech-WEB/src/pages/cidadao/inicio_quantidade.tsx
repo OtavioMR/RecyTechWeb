@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar.tsx';
 import '../../style/cidadao/inicio_quantidade.css';
 import { routesMapCidadao } from "../../routes/routesMap.ts";
+import { storageService } from '../../services/storageService.ts';
+import { ABComparisonHeader } from '../../components/ABComparisonHeader.tsx';
 
 interface Quantidade {
     id: string;
@@ -18,32 +20,38 @@ export default function InicioQuantidade() {
     const [selecionado, setSelecionado] = useState<string | null>(null);
 
     const quantidades: Quantidade[] = [
-        { id: 'pouco', tipo: 'Pouco', descricao: 'Até 15 Kg', icone: '♻️' },
-        { id: 'medio', tipo: 'Médio', descricao: 'Até 50 Kg', icone: '♻️♻️' },
-        { id: 'grande', tipo: 'Grande', descricao: '+50 Kg', icone: '♻️♻️♻️' },
+        { id: 'pouco', tipo: 'Pouco', descricao: 'Até 15 Kg (1 a 2 sacolas)', icone: '♻️' },
+        { id: 'medio', tipo: 'Médio', descricao: 'Até 50 Kg (1 caixa cheia)', icone: '♻️♻️' },
+        { id: 'grande', tipo: 'Grande', descricao: '+50 Kg (múltiplos volumes)', icone: '♻️♻️♻️' },
     ];
 
-    // 🔹 Navegação SPA
+    useEffect(() => {
+        const draft = storageService.getDraftColeta();
+        const salva = draft.quantidade || (() => {
+            const ls = localStorage.getItem('quantidadeSelecionada');
+            return ls ? JSON.parse(ls) : null;
+        })();
+
+        if (salva && salva.id) {
+            setSelecionado(salva.id);
+        }
+    }, []);
+
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
         if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log('Sidebar collapsed:', collapsed);
-    };
-
-    // 🔹 Selecionar quantidade: salva no localStorage e vai para solicitar coleta
     const selecionarQuantidade = (id: string) => {
         setSelecionado(id);
         const quantidade = quantidades.find(qtd => qtd.id === id);
         if (quantidade) {
             localStorage.setItem('quantidadeSelecionada', JSON.stringify(quantidade));
+            storageService.saveDraftColeta({ quantidade });
             navigate('/inicioSolicitarColeta');
         }
     };
 
-    // 🔹 Voltar
     const handleVoltar = () => {
         navigate('/inicioTiposLixo');
     };
@@ -53,36 +61,23 @@ export default function InicioQuantidade() {
             <Sidebar
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
-                onToggle={handleSidebarToggle}
+                onToggle={() => {}}
                 perfil="cidadao"
             />
 
-
             <main className="main-content">
-                <div className="content-area container-fluid px-0">
-
-                    {/* Header */}
-                    <div className="nomeApp mb-3 ps-0">
-                        <h1 className="m-0">RecyTech</h1>
+                <div className="content-area container-fluid px-0" style={{ maxWidth: '680px', margin: '0 auto' }}>
+                    {/* Header Limpo */}
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                        <h2 className="titulo-coleta">Qual o volume?</h2>
+                        <span className="badge bg-light text-muted border">Passo 3 de 4</span>
                     </div>
 
-                    {/* Botão Voltar */}
-                    <div className="voltar-container mb-4">
-                        <button
-                            className="btn-voltar"
-                            onClick={handleVoltar}
-                        >
-                            ← Voltar
-                        </button>
-                    </div>
-
-                    {/* Título */}
-                    <div className="mb-4">
-                        <h2 className="titulo-quantidade">Qual a quantidade:</h2>
-                    </div>
+                    {/* Switcher A/B Minimalista */}
+                    <ABComparisonHeader currentVariant="A" />
 
                     {/* Grid de Quantidades */}
-                    <div className="quantidades-container">
+                    <div className="quantidades-container mb-4">
                         {quantidades.map((qtd) => (
                             <button
                                 key={qtd.id}
@@ -101,6 +96,13 @@ export default function InicioQuantidade() {
                                 </div>
                             </button>
                         ))}
+                    </div>
+
+                    {/* Botão Voltar */}
+                    <div>
+                        <button className="btn btn-outline-secondary" onClick={handleVoltar}>
+                            ← Voltar aos Materiais
+                        </button>
                     </div>
                 </div>
             </main>

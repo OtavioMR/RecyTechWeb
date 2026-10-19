@@ -14,10 +14,16 @@ export const cidadaoService = {
     return res.data;
   },
 
-  // 🟡 BUSCAR cidadão logado
+  // 🟡 BUSCAR cidadão logado (100% LocalStorage / Demo)
   me: async (): Promise<Usuario> => {
-    const res = await api.get("/cidadao/me");
-    return res.data;
+    return {
+      id: "1",
+      nomeCompleto: "Visitante (Teste UX)",
+      nomeUsuario: "visitante_ux",
+      email: "visitante@recytech.com",
+      cpf: "123.456.789-00",
+      telefone: "(11) 98765-4321"
+    };
   },
 
   // 🔵 ATUALIZAR cidadão

@@ -21,10 +21,22 @@ export const catadorService = {
     return res.data;
   },
 
-  // 🟡 BUSCAR catador logado
+  // 🟡 BUSCAR catador logado (com fallback offline/demo)
   me: async (): Promise<Catador> => {
-    const res = await api.get("/catador/me");
-    return res.data;
+    try {
+      const res = await api.get("/catador/me");
+      return res.data;
+    } catch {
+      return {
+        id: "2",
+        nomeCompleto: "João Coletor Parceiro",
+        nomeUsuario: "joao_coletor",
+        email: "joao.catador@recytech.com",
+        cpf: "987.654.321-00",
+        telefone: "(11) 91234-5678",
+        transporte: 2
+      };
+    }
   },
 
   // 🔵 ATUALIZAR catador
@@ -59,8 +71,22 @@ export const catadorService = {
 
   // 🔹 LISTAR COLETAS DO CATADOR
   listarMinhasColetas: async (): Promise<Coleta[]> => {
-    const res = await api.get("/catador/coletas/me");
-    return res.data;
+    try {
+      const res = await api.get("/catador/coletas/me");
+      return res.data;
+    } catch {
+      return [
+        {
+          id: "cat1",
+          status: "em-andamento",
+          prazo: "18:00 de hoje",
+          tiposLixo: [{ tipo: "Plástico", quantidade: "15Kg" }],
+          cidade: "Cotia",
+          bairro: "Centro",
+          catador: "João Coletor Parceiro"
+        }
+      ];
+    }
   },
 
   // 🔹 CONCLUIR UMA COLETA

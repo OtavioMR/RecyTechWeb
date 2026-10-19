@@ -8,7 +8,8 @@ export const routesMapCidadao: Record<string, string> = {
   conta: "/conta",
   inicioTiposLixo: "/inicioTiposLixo",
   inicioQuantidade: "/inicioQuantidade",
-  inicioSolicitarColeta: "/inicioSolicitarColeta"
+  inicioSolicitarColeta: "/inicioSolicitarColeta",
+  solicitarColetaRapida: "/solicitar-coleta-rapida"
 };
 
 // Rotas do Catador

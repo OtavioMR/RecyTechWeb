@@ -1,22 +1,19 @@
-import { api } from "../comuns/api";
+import { storageService } from "../storageService";
 import type { ColetaInput, Coleta } from "../../types/types";
 
 export const coletaService = {
-  // 🔹 Criar solicitação de coleta
-  criar: async (data: ColetaInput): Promise<Coleta> => {
-    const response = await api.post("/coleta", data);
-    return response.data;
+  // 🔹 Criar solicitação de coleta no localStorage
+  criar: async (data: ColetaInput | any): Promise<Coleta> => {
+    return storageService.addColeta(data);
   },
 
   // 🔹 Listar todas (admin/debug)
   listar: async (): Promise<Coleta[]> => {
-    const response = await api.get("/coleta");
-    return response.data;
+    return storageService.getColetas();
   },
 
   // 🔹 Buscar coletas do usuário logado
   listarMinhas: async (): Promise<Coleta[]> => {
-    const response = await api.get("/coleta/minhas");
-    return response.data;
+    return storageService.getColetas();
   }
 };

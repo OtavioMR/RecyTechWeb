@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // 🔹 Comuns
 import Home from "../pages/comuns/paginaInicio";
 import PrivateRoute from "./privateRoute";
+import ABTestToolbar from "../components/ABTestToolbar";
 
 // 🔹 Cidadão
 import LoginCidadao from "../pages/cidadao/loginCidadao";
@@ -16,6 +17,7 @@ import Opcoes from "../pages/cidadao/opcoes";
 import InicioTiposLixo from "../pages/cidadao/inicio_tipos_lixo";
 import InicioQuantidade from "../pages/cidadao/inicio_quantidade";
 import InicioSolicitarColeta from "../pages/cidadao/inicio_solicitar_coleta";
+import FluxoRapidoAB from "../pages/cidadao/fluxoRapidoAB";
 
 // 🔹 Catador
 import LoginCatador from "../pages/catador/loginCatador";
@@ -26,52 +28,47 @@ import InicioCatador from "../pages/catador/inicioCatador";
 import MinhasColetas from "../pages/catador/minhasColetas";
 import OpcoesCatador from "../pages/catador/opcoesCatador";
 
-// (futuro) telas protegidas do Catador
-// import PerfilCatador from "../pages/catador/perfilCatador";
-
 export default function Router() {
   return (
     <BrowserRouter>
-      <Routes>
+      {/* Barra Flutuante de Controle do Teste A/B e Reset de Dados */}
+      <ABTestToolbar />
 
+      <Routes>
         {/* ================= PUBLICAS ================= */}
         <Route path="/" element={<Home />} />
-        
+
         {/* Cidadão */}
         <Route path="/loginCidadao" element={<LoginCidadao />} />
         <Route path="/cadastroCidadao" element={<CadastroCidadao />} />
         <Route path="/esqueciMinhasenha-cidadao" element={<EsqueciMinhaSenhaCidadao />} />
-                  <Route path="/inicioCidadao" element={<InicioCidadao />} />
+        
+        {/* Fluxo Variante A (Etapas) */}
+        <Route path="/inicioCidadao" element={<InicioCidadao />} />
+        <Route path="/inicioTiposLixo" element={<InicioTiposLixo />} />
+        <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
+        <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
 
-          <Route path="/conta" element={<Conta />} />
-          <Route path="/opcoes" element={<Opcoes />} />
-          <Route path="/inicioTiposLixo" element={<InicioTiposLixo />} />
-          <Route path="/inicioQuantidade" element={<InicioQuantidade />} />
-          <Route path="/inicioSolicitarColeta" element={<InicioSolicitarColeta />} />
-          <Route path="/coleta" element={<Coleta />} />
+        {/* Fluxo Variante B (Tela Única Otimizada) */}
+        <Route path="/solicitar-coleta-rapida" element={<FluxoRapidoAB />} />
+        <Route path="/solicitarColetaRapida" element={<FluxoRapidoAB />} />
+
+        {/* Telas Gerais do Cidadão */}
+        <Route path="/coleta" element={<Coleta />} />
+        <Route path="/conta" element={<Conta />} />
+        <Route path="/opcoes" element={<Opcoes />} />
+
         {/* Catador */}
         <Route path="/loginCatador" element={<LoginCatador />} />
         <Route path="/cadastroCatador" element={<CadastroCatador />} />
         <Route path="/esqueciMinhasenha-catador" element={<EsqueciMinhaSenhaCatador />} />
         <Route path="/contaCatador" element={<ContaCatador />} />
-        <Route path="/opcoesCatador" element={<OpcoesCatador/>} />
+        <Route path="/opcoesCatador" element={<OpcoesCatador />} />
+        <Route path="/inicioCatador" element={<InicioCatador />} />
+        <Route path="/minhasColetas" element={<MinhasColetas />} />
 
-        
-                  <Route path="/inicioCatador" element={<InicioCatador />} />
-          <Route path="/minhasColetas" element={<MinhasColetas />} />
-
-        {/* ================= PROTEGIDAS ================= */}
-        <Route element={<PrivateRoute />}>
-          {/* Cidadão */}
-
-          
-          {/* Catador (futuro) */}
-
-          {/*
-          <Route path="/perfilCatador" element={<PerfilCatador />} />
-          */}
-        </Route>
-
+        {/* ================= PROTEGIDAS (Destravadas) ================= */}
+        <Route element={<PrivateRoute />} />
       </Routes>
     </BrowserRouter>
   );

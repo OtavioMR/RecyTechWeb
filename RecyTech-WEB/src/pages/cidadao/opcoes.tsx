@@ -1,83 +1,120 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Sidebar from '../../components/Sidebar.tsx';
 import '../../style/cidadao/opcoes.css';
 import { routesMapCidadao } from "../../routes/routesMap.ts";
-
-interface Opcao {
-    id: string;
-    label: string;
-    icone: string;
-}
+import { storageService } from '../../services/storageService.ts';
 
 export default function Opcoes() {
     const navigate = useNavigate();
     const [activeMenu, setActiveMenu] = useState('opcoes');
+    const [variant, setVariant] = useState<'A' | 'B'>('A');
+    const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-    const opcoes: Opcao[] = [
-        { id: 'tema', label: 'Tema', icone: '🎨' },
-        { id: 'ajuda', label: 'Ajuda', icone: '❓' },
-        { id: 'sobre', label: 'Sobre', icone: 'ℹ️' },
-        { id: 'reciclagem', label: 'Reciclagem', icone: '♻️' },
-        { id: 'remover-conta', label: 'Remover conta', icone: '🗑️' },
-    ];
+    useEffect(() => {
+        setVariant(storageService.getVariant());
+        setTheme(storageService.getTheme());
+    }, []);
 
-    // 🔹 Navegação SPA alinhada com Sidebar
     const handleMenuSelect = (menu: string) => {
         setActiveMenu(menu);
         if (routesMapCidadao[menu]) navigate(routesMapCidadao[menu]);
     };
 
-    const handleSidebarToggle = (collapsed: boolean) => {
-        console.log('Sidebar collapsed:', collapsed);
+    const handleToggleVariant = (target: 'A' | 'B') => {
+        storageService.setVariant(target);
+        setVariant(target);
     };
 
-    // 🔹 Clique nas opções internas
-    const handleOpcaoClick = (opcaoId: string) => {
-        console.log('Opção clicada:', opcaoId);
-        // Exemplo de navegação futura SPA
-        // navigate(`/opcoes/${opcaoId}`);
-        alert(`Navegando para: ${opcaoId}`);
+    const handleIrParaTeste = () => {
+        if (variant === 'B') {
+            navigate('/solicitar-coleta-rapida');
+        } else {
+            navigate('/inicioCidadao');
+        }
+    };
+
+    const handleToggleTheme = () => {
+        const nextTheme = theme === 'light' ? 'dark' : 'light';
+        storageService.setTheme(nextTheme);
+        setTheme(nextTheme);
+    };
+
+    const handleReset = () => {
+        if (window.confirm("Restaurar dados padrão do aplicativo?")) {
+            storageService.resetStorage();
+            window.location.reload();
+        }
     };
 
     return (
         <div className="app-layout">
-            {/* Sidebar */}
             <Sidebar
                 onMenuSelect={handleMenuSelect}
                 activeMenu={activeMenu}
-                onToggle={handleSidebarToggle}
+                onToggle={() => {}}
                 perfil="cidadao"
             />
 
-            {/* Conteúdo Principal */}
             <main className="main-content">
-                <div className="content-area container-fluid px-0">
-                    {/* Header */}
-                    <div className="nomeApp mb-3 ps-0">
-                        <h1 className="m-0">RecyTech</h1>
-                    </div>
+                <div className="content-area container-fluid px-0" style={{ maxWidth: '680px', margin: '0 auto' }}>
+                    <h2 className="titulo-coleta mb-4">Configurações</h2>
 
-                    {/* Título */}
-                    <div className="mb-4">
-                        <h2 className="titulo-opcoes">Opções</h2>
-                    </div>
-
-                    {/* Lista de Opções */}
-                    <div className="opcoes-container">
-                        {opcoes.map((opcao) => (
+                    {/* Modo Teste A/B */}
+                    <div className="card p-3 border rounded shadow-sm mb-3 bg-white">
+                        <strong className="text-dark small text-uppercase mb-2 d-block">Fluxo de Solicitação (Teste A/B)</strong>
+                        <div className="d-flex gap-2 mb-3">
                             <button
-                                key={opcao.id}
-                                className="opcao-btn"
-                                onClick={() => handleOpcaoClick(opcao.id)}
+                                type="button"
+                                className={`btn flex-fill ${variant === 'A' ? 'btn-success fw-bold' : 'btn-outline-secondary'}`}
+                                onClick={() => handleToggleVariant('A')}
                             >
-                                <div className="opcao-content">
-                                    <span className="opcao-icone">{opcao.icone}</span>
-                                    <span className="opcao-label">{opcao.label}</span>
-                                    <span className="opcao-seta">›</span>
-                                </div>
+                                📋 4 Etapas (A)
                             </button>
-                        ))}
+                            <button
+                                type="button"
+                                className={`btn flex-fill ${variant === 'B' ? 'btn-success fw-bold' : 'btn-outline-secondary'}`}
+                                onClick={() => handleToggleVariant('B')}
+                            >
+                                ⚡ Tela Única (B)
+                            </button>
+                        </div>
+                        <button className="btn btn-sm btn-outline-success w-100" onClick={handleIrParaTeste}>
+                            Abrir fluxo selecionado ➔
+                        </button>
+                    </div>
+
+                    {/* Aparência */}
+                    <div className="card p-3 border rounded shadow-sm mb-3 bg-white d-flex flex-row justify-content-between align-items-center">
+                        <div>
+                            <strong className="text-dark d-block">Tema Visual</strong>
+                            <small className="text-muted">{theme === 'light' ? 'Modo Claro' : 'Modo Escuro'}</small>
+                        </div>
+                        <button className="btn btn-sm btn-outline-secondary" onClick={handleToggleTheme}>
+                            {theme === 'light' ? '🌙 Escuro' : '☀️ Claro'}
+                        </button>
+                    </div>
+
+                    {/* Guia Rápido */}
+                    <div className="card p-3 border rounded shadow-sm mb-3 bg-white">
+                        <strong className="text-dark small text-uppercase mb-2 d-block">Guia Rápido de Reciclagem</strong>
+                        <div className="d-flex flex-wrap gap-2">
+                            <span className="badge bg-light text-primary border p-2">📄 Papel</span>
+                            <span className="badge bg-light text-danger border p-2">🥤 Plástico</span>
+                            <span className="badge bg-light text-success border p-2">🍾 Vidro</span>
+                            <span className="badge bg-light text-warning text-dark border p-2">🔩 Metal</span>
+                            <span className="badge bg-light text-secondary border p-2">💻 Eletrônicos</span>
+                        </div>
+                        <small className="text-muted mt-2 d-block">
+                            Descarte apenas materiais limpos e secos para facilitar o trabalho dos catadores parceiros.
+                        </small>
+                    </div>
+
+                    {/* Reset */}
+                    <div className="text-center pt-2">
+                        <button className="btn btn-sm btn-outline-danger" onClick={handleReset}>
+                            ↺ Restaurar Dados Padrão
+                        </button>
                     </div>
                 </div>
             </main>
